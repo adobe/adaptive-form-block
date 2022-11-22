@@ -1,10 +1,16 @@
 
 <html>
     <head>
-        <link rel="stylesheet" href="adaptiveform.css"></link>
+        <link rel="stylesheet" href="./dist/adaptiveform.modern.css"></link>
+        <link rel="stylesheet" href="./dist/adaptiveform.css"></link>
         <script type="module">
-            import d from "./dist/adaptiveform.js"
-             await d(document.getElementById("form"));
+            import dev from "./dist/adaptiveform.modern.js"
+             await dev(document.getElementById("form"));
+        </script>
+        <script type="module">
+            // Any one script module will be succesfully executed.
+            import prod from "./dist/adaptiveform.js"
+             await prod(document.getElementById("form"));
         </script>
     </head>
     <body>

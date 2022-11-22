@@ -9,7 +9,7 @@
     "package": "renamer --chain bundle.mjs dist/* ",
     "bundle": "microbundle --format=modern --sourcemap=false",
     "dev": "npm run clear &&  npm run bundle --compress=false watch",
-    "build": "npm run clear &&npm run bundle && npm run package",
+    "build": "npm run clear && npm run bundle && npm run package",
     "build:debug": "npm run clear && npm run bundle && npm run package",
     "start": "node lib/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,7 +23,6 @@
   "devDependencies": {
     "microbundle": "^0.15.1",
     "renamer": "^4.0.0",
-    "replace": "^1.2.2",
     "rimraf": "^3.0.2"
   }
 }

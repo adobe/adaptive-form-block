@@ -11,7 +11,6 @@
     _model:any;
     state:any;
     options?:{ [key: string]: any }
-    fullVersion:boolean = false;
 
     static IS = "FormField";
     
@@ -70,14 +69,7 @@
          } else {
              throw "Re-initializing model is not permitted"
          }
-
-
-         if (typeof this._model?.getState === 'function') {
-            this.state = this._model?.getState();
-            this.fullVersion = true;
-          } else {
-            this.state = this._model;
-          }
+        this.state = this._model?.getState();
      }
  
      /**

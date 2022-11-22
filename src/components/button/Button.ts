@@ -1,5 +1,6 @@
 import { Constants } from "../../util/constants";
 import FormFieldBase from "../../models/FormFieldBase";
+import { Actions } from "../../util/actions";
 
 
 export default class Button extends FormFieldBase {
@@ -47,9 +48,7 @@ export default class Button extends FormFieldBase {
 
     addListener() {
         this.getWidget()?.addEventListener("click", () => {
-            import("../../core/afcore.js").then((afcore) => {
-                this._model.dispatch(new afcore.Click())
-            })
+            this._model.dispatch(new Actions.Click())
         });
     }
 

@@ -259,10 +259,8 @@
 
     render() {
         this.element.appendChild(this.createView());
-        if(this.fullVersion) {
-            this.addListener();
-            this.subscribe();
-        }
+        this.addListener();
+        this.subscribe();
     }
 
     createView(): Element {

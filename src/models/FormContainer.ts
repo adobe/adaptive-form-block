@@ -1,5 +1,4 @@
 import TextInput from "../components/textinput/TextInput";
-import FormField from "./FormField";
 import FormFieldBase from "./FormFieldBase";
 
 import TextArea from "../components/textarea/TextArea";
@@ -11,17 +10,17 @@ import Text from "../components/text/Text";
 import SliderInput from "../components/slider/SliderInput";
 import EmailInput from "../components/email/EmailInput";
 import CheckBoxGroup from "../components/checkbox/CheckBoxGroup";
+import { createFormInstance } from "../core/afcore";
 
 export default class FormContainer {
 
-    _model?: any;
+    _model: any;
     _path: string;
     _deferredParents: any;
-    #formJson: any;
     #element?: HTMLFormElement;
 
      constructor(params: any) {
-        this.#formJson = params?._formJson;
+        this._model = createFormInstance(params?._formJson, null);
          this._path = params._path;
          this._deferredParents = {};
      }
@@ -34,29 +33,15 @@ export default class FormContainer {
          return this._path;
      }
 
-    isFull() {
-        return this.#formJson?.metadata?.rulesUsed;
-    }
-
     render(placeholder: Element) {
         const form = document.createElement('form');
         form.className = "cmp-adaptiveform-container cmp-container";
         this.#element = form;
 
-        let state;
-        if(this.isFull()) {
-            import("../core/afcore").then((afcore) => {
-                this._model = afcore.createFormInstance(this.#formJson, null);
-                state = this._model?.getState();
-                this.renderChildrens(form, state);
-                placeholder.replaceWith(form);
-                return form;
-            });
-        } else {
-            state = this.#formJson;
-            this.renderChildrens(form, state);
-            placeholder.replaceWith(form);
-        }
+        let state = this._model?.getState();
+        this.renderChildrens(form, state);
+        placeholder.replaceWith(form);
+        return form;
     }
 
     renderChildrens = (form: Element, state:any) => {
@@ -75,14 +60,7 @@ export default class FormContainer {
         const fieldWrapper = document.createElement('div');
         try {
             let fieldViewModel: FormFieldBase;
-            let fieldModel;
-            if(this.isFull()) {
-                fieldModel = this.getModel(field.id)
-            }
-            else {
-                fieldModel = field;
-                fieldModel.id = index;
-            }
+            let fieldModel = this.getModel(field.id);
             let params = {
                 element: fieldWrapper,
                 id: field.id

@@ -1,0 +1,29 @@
+{
+  "name": "adaptiveform",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Adaptive Form Block for AEM Form",
+  "source": "src/lite.ts",
+  "scripts": {
+    "clear": "rimraf dist",
+    "package": "renamer --chain bundle.mjs dist/* ",
+    "bundle": "microbundle --format=modern --sourcemap=false",
+    "dev": "npm run clear &&  npm run bundle --compress=false watch",
+    "build": "npm run clear &&npm run bundle && npm run package",
+    "build:debug": "npm run clear && npm run bundle && npm run package",
+    "start": "node lib/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vijay Kumar J (jalagari@adobe.com)",
+  "license": "ISC",
+  "dependencies": {
+    "@aemforms/af-core": "^0.22.16",
+    "typescript": "^4.8.4"
+  },
+  "devDependencies": {
+    "microbundle": "^0.15.1",
+    "renamer": "^4.0.0",
+    "replace": "^1.2.2",
+    "rimraf": "^3.0.2"
+  }
+}

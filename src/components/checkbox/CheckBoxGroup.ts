@@ -57,14 +57,18 @@ export default class CheckBoxGroup extends FormFieldBase {
     }
 
     _updateModelValue() {
-        let value: Array<any> = []
         let widgets = this.getWidgets();
-        widgets?.forEach(widget => {
-            if (widget.checked) {
-                value.push(widget.value)
-            }
-        }, this)
-        this._model.value = value
+        if(widgets.length == 1) {
+            this._model.value = widgets[0].checked;
+        } else {
+            let value: Array<any> = []
+            widgets?.forEach(widget => {
+                if (widget.checked) {
+                    value.push(widget.value)
+                }
+            }, this)
+            this._model.value = value
+        }
     }
 
     _updateEnabled(enabled: boolean) {

@@ -13,12 +13,6 @@
      constructor(params: any, model: any) {
          super(params, model);
          this.element.className = this.getbemBlock();
-         this.widget = this.getWidget();
-         this.description = this.getDescription();
-         this.label = this.getLabel();
-         this.errorDiv = this.getErrorDiv();
-         this.qm = this.getQuestionMarkDiv();
-         this.tooltip = this.getTooltipDiv()
      }
  
      /**
@@ -164,7 +158,7 @@
              this.toggle(valid, Constants.ARIA_INVALID, true);
              this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid+"");
              if (typeof state.errorMessage !== "string" || state.errorMessage === "") {
-                 const errMessage = valid === true ? '' : 'There is an error in the field';
+                 const errMessage = valid === true ? '' : 'Please fill in this field.';
                  this.errorDiv.innerHTML = errMessage;
              }
          }
@@ -239,7 +233,14 @@
          });
      }
 
-    
+    setElements() {
+        this.widget = this.getWidget();
+        this.description = this.getDescription();
+        this.label = this.getLabel();
+        this.errorDiv = this.getErrorDiv();
+        this.qm = this.getQuestionMarkDiv();
+        this.tooltip = this.getTooltipDiv()
+    }
 
     getbemBlock(): string {
         throw "bemBlock not implemented";
@@ -259,6 +260,7 @@
 
     render() {
         this.element.appendChild(this.createView());
+        this.setElements();
         this.addListener();
         this.subscribe();
     }
@@ -270,6 +272,7 @@
         div.dataset.cmpVisible = this.isVisible()?.toString();
         div.dataset.cmpEnabled = this.isEnabled()?.toString();
         div.dataset.cmpAdaptiveformcontainerPath = this.getFormContainerPath();
+        div.className = this.state.style;
 
         if(this.isLabelVisible()) {
             div.appendChild(this.createLabel());
@@ -287,10 +290,10 @@
         
         let desc = this.getDescriptionValue();
         if(desc) {
-            div.appendChild(this.createQuestionMarkHTML());
             div.appendChild(this.createLongDescHTML());
         }
-        if(this.isShortDescVisible()) {
+        if(this.isTooltipVisible()) {
+            div.appendChild(this.createQuestionMarkHTML());
             div.appendChild(this.createShortDescHTML());
         }
 
@@ -313,14 +316,14 @@
 
     createQuestionMarkHTML(): Element  {
         let button = document.createElement("button");
-        button.className = this.getbemBlock() + "__questionmark";
+        button.className = this.getbemBlock() + "__questionmark cmp-adaptiveform__questionmark";
         return button;
     }
 
     createShortDescHTML(): Element {
         let div = document.createElement("div");
         div.id = this.getId()+"-shortDescription";
-        div.className = this.getbemBlock() + "__shortdescription";
+        div.className = this.getbemBlock() + "__shortdescription cmp-adaptiveform__shortdescription";
         return div;
     }
 
@@ -328,7 +331,11 @@
         let div = document.createElement("div");
         div.setAttribute("aria-live", "polite");
         div.id = this.getId()+"-longDescription";
-        div.className = this.getbemBlock() + "__longdescription";
+        div.className = this.getbemBlock() + "__longdescription cmp-adaptiveform__longdescription";
+
+        let p = document.createElement("p");
+        p.innerHTML = this.getDescriptionValue();
+        div.append(p);
         return div;
     }
 
@@ -351,7 +358,7 @@
         let maxLength = this.getMaxLength();
         let minLength = this.getMinLength();
         if(minLength > 0) element.minLength = minLength
-        if(minLength > 0) element.maxLength = maxLength
+        if(maxLength > 0) element.maxLength = maxLength
         if(element instanceof HTMLInputElement) element.pattern = this.state?.pattern;
     }
 

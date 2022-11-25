@@ -10,6 +10,7 @@ export default class SliderInput extends FormFieldBase {
         self: "[data-" + this.NS + '-is="' + this.IS + '"]',
         widget: `.${SliderInput.bemBlock}__widget`,
         label: `.${SliderInput.bemBlock}__label`,
+        labelValue: `.${SliderInput.bemBlock}__label__value`,
         description: `.${SliderInput.bemBlock}__longdescription`,
         qm: `.${SliderInput.bemBlock}__questionmark`,
         errorDiv: `.${SliderInput.bemBlock}__errormessage`,
@@ -28,6 +29,9 @@ export default class SliderInput extends FormFieldBase {
         return this.element.querySelector(SliderInput.selectors.label);
     }
 
+    getDisplayLabel(): Element | null {
+        return this.element.querySelector(SliderInput.selectors.labelValue);
+    }
     getErrorDiv(): Element | null {
         return this.element.querySelector(SliderInput.selectors.errorDiv);
     }
@@ -41,9 +45,12 @@ export default class SliderInput extends FormFieldBase {
     }
 
     addListener() {
-        this.getWidget()?.addEventListener('blur', (e:any) => {
+        this.getWidget()?.addEventListener('change', (e:any) => {
             this._model.value = e.target.value;
             this.setInactive();
+            let labelValueEl = this.getDisplayLabel();
+            if(labelValueEl) 
+                labelValueEl.textContent =  "\t\t\t" + e.target.value;
         });
         this.getWidget()?.addEventListener('focus', (e) => {
             this.setActive();
@@ -58,9 +65,13 @@ export default class SliderInput extends FormFieldBase {
         return SliderInput.IS;
     }
     
-    createInputHTML(): Element {
+    createInputHTML(): Array<Element> {
+        let label = document.createElement("label");
+        label.className = "cmp-adaptiveform-sliderinput__label__value"
+        label.textContent = "\t\t\t" + this.getDefault();
+
         let input = document.createElement("input");
-        input.className = "cmp-adaptiveform-sliderInput__widget";
+        input.className = "cmp-adaptiveform-sliderinput__widget";
         input.title = this.isTooltipVisible() ? this.getTooltipValue() : '';
         input.type = "range";
         input.name = this.getName();
@@ -74,6 +85,6 @@ export default class SliderInput extends FormFieldBase {
         this.setDisabledAttribute(input);
         this.setReadonlyAttribute(input);
         this.setNumberConstraints(input);
-        return input;
+        return [label, input];
    }
 }

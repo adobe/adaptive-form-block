@@ -64,7 +64,7 @@ export default class TextInput extends FormFieldBase {
         input.className = "cmp-adaptiveform-textinput__widget";
         input.title = this.isTooltipVisible() ? this.getTooltipValue() : '';
         input.name = this.getName();
-        input.value = this.getDefault();
+        input.value = this.state.value ? this.state.value : null;
         input.placeholder = this.getPlaceHolder();
         input.required = this.isRequired();
         input.setAttribute("aria-label", this.isLabelVisible() ? this.getLabelValue() : '' );

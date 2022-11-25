@@ -142,19 +142,11 @@
      }
 
      isTooltipVisible(): boolean {
-        return false // TBD - Missing in Spec
+        return this.getTooltipValue() ? true : false;
      }
 
      getTooltipValue(): string {
-        return ""; // TBD - Missing in Spec
-     }
-
-     isShortDescVisible(): boolean {
-        return false // TBD - Missing in Spec
-     }
-
-     getShortDescValue(): string {
-        return ""; // TBD - Missing in Spec
+        return this?.state?.tooltip;
      }
 
      getDescriptionValue(): string {

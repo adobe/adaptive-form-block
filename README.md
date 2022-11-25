@@ -7,7 +7,7 @@ Adaptive Form Block is Form rendition block which renders the form based on Adap
 
 ## Playground
 
-[Live Playground](https://git.corp.adobe.com/pages/jalagari/adpative-form-block/)
+[Live Playground](https://git.corp.adobe.com/pages/jalagari/adpative-form-block/index.html)
 
 ### Local Playground
 

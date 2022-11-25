@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="../dist/adaptiveform.modern.css"></link>
+        <link rel="stylesheet" href="../dist/adaptiveform.css"></link>
+        <link rel="stylesheet" href="style.css"></link>
+        <script src="script.js"></script>
+
+        <script type="module">
+            import loadForm from "../dist/adaptiveform.modern.js"
+             await loadForm(document.getElementById("form"));
+            window.loadForm = loadForm;
+        </script>
+        <script type="module">
+            // Any one script module will be succesfully executed.
+            import loadForm from "../dist/adaptiveform.js"
+             await loadForm(document.getElementById("form"));
+            window.loadForm = loadForm;
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h2>Excel Template </h2>
+            <p>Select template:</p>
+            <select id="template" onchange="loadTemplate(this)">
+                <option value="">Select</option>
+                <option value="../forms/templates/registration.json">Registration</option>
+                <option value="../forms/templates/loancalculator.json">Loan Calculator</option>
+            </select>
+        </div>
+        <div class="row">
+            <div class="side"> 
+                <h2>JSON Details</h2>
+                <pre id='json_view'>
+                    
+                </pre>
+            </div>  
+            <div class="main">
+                <h2>Adaptive Form Block</h2>
+                <div class="form block" data-block-name="form" data-block-status="loaded">
+                    <div>
+                        <div id="form">
+                            <a href="">Select Template</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

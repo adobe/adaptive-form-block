@@ -1,0 +1,26 @@
+
+* {
+    box-sizing: border-box;
+}
+.header {
+    background-color: #f1f1f1;
+    padding: 20px;
+    
+}
+.row {  
+    display: flex;
+    flex-wrap: wrap;
+    height: 80%;
+    padding: 2px;
+    border: 2px solid gray;
+}
+.side {
+    width: 50%;
+}
+
+.main {
+    flex: 50%;
+    background-color: white;
+    padding: 20px;
+    border-left: 2px solid gray;
+}

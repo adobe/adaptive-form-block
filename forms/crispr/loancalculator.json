@@ -1,0 +1,126 @@
+{
+    "adaptiveform": "0.10.0",
+    "metadata": {
+        "grammar": "json-formula-1.0.0",
+        "version": "1.0.0"
+    },
+    "properties": {
+        "vatratecal": "0.15",
+        "maxncafee": "1050",
+        "basencafee": "1000",
+        "partncalfee": "165",
+        "percent1ncafee": "0.1",
+        "percent2ncafee": "0.15",
+        "monthlyServiceFeeExclVATcal": "60",
+        "insuranceMultipliercal": "0.0035",
+        "monthwise": "1200"
+    },
+    "rules": {},
+    "items": [
+        {
+            "name": "amount",
+            "description": "Enter an amount between R2,000 and R300,000",
+            "fileType": "number",
+            "type": "string",
+            "default": "2000",
+            "required": true,
+            "minimum": "2000",
+            "maximum": "300000",
+            "constraintMessages": {
+                "required": "Please fill in this field.",
+                "minimum": "Enter an amount of R2,000 or more",
+                "maximum": "Enter an amount less than R300,000"
+            },
+            "label": {
+                "value": "How much do you want to borrow?"
+            }
+        },
+        {
+            "name": "term",
+            "fileType": "slider",
+            "type": "string",
+            "default": "2",
+            "required": true,
+            "minimum": "1",
+            "maximum": "6",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "label": {
+                "value": "What’s your preferred repayment term?"
+            }
+        },
+        {
+            "name": "rate",
+            "fileType": "slider",
+            "type": "string",
+            "default": "18.25",
+            "minimum": "8.25",
+            "maximum": "25.75",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "label": {
+                "value": "Explore Rate"
+            },
+            "required": false
+        },
+        {
+            "name": "insuranceOption",
+            "fileType": "radio",
+            "type": "string",
+            "default": "8.07",
+            "enum": [
+                "8.07",
+                "0"
+            ],
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "label": {
+                "value": "Include insurance in your repayment"
+            },
+            "required": false
+        },
+        {
+            "name": "emi",
+            "type": "string",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "label": {
+                "value": "How much you’ll pay back each month"
+            },
+            "rules": {
+                "value": "emi * term"
+            },
+            "required": false
+        },
+        {
+            "name": "total",
+            "type": "string",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "label": {
+                "value": "How much you'll pay back in total"
+            },
+            "rules": {
+                "value": "$form.properties.part3 + $form.properties.part2"
+            },
+            "required": false
+        },
+        {
+            "name": "insuranceAmount",
+            "type": "string",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "rules": {
+                "value": "$properties.insuranceMultipliercal * $properties.part1"
+            },
+            "required": false
+        }
+    ],
+    "action": "/personalloan"
+}

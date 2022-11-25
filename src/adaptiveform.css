@@ -3414,10 +3414,6 @@ html,body {
 }
 
 .cmp-adaptiveform-checkboxgroup__longdescription {
-  color: #969696;
-  background-color: #e6e6e6;
-  margin-top: 10px;
-  padding: .125rem .5rem;
   font-size: .875rem
 }
 
@@ -3511,10 +3507,6 @@ html,body {
 }
 
 .cmp-adaptiveform-datepicker__longdescription {
-  color: #969696;
-  background-color: #e6e6e6;
-  margin-top: 10px;
-  padding: .125rem .5rem;
   font-size: .875rem
 }
 
@@ -3565,10 +3557,6 @@ html,body {
 }
 
 .cmp-adaptiveform-dropdown__longdescription {
-  color: #969696;
-  background-color: #e6e6e6;
-  margin-top: 10px;
-  padding: .125rem .5rem;
   font-size: .875rem
 }
 
@@ -3630,10 +3618,6 @@ html,body {
 }
 
 .cmp-adaptiveform-fileinput__longdescription {
-  color: #969696;
-  background-color: #e6e6e6;
-  margin-top: 10px;
-  padding: .125rem .5rem;
   font-size: .875rem
 }
 
@@ -3706,10 +3690,6 @@ html,body {
 }
 
 .cmp-adaptiveform-numberinput__longdescription {
-  color: #969696;
-  background-color: #e6e6e6;
-  margin-top: 10px;
-  padding: .125rem .5rem;
   font-size: .875rem
 }
 
@@ -3764,10 +3744,6 @@ html,body {
 }
 
 .cmp-adaptiveform-radiobutton__longdescription {
-  color: #969696;
-  background-color: #e6e6e6;
-  margin-top: 10px;
-  padding: .125rem .5rem;
   font-size: .875rem
 }
 
@@ -3839,10 +3815,6 @@ textarea.cmp-adaptiveform-textinput__widget {
 }
 
 .cmp-adaptiveform-textinput__longdescription {
-  color: #969696;
-  background-color: #e6e6e6;
-  margin-top: 10px;
-  padding: .125rem .5rem;
   font-size: .875rem
 }
 
@@ -3852,9 +3824,28 @@ textarea.cmp-adaptiveform-textinput__widget {
 }
 
 .cmp-adaptiveform-textinput__questionmark {
-  position: absolute
+  position: absolute;
 }
 
+.cmp-adaptiveform__longdescription {
+  font-size: .875rem
+  /*color: #969696;
+  background-color: #e6e6e6;
+  margin-top: 10px;
+  padding: .125rem .5rem;*/
+
+}
+
+.cmp-adaptiveform__questionmark {
+  display: inline-block;
+  top: 8px;
+  right: 8px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9px;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE4LjEuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgogIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjQgMjQiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xNS45LDguOWMwLDEuMy0wLjUsMi0xLjMsMi43Yy0wLjgsMC43LTEuNSwxLjQtMS41LDEuOWMwLDAuNCwwLjEsMC43LDAuMywxYzAsMC4xLDAsMC4yLTAuMSwwLjJoLTIKCQljLTAuMSwwLTAuMiwwLTAuMy0wLjFjLTAuNC0wLjQtMC41LTEtMC41LTEuNGMwLTAuOSwwLjUtMS41LDEuNS0yLjRjMC42LTAuNiwxLTEsMS0xLjVjMC0wLjYtMC40LTEtMS42LTFjLTEuMSwwLTEuOSwwLjMtMi42LDAuNwoJCUM4LjksOSw4LjgsOC45LDguOCw4LjhWNi42YzAtMC4xLDAtMC4yLDAuMS0wLjJjMC41LTAuMiwxLjUtMC43LDMuMi0wLjdDMTQuNSw1LjcsMTUuOSw3LjEsMTUuOSw4Ljl6IE0xMC42LDE3LjYKCQljMC0xLDAuNy0xLjYsMS42LTEuNmMxLDAsMS42LDAuNiwxLjYsMS42YzAsMC45LTAuNiwxLjYtMS42LDEuNkMxMS4zLDE5LjIsMTAuNiwxOC42LDEwLjYsMTcuNnoiLz4KPC9nPgo8L3N2Zz4K) center center / cover no-repeat,#969696;
+  cursor: pointer;
+}
 .cmp-adaptiveform-textinput__errormessage {
   color: #eb3c36;
   margin-top: 10px;
@@ -3915,11 +3906,6 @@ textarea.cmp-adaptiveform-textinput__widget {
 }
 
 .cmp-accordion__longdescription {
-  color: #969696;
-  background-color: #e6e6e6;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  padding: .125rem .5rem;
   font-size: .875rem
 }
 
@@ -3963,10 +3949,6 @@ textarea.cmp-adaptiveform-textinput__widget {
 }
 
 .cmp-tabs__longdescription {
-  color: #969696;
-  background-color: #e6e6e6;
-  margin-top: 10px;
-  padding: .125rem .5rem;
   font-size: .875rem
 }
 
@@ -4067,10 +4049,6 @@ textarea.cmp-adaptiveform-textinput__widget {
 }
 
 .cmp-adaptiveform-sliderinput__longdescription {
-  color: #969696;
-  background-color: #e6e6e6;
-  margin-top: 10px;
-  padding: .125rem .5rem;
   font-size: .875rem
 }
 
@@ -4101,3 +4079,14 @@ textarea.cmp-adaptiveform-textinput__widget {
   float: right !important;
 }
 /*# sourceMappingURL=theme.css.map */
+
+.readOnly input {
+  border: 0px;
+}
+
+.cmp-adaptiveform-sliderInput__label__value {
+  font-weight: bold;
+}
+[data-cmp-visible="false"]{
+  display:none
+}

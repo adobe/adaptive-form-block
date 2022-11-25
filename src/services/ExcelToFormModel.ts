@@ -1,12 +1,27 @@
-const PANEL_TYPE = "object";
-const PANEL_END = "page-break";
 
-const RULE_TYPE = "Rules.";
-const EVENTS = "Events.";
-const CONSTRAINT_MESSAGE = "ConstraintMessages.";
+const PROPERTY = "property";
+const PROPERTY_RULES = "rules.properties";
 
 export default class ExcelToFormModel {
     
+    fieldPropertyMapping: any = {
+        "Default" : "default",
+        "MaxLength" : "maxLength",
+        "MinLength" : "minLength",
+        "Maximum" : "maximum",
+        "Minimum" : "minimum",
+        "Step" : "step",
+        "Pattern" : "pattern",
+        "Value" : "value",
+        "Placeholder": "placeholder",
+        "Field" : "name",
+        "ReadOnly": "readOnly",
+        "Description": "description",
+        "Type" : "fieldType",
+        "Label" : "label.value",
+        "Mandatory": "required",
+        "Options" : "enum"
+    }
     static fieldMapping : Map<string, string> = new Map([
         ["text-input", "text"],
         ["number-input", "number"],
@@ -31,176 +46,174 @@ export default class ExcelToFormModel {
         return json;
     }
 
-    #getFormDef(formPath:string): any {
+    #initFormDef(formPath:string): any {
         return {
             adaptiveform: "0.10.0",
             metadata: {
               grammar: "json-formula-1.0.0",
               version: "1.0.0"
             },
+            properties: {},
+            rules: {},
             items: [],
-            action: formPath.split('.json')[0]
+            action: formPath?.split('.json')[0]
           }
+    }
+
+    #initField() : any {
+        return {
+            constraintMessages: {
+                required: "Please fill in this field."
+            }
+        }
     }
 
     async getFormModel(formPath: string)  {
         if(formPath) {
-            
             console.time("Get Excel JSON")
             let exData = await this._getForm(formPath);
             console.timeEnd("Get Excel JSON")
-    
-            if(!exData || !exData.data) {
-                throw new Error("Unable to retrieve the form details from " + formPath);
-            }
-            const formDef = this.#getFormDef(formPath);
-            var stack: Array<any> = [];
-            stack.push(formDef.items);
-            let currentPanel:any = formDef;
-            exData.data.forEach((item: any, index: number)=> {
-                if(this.#isPanel(item)) {
-                    item.items = {};
-                    let panel = JSON.parse(JSON.stringify(item));
-                    this.#handlePanel(panel);
-                    currentPanel.items.push(panel);
-                    stack.push(currentPanel);
-                    currentPanel = panel;
-                } else if(this.#isEndingPanel(item)) {
-                    currentPanel = stack.pop();
-                    if(!currentPanel) {
-                        currentPanel = formDef;
-                    }
-                } else {
-                    currentPanel.items.push(this.#handleProperty(formDef, item, index));
-                }
-            });
-            return {formDef : formDef, excelData : exData};
+            return this.transform(exData, formPath);
         }
     }
 
-    #handlePanel(item: any) {
-        this.#cleanUpPanel(item);
-        if(this.#haveRule(item)) {
-            let rule = this.#handleHierarchy(item, RULE_TYPE);
-            if(rule && Object.keys(rule).length != 0) {
-                item.rules = rule;
-            }
+    transform(exData : any, formPath: string): {formDef: any, excelData: any} {
+        if(!exData || !exData.data) {
+            throw new Error("Unable to retrieve the form details from " + formPath);
         }
-        // Handle Events
-        let events = this.#handleHierarchy(item, EVENTS);
-        if(events && Object.keys(events).length != 0) {
-            item.events = events;
+        const formDef = this.#initFormDef(formPath);
+        var stack: Array<any> = [];
+        stack.push(formDef.items);
+        let currentPanel:any = formDef;
+        exData.data.forEach((item: any)=> {
+
+            let source: any = Object.fromEntries(Object.entries(item).filter(([_, v]) => (v != null && v!= "")));
+            let field = {...source, ...this.#initField()};
+            this.#transformFieldNames(field);
+
+            if(this.#isProperty(field)) {
+                this.#handleProperites(formDef, field);
+            }
+             else {
+                currentPanel.items.push(this.#handleField(field));
+            }
+        });
+        this.#transformPropertyRules(formDef);
+        return {formDef : formDef, excelData : exData};
+    }
+
+    #handleProperites(formDef:any, item: any) {
+        formDef.properties[item.name] = item.default
+        if(item.hasOwnProperty(PROPERTY_RULES)) {
+            if(!formDef.rules.properties) {
+                formDef.rules.properties = [];
+            }
+            formDef.rules.properties.push(`{${item.name}: ${item[PROPERTY_RULES]}}`)
         }
     }
 
-    #handleProperty(formDef:any, item: any, index:number) {
-        let source: any = Object.fromEntries(Object.entries(item).filter(([_, v]) => (v != null && v!= "")));
-        let fieldType = ExcelToFormModel.fieldMapping.has(source.Type) ? ExcelToFormModel.fieldMapping.get(source.Type) : source.Type;
-        let field: any = {
-            name : source.Field,
-            placeholder: source.Placeholder,
-            type : "string", // TODO - define data type in excel
-            fieldType : fieldType,
-            value: source.Value,
-            label : {
-                value : source.Label
-            },
-            required: source.Mandatory ? true : false
+    #transformPropertyRules(formDef: any) {
+        if(formDef.rules.properties) {
+            let properites = "merge($properties"
+            formDef.rules.properties.forEach((rule:string) => {
+                properites = properites + "," + rule
+            })
+            properites += ")"
+            formDef.rules.properties = properites;
         }
+    }
 
-        if(field.type == "string") {
-            this.#setProperty(source, "MaxLength", field, "maxLength");
-            this.#setProperty(source, "MinLength", field, "minLength");
-        } else {
-            this.#setProperty(source, "Maximum", field, "maximum");
-            this.#setProperty(source, "Minimum", field, "minimum");
-            this.#setProperty(source, "Step", field, "step");
-        }
+    /**
+     * Transform flat field to Crispr Field
+     * @param field 
+     * @returns 
+     */
+    #handleField(field: any) {
+        this.#transformFieldType(field);
+        this.#transformFlatToHierarchy(field);
 
-        if(this.#haveRule(source)) {
-            let rule = this.#handleHierarchy(source, RULE_TYPE);
-            if(rule && Object.keys(rule).length != 0) {
-                field.rules = rule;
-                formDef.metadata.rulesUsed = true;
-            }
-        }
-        if(this.#haveConstraintMsg(source)) {
-            let constraints = this.#handleHierarchy(source, CONSTRAINT_MESSAGE);
-            if(constraints && Object.keys(constraints).length != 0) {
-                field.constraintMessages = constraints;
-            }
+        this.#handleMultiValues(field, "enum");
+        this.#handleMultiValues(field, "enumNames");
 
-        }
-        // Handle Events
-        let events = this.#handleHierarchy(source, EVENTS);
-        if(events && Object.keys(events).length != 0) {
-            field.events = events;
-        }
-        let enumNames = this.#handleMultiValues(source, "Options");
-        if(enumNames) {
-            field.enumNames = field.enum = enumNames
-        }
+        this.#handleFranklinSpecialCases(field);
 
         this.#handleCheckbox(field);
         return field;
     }
 
+    /**
+     * Transform CRISPR fieldType to HTML Input Type.
+     * @param field 
+     */
+    #transformFieldType(field: any) {
+        if(ExcelToFormModel.fieldMapping.has(field.fieldType)) {
+            field.fieldType = ExcelToFormModel.fieldMapping.get(field.fieldType) 
+        }
+    }
+
+    /**
+     * Convert Field names from Franklin Form to crispr def.
+     * @param item Form Def received from excel
+     */
+    #transformFieldNames(item: any) {
+        Object.keys(this.fieldPropertyMapping).forEach((key) => {
+            if(item[key]) {
+                item[this.fieldPropertyMapping[key]] = item[key];
+                delete item[key]
+            }
+        })
+    }
+
+    /**
+     * Convert flat field to hierarchy based on dot notation.
+     * @param item Flat field Definition
+     * @returns 
+     */
+    #transformFlatToHierarchy(item: any) {
+        Object.keys(item).forEach((key) => {
+            if(key.includes(".")) {
+                let temp = item;
+                key.split('.').map((k, i, values) => {
+                    temp = (temp[k] = (i == values.length - 1 ? item[key] : (temp[k] != null ? temp[k] : {})))
+                });
+                delete item[key];
+            }
+        });
+    }
+
+    /**
+     * If checkbox doesn't have any enum add ON.
+     * @param field 
+     */
     #handleCheckbox(field: any) {
         if(field?.fieldType == "checkbox" && (!field.enum || field.enum.length == 0)) {
             field.enum = ["on"];
         }
     }
 
-    #setProperty(source: any, sourceKey:string, target: any, targetKey: string) {
-        if(source && source[sourceKey]) {
-            target[targetKey] = source[sourceKey];
-        }
-    }
-
-    #handleMultiValues(item: any, source: string): Array<string> {
+    /**
+     * handle multivalues field i.e. comma seprator to array.
+     * @param item 
+     * @param key 
+     */
+    #handleMultiValues(item: any, key: string) {
         let values;
-        if(item && item[source]) {
-            values = item[source].split(",").map((value:string)=> value.trim());
+        if(item && item[key]) {
+            values = item[key].split(",").map((value:string)=> value.trim());
+            item[key] = values;
         }
-        return values;
     }
 
-    #handleHierarchy(item: any, match: string) {
-        let constraints:any = {};
-        Object.keys(item).forEach((key) => {
-            if(~key.indexOf(match)) {
-                let constraint = key.split(".")[1];
-                if(item[key]) {
-                    constraints[constraint] = item[key];
-                }
-                delete item[key]
-            }
-        });
-        return constraints;
+    /**
+     * Handle special use cases of Franklin.
+     * @param item 
+     */
+    #handleFranklinSpecialCases(item: any) {
+        //Franklin Mandatory uses x for true.
+        item.required = (item.required == "x" || item.required == "true");
     }
 
-    #haveRule(item: any) {
-        return (Object.keys(item).some(function(key){ return ~key.indexOf(RULE_TYPE) }));
-    }
-
-    #haveConstraintMsg(item: any) {
-        return (Object.keys(item).some(function(key){ return ~key.indexOf(CONSTRAINT_MESSAGE) }));
-    }
-
-    #isPanel(item: any) {
-        return item && item.type == PANEL_TYPE;
-    }
-
-    #isEndingPanel(item: any) {
-        return item && item.viewType == PANEL_END;
-    }
-
-    #determineDataType(field: any) {
-        
-    }
-
-    #cleanUpPanel(item: any) {
-        //delete item.viewType;
-        delete item.type;
+    #isProperty(item: any) {
+        return item && item.fieldType == PROPERTY;
     }
 }

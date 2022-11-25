@@ -5,10 +5,14 @@ AEM Form, Headless Adaptive Forms (HAF) specifies a mechanism to create a Form o
 
 Adaptive Form Block is Form rendition block which renders the form based on Adaptive Forms Specification (JSON) for Franklin.
 
-## Getting Started -- Local Development
+## Playground
+
+[Live Playground](https://git.corp.adobe.com/pages/jalagari/adpative-form-block/)
+
+### Local Playground
 
 * Open the project in VSC 
-* Open index.html with Live Server ( Live Server is VSC extension)
+* Open docs/index.html with Live Server ( Live Server is VSC extension)
 * On selecting template
   * Left side view will open the JSON View and
   * On Right side form will be rendered using Adaptive Form Block

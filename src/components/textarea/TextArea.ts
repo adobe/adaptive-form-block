@@ -6,7 +6,7 @@ export default class TextArea extends TextInput {
 
     createInputHTML(): Element {
           let input = document.createElement("textarea");
-          input.className = "cmp-adaptiveform-textarea__widget";
+          input.className = TextInput.selectors.widget.replace(".","");
           input.title = this.isTooltipVisible() ? this.getTooltipValue() : '';
           input.name = this.getName();
           input.value = this.getDefault();

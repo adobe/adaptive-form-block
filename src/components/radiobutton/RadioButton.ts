@@ -33,7 +33,7 @@ export default class RadioButton extends FormFieldBase {
         return this.element.querySelector(RadioButton.selectors.description);
     }
 
-    getLabel(): Element | null {
+    getLabel(): HTMLLabelElement | null {
         return this.element.querySelector(RadioButton.selectors.label);
     }
 

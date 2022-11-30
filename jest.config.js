@@ -1,5 +1,6 @@
 export default {
     preset: 'ts-jest',
+    testEnvironment: 'jsdom',
     coverageDirectory: 'target/coverage',
     coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
     collectCoverage: true,

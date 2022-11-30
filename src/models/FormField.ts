@@ -1,9 +1,10 @@
- import {Constants} from "../util/constants.js";
+ import {Constants} from "../util/constants";
  
  export default class FormField {
     
     formContainer: any;
-    element: Element;
+    elementWrapper: HTMLDivElement;
+    element: HTMLDivElement;
     active: boolean;
     id: string;
  
@@ -17,7 +18,8 @@
      constructor(params: any, model: any) {
          this.formContainer = params.formContainer;
          this.id = params.id;
-         this.element = params.element; //html element of field
+         this.element = document.createElement("div");
+         this.elementWrapper = params.element; //html element of field
          this.active = false;
          this.setModel(model);
      }

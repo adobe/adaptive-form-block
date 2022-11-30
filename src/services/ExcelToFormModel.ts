@@ -78,6 +78,10 @@ export default class ExcelToFormModel {
     }
 
     transform(exData : any, formPath: string): {formDef: any, excelData: any} {
+        // if its adaptive form json just return it.
+        if(exData?.adaptiveform) {
+            return {formDef : exData, excelData : null}
+        }
         if(!exData || !exData.data) {
             throw new Error("Unable to retrieve the form details from " + formPath);
         }

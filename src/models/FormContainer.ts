@@ -10,7 +10,7 @@ import Text from "../components/text/Text";
 import SliderInput from "../components/slider/SliderInput";
 import EmailInput from "../components/email/EmailInput";
 import CheckBoxGroup from "../components/checkbox/CheckBoxGroup";
-import { createFormInstance } from "../core/afcore";
+import { createFormInstance } from "../core/afcore.js";
 
 export default class FormContainer {
 

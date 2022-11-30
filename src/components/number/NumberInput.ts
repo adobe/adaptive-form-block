@@ -30,7 +30,7 @@ export default class NumberInput extends FormFieldBase {
         return this.element.querySelector(NumberInput.selectors.description);
     }
 
-    getLabel() {
+    getLabel(): HTMLLabelElement | null {
         return this.element.querySelector(NumberInput.selectors.label);
     }
 

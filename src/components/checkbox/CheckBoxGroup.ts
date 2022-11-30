@@ -40,7 +40,7 @@ export default class CheckBoxGroup extends FormFieldBase {
         return this.element.querySelector(CheckBoxGroup.selectors.description);
     }
 
-    getLabel() {
+    getLabel(): HTMLLabelElement | null {
         return this.element.querySelector(CheckBoxGroup.selectors.label);
     }
 

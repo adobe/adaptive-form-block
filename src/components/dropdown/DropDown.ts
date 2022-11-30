@@ -30,7 +30,7 @@ export default class DropDown extends FormFieldBase {
         return this.element.querySelector(DropDown.selectors.description);
     }
 
-    getLabel(): Element | null {
+    getLabel(): HTMLLabelElement | null {
         return this.element.querySelector(DropDown.selectors.label);
     }
 

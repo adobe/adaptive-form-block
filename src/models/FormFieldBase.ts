@@ -12,7 +12,7 @@
 
      constructor(params: any, model: any) {
          super(params, model);
-         this.element.className = this.getbemBlock();
+         this.elementWrapper.className = this.getbemBlock();
      }
  
      /**
@@ -36,7 +36,7 @@
       * implementations should return the element used to show the label of the field
       * @returns
       */
-     getLabel(): Element | null {
+     getLabel(): HTMLLabelElement | null {
          throw "method not implemented";
      }
  
@@ -259,7 +259,7 @@
     }
 
     render() {
-        this.element.appendChild(this.createView());
+        this.elementWrapper.appendChild(this.createView());
         this.setElements();
         this.addListener();
         this.subscribe();
@@ -267,38 +267,37 @@
 
     createView(): Element {
 
-        let div = document.createElement("div");
-        div.id = this.getId();
-        div.dataset.cmpVisible = this.isVisible()?.toString();
-        div.dataset.cmpEnabled = this.isEnabled()?.toString();
-        div.dataset.cmpAdaptiveformcontainerPath = this.getFormContainerPath();
-        div.className = this.state.style;
+        this.element.id = this.getId();
+        this.element.className = this.getbemBlock() ;
+        this.element.dataset.cmpVisible = this.isVisible()?.toString();
+        this.element.dataset.cmpEnabled = this.isEnabled()?.toString();
+        this.element.dataset.cmpAdaptiveformcontainerPath = this.getFormContainerPath();
 
         if(this.isLabelVisible()) {
-            div.appendChild(this.createLabel());
+            this.element.appendChild(this.createLabel());
         }
         let inputs = this.createInputHTML();
         if(inputs) {
             if(inputs instanceof Element) {
-                div.appendChild(inputs);
+                this.element.appendChild(inputs);
             } else if(inputs instanceof Array<Element>) {
                 inputs?.forEach((input) => {
-                    div.appendChild(input);
+                    this.element.appendChild(input);
                 })
             }
         }
         
         let desc = this.getDescriptionValue();
         if(desc) {
-            div.appendChild(this.createLongDescHTML());
+            this.element.appendChild(this.createLongDescHTML());
         }
         if(this.isTooltipVisible()) {
-            div.appendChild(this.createQuestionMarkHTML());
-            div.appendChild(this.createShortDescHTML());
+            this.element.appendChild(this.createQuestionMarkHTML());
+            this.element.appendChild(this.createShortDescHTML());
         }
 
-        div.appendChild(this.createErrorHTML());
-        return div;
+        this.element.appendChild(this.createErrorHTML());
+        return this.element;
     }
     
     createInputHTML(): Element | Array<Element> {

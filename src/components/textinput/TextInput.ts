@@ -24,7 +24,7 @@ export default class TextInput extends FormFieldBase {
         return this.element.querySelector(TextInput.selectors.description);
     }
 
-    getLabel(): Element | null {
+    getLabel(): HTMLLabelElement | null {
         return this.element.querySelector(TextInput.selectors.label);
     }
 
@@ -61,7 +61,7 @@ export default class TextInput extends FormFieldBase {
     createInputHTML(): Element {
         let input = document.createElement("input");
         input.type="text"
-        input.className = "cmp-adaptiveform-textinput__widget";
+        input.className = TextInput.selectors.widget.replace(".","");
         input.title = this.isTooltipVisible() ? this.getTooltipValue() : '';
         input.name = this.getName();
         input.value = this.state.value ? this.state.value : null;

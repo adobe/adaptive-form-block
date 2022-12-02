@@ -71,6 +71,27 @@ export default class CheckBoxGroup extends FormFieldBase {
         }
     }
 
+    _updateValue(modelValue: any) {
+        let widgets = this.getWidgets();
+        if(widgets.length == 1) {
+            super._updateValue(modelValue)
+        } else {
+            if(modelValue != null) {
+                this.getWidgets().forEach((widget: HTMLInputElement) => {
+                    if (widget.value != null && modelValue?.includes(widget.value)) {
+                        widget.checked = true;
+                        widget.setAttribute(Constants.HTML_ATTRS.CHECKED, Constants.HTML_ATTRS.CHECKED);
+                        widget.setAttribute(Constants.ARIA_CHECKED, true + "");
+                    } else {
+                        widget.checked = false;
+                        widget.removeAttribute(Constants.HTML_ATTRS.CHECKED);
+                        widget.setAttribute(Constants.ARIA_CHECKED, false + "");
+                    }
+                }, this)
+            }
+        }
+    }
+
     _updateEnabled(enabled: boolean) {
         this.toggle(enabled, Constants.ARIA_DISABLED, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED,  enabled + "");
@@ -107,8 +128,8 @@ export default class CheckBoxGroup extends FormFieldBase {
     createInputHTML(): Element {
         let div = document.createElement("div");
         div.className = "cmp-adaptiveform-checkboxgroup__widget";
-        this.getEnum()?.forEach((enumVal:string, index: number, enums: Array<any>) => {
-            div.appendChild(this.createCheckboxHTML(this, enumVal,(this.getEnumNames()?.[index] || enumVal), index, enums?.length))
+        this.state?.enum?.forEach((enumVal:string, index: number, enums: Array<any>) => {
+            div.appendChild(this.createCheckboxHTML(this, enumVal,(this.state?.enumNames?.[index] || enumVal), index, enums?.length))
         })
         return div;
     }
@@ -130,13 +151,15 @@ export default class CheckBoxGroup extends FormFieldBase {
         input.id = label.htmlFor;
         input.value = enumValue.toString();
         input.name = size > 1 ? checkbox.getName(): checkbox.getLabelValue();
-        input.checked = enumValue == checkbox.getDefault() ;
+        input.checked = size > 1 ?  checkbox.getDefault()?.includes(enumValue) : enumValue == checkbox.getDefault() ;
         input.setAttribute("aria-describedby", "_desc");
 
         this.setDisabledAttribute(input);
 
         let span = document.createElement("span");
-        span.textContent = this.getEnum().length > 1 ? enumDisplayName : checkbox.getLabelValue();
+        if(this.state?.enum) {
+            span.textContent = this.state?.enum?.length > 1 ? enumDisplayName : checkbox.getLabelValue();
+        }
 
         label.appendChild(input);
         label.appendChild(span);
@@ -152,7 +175,7 @@ export default class CheckBoxGroup extends FormFieldBase {
         label.htmlFor = this.getId();
         label.className = this.getbemBlock() + "__label";
         label.textContent = this.getLabelValue();
-        label.hidden = this.isLabelVisible() && this.getEnum()?.length == 1;
+        label.hidden = this.isLabelVisible() && this.state?.enum?.length == 1;
         return label;
     }
 

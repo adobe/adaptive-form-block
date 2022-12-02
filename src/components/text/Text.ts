@@ -53,15 +53,16 @@ export default class Text extends FormFieldBase {
     createView(): Element {
         let div = document.createElement("div");
         div.id = this.getId();
-        div.className = "cmp-adaptiveform-text"
-        div.dataset.cmpVisible = this.isVisible.toString();
+        div.className = this.getbemBlock();
+        div.dataset.cmpVisible = this.isVisible().toString();
         div.dataset.cmpAdaptiveformcontainerPath = this.getFormContainerPath();
         div.dataset.cmIs = this.getIS();
 
         let child = document.createElement("div");
-        child.className = "cmp-adaptiveform-text__widget";
+        child.className = this.getbemBlock() + "__widget";
         child.tabIndex = 0;
         child.textContent = this.state.value;
+        div.append(child);
         return div;
     };
 }

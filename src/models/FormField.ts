@@ -1,4 +1,5 @@
- import {Constants} from "../util/constants";
+ import { FieldJson, FieldModel, State } from "@aemforms/af-core";
+import {Constants} from "../util/constants";
  
  export default class FormField {
     
@@ -9,23 +10,20 @@
     id: string;
  
     parentView: any;
-    _model:any;
-    state:any;
+    _model:FieldModel;
+    state:State<FieldJson>;
     options?:{ [key: string]: any }
 
     static IS = "FormField";
     
-     constructor(params: any, model: any) {
+     constructor(params: any, model: FieldModel) {
          this.formContainer = params.formContainer;
          this.id = params.id;
          this.element = document.createElement("div");
          this.elementWrapper = params.element; //html element of field
          this.active = false;
-         this.setModel(model);
-     }
- 
-     setId(id:string) {
-         this.id = id;
+         this._model = model;
+         this.state = this._model?.getState();
      }
  
      setParent(parentView: any) {
@@ -63,15 +61,6 @@
  
      getId() {
          return this.id;
-     }
- 
-     setModel(model:any) {
-         if (typeof this._model === "undefined" || this._model === null) {
-             this._model = model;
-         } else {
-             throw "Re-initializing model is not permitted"
-         }
-        this.state = this._model?.getState();
      }
  
      /**
@@ -148,6 +137,7 @@
      }
 
      getTooltipValue(): string {
+        //@ts-ignore
         return this?.state?.tooltip;
      }
 
@@ -171,27 +161,7 @@
         return this?.state?.placeholder || "";
      }
 
-     getMinLength(): number {
-        return this?.state?.minLength ;
-     }
-
-     getMaxLength(): number {
-        return this?.state?.maxLength;
-     }
-
-     getMinimum(): number {
-        return this?.state?.minimum ;
-     }
-
-     getMaximum(): number {
-        return this?.state?.maximum;
-     }
-
-    getEnum() {
-        return this.state?.enum;
-    }
-
-    getEnumNames() {
-        return this.state?.enumNames;
+    isArrayType() {
+        return this.state.type == "array";
     }
  } 

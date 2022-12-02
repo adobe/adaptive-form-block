@@ -59,7 +59,7 @@ export default class DropDown extends FormFieldBase {
     }
 
     _updateValue(value: any) {
-        let isMultiSelect = this._model.isArrayType();
+        let isMultiSelect = this.isArrayType();
         if(this.widget) {
             let select: HTMLSelectElement =  (this.widget as unknown) as HTMLSelectElement;
             [select].forEach((option) => {
@@ -74,7 +74,7 @@ export default class DropDown extends FormFieldBase {
 
     addListener() {
         this.getWidget()?.addEventListener('blur', (e:any) => {
-            if(this._model.isArrayType()) {
+            if(this.isArrayType()) {
                 let valueArray:Array<any> = [];
                 let select: HTMLSelectElement =  (this.widget as unknown) as HTMLSelectElement;
                 [select].forEach((option: any) => {
@@ -102,7 +102,7 @@ export default class DropDown extends FormFieldBase {
         select.className = "cmp-adaptiveform-dropdown__widget";
         select.title = this.isTooltipVisible() ? this.getTooltipValue() : '';
         select.name = this.getName();
-        select.multiple = this.state?.isMultiSelect;
+        select.multiple = this.isArrayType();
         select.required = this.isRequired();
         select.setAttribute("aria-label", this.isLabelVisible() ? this.getLabelValue() : '')
         this.setDisabledAttribute(select);
@@ -113,17 +113,17 @@ export default class DropDown extends FormFieldBase {
            let option = this.createOptions("", this.getPlaceHolder(), true, true);
            select.appendChild(option);
         }
-        this.getEnum()?.forEach((enumVal:string, index: number) => {
-            select.appendChild(this.createOptions(enumVal, this.getEnumNames()[index], (enumVal == this.getDefault()), false));
+        this.state?.enum?.forEach((enumVal:string, index: number) => {
+            select.appendChild(this.createOptions(enumVal, this.state?.enumNames?.[index], (enumVal == this.getDefault()), false));
         })
         return select;
     }
 
-    createOptions(enumValue:any, enumDisplayName: string, selected:boolean, disabled: boolean = false): Element {
+    createOptions(enumValue:any, enumDisplayName: string | undefined, selected:boolean, disabled: boolean = false): Element {
         let option = document.createElement("option");
         option.value = enumValue;
         option.disabled = disabled;
-        option.textContent = enumDisplayName;
+        option.textContent = enumDisplayName || enumValue;
         option.selected = selected;
         option.className = "cmp-adaptiveform-dropdown__option";
         return option;

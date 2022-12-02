@@ -11,10 +11,11 @@ import SliderInput from "../components/slider/SliderInput";
 import EmailInput from "../components/email/EmailInput";
 import CheckBoxGroup from "../components/checkbox/CheckBoxGroup";
 import { createFormInstance } from "../core/afcore.js";
+import { FieldModel, FormModel } from "@aemforms/af-core";
 
 export default class FormContainer {
 
-    _model: any;
+    _model: FormModel;
     _path: string;
     _deferredParents: any;
     #element?: HTMLFormElement;
@@ -25,8 +26,8 @@ export default class FormContainer {
          this._deferredParents = {};
      }
  
-     getModel(id: string) {
-         return id ? this._model?.getElement(id) : this._model;
+     getModel(id: string) : FieldModel {
+         return this._model?.getElement(id) as FieldModel;
      }
  
      getPath() {
@@ -59,7 +60,7 @@ export default class FormContainer {
     getRender = (field:any, index:number): Element => {
         const fieldWrapper = document.createElement('div');
         try {
-            let fieldViewModel: FormFieldBase;
+            let fieldView: FormFieldBase;
             let fieldModel = this.getModel(field.id);
             let params = {
                 element: fieldWrapper,
@@ -67,37 +68,37 @@ export default class FormContainer {
             }
             switch (field?.fieldType) {
                 case "checkbox":
-                    fieldViewModel = new CheckBoxGroup(params, fieldModel);
+                    fieldView = new CheckBoxGroup(params, fieldModel);
                     break;
                 case "email":
-                    fieldViewModel = new EmailInput(params, fieldModel);
+                    fieldView = new EmailInput(params, fieldModel);
                     break;
                 case "slider":
-                    fieldViewModel = new SliderInput(params, fieldModel);
+                    fieldView = new SliderInput(params, fieldModel);
                     break;
                 case "plain-text":
-                    fieldViewModel = new Text(params, fieldModel);
+                    fieldView = new Text(params, fieldModel);
                     break;
                 case "radio":
-                    fieldViewModel = new RadioButton(params, fieldModel);
+                    fieldView = new RadioButton(params, fieldModel);
                     break;
                 case "number":
-                    fieldViewModel = new NumberInput(params, fieldModel);
+                    fieldView = new NumberInput(params, fieldModel);
                     break;
                 case "button":
-                    fieldViewModel = new Button(params, fieldModel);
+                    fieldView = new Button(params, fieldModel);
                     break;
                 case "select":
-                    fieldViewModel = new DropDown(params, fieldModel);
+                    fieldView = new DropDown(params, fieldModel);
                     break;
                 case "text-area": 
-                    fieldViewModel = new TextArea(params, fieldModel);
+                    fieldView = new TextArea(params, fieldModel);
                     break;
                 default:
-                    fieldViewModel = new TextInput(params, fieldModel)
+                    fieldView = new TextInput(params, fieldModel)
             }
-            if(fieldViewModel) {
-                fieldViewModel.render();
+            if(fieldView) {
+                fieldView.render();
             }
         } catch (error) {
             console.error("Unexpected error ", error);

@@ -76,11 +76,9 @@ export default class SliderInput extends FormFieldBase {
         input.type = "range";
         input.name = this.getName();
         input.value = this.getDefault();
-        input.step= this.state.step;
+        input.step = "" + (this.state.step);
         input.placeholder = this.getPlaceHolder();
         input.required = this.isRequired();
-        input.min = this.getMinLength()?.toString();
-        input.max = this.getMaxLength()?.toString();
         input.setAttribute("aria-label", this.isLabelVisible() ? this.getLabelValue() : '' );
         this.setDisabledAttribute(input);
         this.setReadonlyAttribute(input);

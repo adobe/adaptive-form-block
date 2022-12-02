@@ -10,6 +10,7 @@ export default class ComponentValidator {
         expect(widget?.id).toEqual(fieldView.getIS()+"-"+fieldView.id)
         expect(widget?.dataset.cmpVisible).toEqual(visible+"")
         expect(widget?.dataset.cmpEnabled).toEqual(enabled+"")
+        expect(widget?.dataset.cmpIs).toEqual(fieldView.getIS())
         expect(widget?.dataset.cmpAdaptiveformcontainerPath).toEqual("undefined");
         if(!visible) {
             expect(widget?.getAttribute("aria-hidden")).toBeTruthy()

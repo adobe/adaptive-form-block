@@ -97,20 +97,20 @@ export default class RadioButton extends FormFieldBase {
 
     createInputHTML(): Array<Element> {
         let inputs:Array<Element> = [];
-        this.getEnum()?.forEach((enumVal:string, index: number) => {
-            inputs.push(this.createRadioButton(this, enumVal, this.getEnumNames()?.[index], index))
+        this.state?.enum?.forEach((enumVal:string, index: number) => {
+            inputs.push(this.createRadioButton(this, enumVal, this.state?.enumNames?.[index], index))
         })
         return inputs;
     }
 
-    createRadioButton(radioButton: RadioButton, enumValue: string, enumDisplayName: string, index: number) : Element {
+    createRadioButton(radioButton: RadioButton, enumValue: string, enumDisplayName: string | undefined, index: number) : Element {
         let div = document.createElement("div");
         div.className = "cmp-adaptiveform-radiobutton__option " + radioButton.getLayoutProperties().orientation;
         
         let label = document.createElement("label");
         label.className = "cmp-adaptiveform-radiobutton__option__label";
         label.title = radioButton.getTooltipValue();
-        label.setAttribute("aria-label", enumDisplayName);
+        label.setAttribute("aria-label", enumDisplayName || enumValue);
         label.setAttribute("aria-describedby", "_desc");
 
         let input = document.createElement("input");
@@ -118,13 +118,13 @@ export default class RadioButton extends FormFieldBase {
         input.name = radioButton.getName();
         input.className = "cmp-adaptiveform-radiobutton__option__widget";
         input.id = radioButton.getId() + "_" + index + "__widget";
-        input.value = enumValue;
+        input.value = enumValue || enumValue;
         input.checked = enumValue == this.getDefault();
         input.setAttribute("aria-describedby", "_desc");
         this.setDisabledAttribute(input);
 
         let span = document.createElement("span");
-        span.textContent = enumDisplayName;
+        span.textContent = enumDisplayName || enumValue;
 
         label.appendChild(input);
         label.appendChild(span);

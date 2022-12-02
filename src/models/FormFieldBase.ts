@@ -5,7 +5,7 @@
  
     qm?: Element | null
     widget?: HTMLInputElement | null
-    label?: Element | null
+    label?: HTMLLabelElement | null
     errorDiv?: Element | null
     tooltip?: Element | null
     description?: Element | null
@@ -60,13 +60,6 @@
       */
      getQuestionMarkDiv(): Element | null {
          throw "method not implemented";
-     }
- 
-     setModel(model:any) {
-         super.setModel(model);
-         // No need to apply state as UI is build using current state.
-         /*const state = this._model.getState();
-         this._applyState(state); */
      }
  
      /**
@@ -150,7 +143,7 @@
                  this.getWidget()?.removeAttribute("disabled");
                  this.getWidget()?.removeAttribute(Constants.ARIA_DISABLED);
              }
-         }
+        }
      }
  
      _updateValid(valid: boolean, state: any) {
@@ -271,6 +264,7 @@
         this.element.className = this.getbemBlock() ;
         this.element.dataset.cmpVisible = this.isVisible()?.toString();
         this.element.dataset.cmpEnabled = this.isEnabled()?.toString();
+        this.element.dataset.cmpIs = this.getIS();
         this.element.dataset.cmpAdaptiveformcontainerPath = this.getFormContainerPath();
 
         if(this.isLabelVisible()) {
@@ -354,16 +348,17 @@
     }
 
     setStringContraints(element : HTMLInputElement | HTMLTextAreaElement) {
-        let maxLength = this.getMaxLength();
-        let minLength = this.getMinLength();
+        let maxLength = this.state?.maxLength || 0;
+        let minLength = this.state?.minLength || 0;
         if(minLength > 0) element.minLength = minLength
         if(maxLength > 0) element.maxLength = maxLength
-        if(element instanceof HTMLInputElement) element.pattern = this.state?.pattern;
+        if(element instanceof HTMLInputElement && this.state?.pattern) 
+            element.pattern = this.state?.pattern;
     }
 
     setNumberConstraints(element: HTMLInputElement) {
-        let max = this.getMaximum();
-        let min = this.getMinimum();
+        let max = this.state?.maximum || 0;
+        let min = this.state?.minimum || 0;
         if(max > 0) element.max = max?.toString();
         if(min > 0) element.min = min?.toString();
     }

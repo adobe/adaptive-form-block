@@ -9,6 +9,7 @@
     errorDiv?: Element | null
     tooltip?: Element | null
     description?: Element | null
+    customWidget?: Function;
 
      constructor(params: any, model: any) {
          super(params, model);
@@ -143,6 +144,8 @@
                  this.getWidget()?.removeAttribute("disabled");
                  this.getWidget()?.removeAttribute(Constants.ARIA_DISABLED);
              }
+        } else if(this.customWidget){
+            this.customWidget(this.elementWrapper, this._model, this._model.getState());
         }
      }
  

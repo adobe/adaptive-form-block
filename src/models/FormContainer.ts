@@ -99,11 +99,67 @@ export default class FormContainer {
             }
             if(fieldView) {
                 fieldView.render();
+                this.loadCustomComponent(fieldModel, fieldView);
             }
         } catch (error) {
             console.error("Unexpected error ", error);
         }
         return fieldWrapper;
+    }
+
+    loadCustomComponent = async (fieldModel:FieldModel, fieldView: FormFieldBase) => {
+        if(fieldModel && fieldView && fieldModel[":type"] != fieldModel.fieldType) {
+            fieldView.elementWrapper.setAttribute("data-block-name", fieldModel[":type"]);
+            this.loadBlock(fieldView.elementWrapper, fieldModel, fieldView);
+        }
+    }
+
+    loadBlock = async(block: Element, fieldModel:FieldModel, fieldView: FormFieldBase) => {
+        const status = block.getAttribute('data-block-status');
+        if (status !== 'loading' && status !== 'loaded') {
+          block.setAttribute('data-block-status', 'loading');
+          const blockName = block.getAttribute('data-block-name');
+          try {
+            const cssLoaded = new Promise((resolve) => {
+              this.loadCSS(`/blocks/${blockName}/${blockName}.css`, resolve);
+            });
+            const decorationComplete = new Promise((resolve) => {
+              (async () => {
+                try {
+                  const mod = await import(`/blocks/${blockName}/${blockName}.js`);
+                  if (mod.default) {
+                    fieldView.customWidget = mod.default;
+                    await mod.default(block, fieldModel, fieldModel.getState());
+                  }
+                } catch (error) {
+                  // eslint-disable-next-line no-console
+                  console.log(`failed to load module for ${blockName}`, error);
+                }
+                resolve(true);
+              })();
+            });
+            await Promise.all([cssLoaded, decorationComplete]);
+          } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log(`failed to load block ${blockName}`, error);
+          }
+          block.setAttribute('data-block-status', 'loaded');
+        }
+      }
+
+    loadCSS(href: string, callback: Function) {
+        if (!document.querySelector(`head > link[href="${href}"]`)) {
+            const link = document.createElement('link');
+            link.setAttribute('rel', 'stylesheet');
+            link.setAttribute('href', href);
+            if (typeof callback === 'function') {
+            link.onload = (e) => callback(e.type);
+            link.onerror = (e) => callback(e);
+            }
+            document.head.appendChild(link);
+        } else if (typeof callback === 'function') {
+            callback('noop');
+        }
     }
 
  }

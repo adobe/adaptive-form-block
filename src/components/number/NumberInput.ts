@@ -47,7 +47,7 @@ export default class NumberInput extends FormFieldBase {
     }
 
     _updateValue(value: number) {
-        if (this.widgetObject == null && (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat)) {
+        if (this.widgetObject == null && (this._model.editFormat || this._model.displayFormat)) {
             this.widgetObject = new NumericInputWidget(this.getWidget(), this._model)
         }
         if (this.widgetObject) {
@@ -59,7 +59,7 @@ export default class NumberInput extends FormFieldBase {
 
     addListener() {
         // only initialize if patterns are set
-        if (this._model?._jsonModel?.editFormat || this._model?._jsonModel?.displayFormat) {
+        if (this._model.editFormat || this._model?.displayFormat) {
             if (this.widgetObject == null) {
                 this.widgetObject = new NumericInputWidget(this.getWidget(), this._model)
             }

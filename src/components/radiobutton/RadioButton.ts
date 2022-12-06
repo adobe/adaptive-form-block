@@ -48,6 +48,16 @@ export default class RadioButton extends FormFieldBase {
     getErrorDiv() {
         return this.element.querySelector(RadioButton.selectors.errorDiv);
     }
+    _updateEnum(Enum: any): void {
+
+    }
+
+    _updateEnumNames(enumNames: any): void {
+        //todo: remove extra options, fallback to enum if enumNames are not updated.
+        document.querySelectorAll('.cmp-adaptiveform-radiobutton__option__label span').forEach((x,i) => {
+            x.textContent = enumNames[i]
+        })
+    }
 
     _updateValue(modelValue: any) {
         if(modelValue != null) {
@@ -118,7 +128,7 @@ export default class RadioButton extends FormFieldBase {
         input.name = radioButton.getName();
         input.className = "cmp-adaptiveform-radiobutton__option__widget";
         input.id = radioButton.getId() + "_" + index + "__widget";
-        input.value = enumValue || enumValue;
+        input.value = enumValue;
         input.checked = enumValue == this.getDefault();
         input.setAttribute("aria-describedby", "_desc");
         this.setDisabledAttribute(input);

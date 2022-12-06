@@ -171,6 +171,24 @@
             }
         },
         {
+            "id": "testNo",
+            "type": "number",
+            "fieldType": "number-input",
+            "placeholder": "Enter Number",
+            "required": false,
+            "name": "testNo",
+            "label": {
+                "value": "Enter Number between 50 & 100"
+            },
+            "minimum": 50,
+            "maximum": 99,
+            "constraintMessages": {
+                "required": "Please fill in this field.",
+                "minimum": "Enter number should be greater than 50",
+                "exclusiveMaximum": "Enter number should be greater than 50"
+            }
+        },
+        {
             "id": "phone",
             "constraintMessages": {
                 "required": "Please fill in this field.",
@@ -185,6 +203,16 @@
                 "value": "Phone"
             },
             "type": "number"
+        },
+        {
+            "id": "hidden",
+            "fieldType": "hidden",
+            "placeholder": "Hidden field",
+            "name": "hid",
+            "label": {
+                "value": "Expected to Hide"
+            },
+            "default": 20
         },
         {
             "id": "subscribe",

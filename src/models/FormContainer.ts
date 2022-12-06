@@ -12,6 +12,7 @@ import EmailInput from "../components/email/EmailInput";
 import CheckBoxGroup from "../components/checkbox/CheckBoxGroup";
 import { createFormInstance } from "../core/afcore.js";
 import { FieldModel, FormModel } from "@aemforms/af-core";
+import Hidden from "../components/hidden/Hidden";
 
 export default class FormContainer {
 
@@ -93,6 +94,9 @@ export default class FormContainer {
                     break;
                 case "text-area": 
                     fieldView = new TextArea(params, fieldModel);
+                    break;
+                case 'hidden':
+                    fieldView = new Hidden(params, fieldModel)
                     break;
                 default:
                     fieldView = new TextInput(params, fieldModel)

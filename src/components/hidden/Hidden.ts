@@ -29,4 +29,8 @@ export default class Hidden extends FormFieldBase {
         input.setAttribute("aria-label", this.isLabelVisible() ? this.getLabelValue() : '' );
         return input;
     }
+
+    createLabel(): Element | null {
+        return null;
+    }
 }

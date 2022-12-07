@@ -25,6 +25,21 @@
             }
         },
         {
+            "name": "emi",
+            "readOnly": "true",
+            "style": "muted input-bold input-green",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "label": {
+                "value": "How much you’ll pay back each month"
+            },
+            "rules": {
+                "value": "round(part2 + (rate / monthwise * (part1 + rate / monthwise * part1 + part2) / (1 - power(1 + rate / monthwise, -1 * (12 *term)))),2)"
+            },
+            "required": false
+        },
+        {
             "name": "term",
             "fieldType": "slider",
             "type": "number",
@@ -32,6 +47,7 @@
             "required": true,
             "minimum": "1",
             "maximum": "6",
+            "style": "row-2-item input-green",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
@@ -40,51 +56,17 @@
             }
         },
         {
-            "name": "rateDisplay",
-            "type": "string",
+            "name": "total",
             "readOnly": "true",
+            "style": "muted input-bold",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
             "label": {
-                "value": "Example interest rate"
+                "value": "How much you’ll pay back in total"
             },
             "rules": {
-                "value": "rate & '%'"
-            },
-            "required": false
-        },
-        {
-            "name": "exploreRate",
-            "fieldType": "checkbox",
-            "type": "boolean",
-            "constraintMessages": {
-                "required": "Please fill in this field."
-            },
-            "label": {
-                "value": "Explore rate"
-            },
-            "required": false,
-            "enum": [
-                "on"
-            ]
-        },
-        {
-            "name": "rate",
-            "fieldType": "slider",
-            "type": "number",
-            "default": "18.25",
-            "minimum": "8.25",
-            "maximum": "25.75",
-            "visible": "false",
-            "constraintMessages": {
-                "required": "Please fill in this field."
-            },
-            "label": {
-                "value": "Rate of interest"
-            },
-            "rules": {
-                "visible": "exploreRate == true()"
+                "value": "round (12 * term * emi, 2)"
             },
             "required": false
         },
@@ -92,7 +74,7 @@
             "name": "insuranceOption",
             "fieldType": "radio",
             "type": "number",
-            "default": "8.07",
+            "default": "0",
             "enum": [
                 "8.07",
                 "0"
@@ -114,45 +96,11 @@
             "required": false
         },
         {
-            "name": "emi",
-            "readOnly": "true",
-            "style": "custom-style",
-            "constraintMessages": {
-                "required": "Please fill in this field."
-            },
-            "label": {
-                "value": "How much you’ll pay back each month"
-            },
-            "rules": {
-                "value": "round(part2 + (rate / monthwise * (part1 + rate / monthwise * part1 + part2) / (1 - power(1 + rate / monthwise, -1 * (12 *term)))),2)"
-            },
-            "required": false
-        },
-        {
-            "name": "total",
-            "readOnly": "true",
-            "style": "custom-style",
-            "constraintMessages": {
-                "required": "Please fill in this field."
-            },
-            "label": {
-                "value": "How much you’ll pay back in total"
-            },
-            "rules": {
-                "value": "round (12 * term * emi, 2)"
-            },
-            "required": false
-        },
-        {
             "name": "insuranceAmount",
             "fieldType": "hidden",
             "readOnly": "true",
-            "style": "custom-style",
             "constraintMessages": {
                 "required": "Please fill in this field."
-            },
-            "label": {
-                "value": "Insurance Amount"
             },
             "rules": {
                 "value": "round(insuranceMultipliercal * part1,2)"
@@ -160,11 +108,53 @@
             "required": false
         },
         {
-            "name": "vatratecal",
-            "fieldType": "hidden",
-            "default": "0.15",
+            "name": "rateDisplay",
+            "type": "string",
+            "readOnly": "true",
+            "style": "muted input-bold",
             "constraintMessages": {
                 "required": "Please fill in this field."
+            },
+            "label": {
+                "value": "Example interest rate"
+            },
+            "rules": {
+                "value": "rate & '%'"
+            },
+            "required": false
+        },
+        {
+            "name": "exploreRate",
+            "fieldType": "checkbox",
+            "default": "false",
+            "enum": [
+                "true",
+                "false"
+            ],
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "label": {
+                "value": "Explore rate"
+            },
+            "required": false
+        },
+        {
+            "name": "rate",
+            "fieldType": "slider",
+            "type": "number",
+            "default": "18.25",
+            "minimum": "8.25",
+            "maximum": "25.75",
+            "style": "input-green",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "label": {
+                "value": "Rate of interest"
+            },
+            "rules": {
+                "visible": "exploreRate == 'true'"
             },
             "required": false
         },
@@ -172,6 +162,15 @@
             "name": "maxncafee",
             "fieldType": "hidden",
             "default": "1050",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "required": false
+        },
+        {
+            "name": "vatratecal",
+            "fieldType": "hidden",
+            "default": "0.15",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
@@ -259,14 +258,6 @@
             },
             "rules": {
                 "value": "monthlyServiceFeeExclVATcal * (1 + vatratecal)"
-            },
-            "required": false
-        },
-        {
-            "name": "part3",
-            "fieldType": "hidden",
-            "constraintMessages": {
-                "required": "Please fill in this field."
             },
             "required": false
         }

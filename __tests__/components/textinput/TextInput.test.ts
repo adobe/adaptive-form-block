@@ -44,9 +44,11 @@ test("Validate Length Constraint", () => {
 test("Validate Dynamic Hide/show", async() => {
     model.visible = false;
     componentValidator.validateWidget(fieldView, model, false);
+    model.visible = true;
 })
 
 test("Validate Dynamic Enabled/Disabled", async() => {
     model.enabled = false;
     componentValidator.validateWidget(fieldView, model, true, false);
+    model.enabled = true;
 })

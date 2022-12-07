@@ -21,6 +21,7 @@ test('Registration Template to Crispr Form', () => {
 
 test('Calculator Template to Crispr Form', () => {
   let response = transform.transform(personalloanTemplate, "/personalloan.json")
+  //console.log("re", JSON.stringify(response.formDef));
   verify(response, personalloanTemplate, personalloan);
 })
 

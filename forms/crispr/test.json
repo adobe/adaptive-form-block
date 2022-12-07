@@ -125,7 +125,7 @@
         },
         {
             "id": "doboptions",
-            "fieldType": "checkbox",
+            "fieldType": "checkbox-group",
             "type": "string[]",
             "name": "doboptions",
             "constraintMessages": {
@@ -216,6 +216,7 @@
         },
         {
             "id": "subscribe",
+            "type": "boolean",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
@@ -225,9 +226,54 @@
             "fieldType": "checkbox",
             "label": {
                 "value": "Subscribe to Superside's blog and get the best in design thinking delivered biweekly."
+            }
+        },
+        {
+            "id": "switchOn",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "required": false,
+            "name": "switchOn",
+            "fieldType": "checkbox",
+            "label": {
+                "value": "Switch ( on or null)"
             },
             "enum": [
                 "on"
+            ]
+        },
+        {
+            "id": "switchOnOff",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "required": false,
+            "name": "switchOnOff",
+            "fieldType": "checkbox",
+            "label": {
+                "value": "Switch On or Off"
+            },
+            "enum": [
+                "on",
+                "off"
+            ]
+        },
+        {
+            "id": "switchTrueFalse",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "default": "false",
+            "required": false,
+            "name": "switchTrueFalse",
+            "fieldType": "checkbox",
+            "label": {
+                "value": "Switch True or False"
+            },
+            "enum": [
+                "true",
+                "false"
             ]
         },
         {

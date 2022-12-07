@@ -25,6 +25,8 @@ export default class Hidden extends FormFieldBase {
         input.title = this.isTooltipVisible() ? this.getTooltipValue() : '';
         input.name = this.getName();
         input.value = this.state.value ? this.state.value : null;
+        input.placeholder = this.getPlaceHolder();
+        input.setAttribute("aria-label", this.isLabelVisible() ? this.getLabelValue() : '' );
         return input;
     }
 }

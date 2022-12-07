@@ -1,6 +1,7 @@
 import { createFormInstance, FieldModel, FormModel } from "@aemforms/af-core";
 import test from "../../forms/crispr/test.json"
 import EmailInput from "../../src/components/email/EmailInput";
+import Hidden from "../../src/components/hidden/Hidden";
 import TextArea from "../../src/components/textarea/TextArea";
 import TextInput from "../../src/components/textinput/TextInput";
 import FormFieldBase from "../../src/models/FormFieldBase";
@@ -31,6 +32,9 @@ class FormsEnvironment {
             case "text-area": 
                 fieldView = new TextArea(params, model);
                 break;
+            case "hidden": 
+                fieldView = new Hidden(params, model);
+                break;
             default:
                 fieldView = new TextInput(params, model);
         }
@@ -45,6 +49,8 @@ class RegistrationForm {
     emailFieldId:string = "email";
     messageFieldId:string = "message";
     phoneNoFieldId:string = "phone";
+    testNoFieldId:string = "testNo";
+    hiddenFieldId:string = "hidden";
     constructor(formInstance: FormModel) {
         this.formInstance = formInstance;
     }

@@ -50,7 +50,7 @@ export default class ComponentValidator {
         let input = fieldView.getWidget();
         expect(input).not.toBeNull()
         expect(input?.value).toEqual(expected);
-        expect(input?.value).toEqual(model.value);
+        expect(input?.value).toEqual(model.value+"");
         this.validateErrorWidget(fieldView, model, "");
     }
 
@@ -62,12 +62,12 @@ export default class ComponentValidator {
         expect(widget?.textContent).toEqual(message);
     }
 
-    validateConstraint = (fieldView:FormFieldBase, model: FieldModel, value:string, msg: string = "") => {
+    validateConstraint = (fieldView:FormFieldBase, model: FieldModel, value:any, msg: string = "") => {
         this.triggerValueChange(fieldView, model, value);
         this.validateErrorWidget(fieldView, model, msg);
     }
 
-    triggerValueChange = (fieldView:FormFieldBase, model: FieldModel, value: any) => {
+    triggerValueChange = (fieldView:FormFieldBase, model: FieldModel, value: string) => {
         let input = fieldView.widget;
         expect(input).not.toBeNull()
         if(input) {

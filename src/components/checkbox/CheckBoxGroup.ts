@@ -157,9 +157,7 @@ export default class CheckBoxGroup extends FormFieldBase {
         this.setDisabledAttribute(input);
 
         let span = document.createElement("span");
-        if(this.state?.enum) {
-            span.textContent = this.state?.enum?.length > 1 ? enumDisplayName : checkbox.getLabelValue();
-        }
+        span.textContent = enumDisplayName || enumValue;
 
         label.appendChild(input);
         label.appendChild(span);
@@ -175,10 +173,7 @@ export default class CheckBoxGroup extends FormFieldBase {
         label.htmlFor = this.getId();
         label.className = this.getbemBlock() + "__label";
         label.textContent = this.getLabelValue();
-        label.hidden = this.isLabelVisible() && this.state?.enum?.length == 1;
+        label.hidden = this.isLabelVisible();
         return label;
     }
-
-
-
 }

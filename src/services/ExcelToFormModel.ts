@@ -140,8 +140,6 @@ export default class ExcelToFormModel {
         this.#handleMultiValues(field, "enumNames");
 
         this.#handleFranklinSpecialCases(field);
-
-        this.#handleCheckbox(field);
         return field;
     }
 
@@ -183,16 +181,6 @@ export default class ExcelToFormModel {
                 delete item[key];
             }
         });
-    }
-
-    /**
-     * If checkbox doesn't have any enum add ON.
-     * @param field 
-     */
-    #handleCheckbox(field: any) {
-        if(field?.fieldType == "checkbox" && (!field.enum || field.enum.length == 0)) {
-            field.enum = ["on"];
-        }
     }
 
     /**

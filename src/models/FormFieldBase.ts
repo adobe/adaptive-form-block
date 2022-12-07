@@ -264,14 +264,23 @@
     createView(): Element {
 
         this.element.id = this.getId();
-        this.element.className = this.getbemBlock() ;
+        this.element.className = this.getbemBlock();
         this.element.dataset.cmpVisible = this.isVisible()?.toString();
         this.element.dataset.cmpEnabled = this.isEnabled()?.toString();
         this.element.dataset.cmpIs = this.getIS();
         this.element.dataset.cmpAdaptiveformcontainerPath = this.getFormContainerPath();
 
+        //@ts-ignore
+        if(this.state?.style) {
+            //@ts-ignore
+            this.element.className += " " + this.state?.style;
+        }
+
         if(this.isLabelVisible()) {
-            this.element.appendChild(this.createLabel());
+            let label = this.createLabel();
+            if(label) {
+                this.element.appendChild(label);
+            }
         }
         let inputs = this.createInputHTML();
         if(inputs) {
@@ -301,7 +310,7 @@
         throw "getInputHTML is not implemented";
     }
 
-    createLabel(): Element {
+    createLabel(): Element | null {
         let label = document.createElement("label");
         label.id = this.getId()+"-label";
         label.htmlFor = this.getId();

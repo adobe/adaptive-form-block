@@ -113,11 +113,11 @@ import {Constants} from "../util/constants";
      }
 
      isVisible(): boolean {
-        return this?.state?.visible || true;
+        return this?.state?.visible == true;
      }
 
      isEnabled(): boolean {
-        return this?.state?.enabled || true;
+        return this?.state?.enabled == true || this?.state?.enabled == undefined;
      }
 
      isLabelVisible(): boolean {

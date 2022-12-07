@@ -13,6 +13,7 @@ import CheckBoxGroup from "../components/checkbox/CheckBoxGroup";
 import { createFormInstance } from "../core/afcore.js";
 import { FieldModel, FormModel } from "@aemforms/af-core";
 import Hidden from "../components/hidden/Hidden";
+import CheckBox from "../components/checkbox/CheckBox";
 
 export default class FormContainer {
 
@@ -69,6 +70,9 @@ export default class FormContainer {
             }
             switch (field?.fieldType) {
                 case "checkbox":
+                    fieldView = new CheckBox(params, fieldModel);
+                    break;
+                case "checkbox-group":
                     fieldView = new CheckBoxGroup(params, fieldModel);
                     break;
                 case "email":

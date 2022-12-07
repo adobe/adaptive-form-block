@@ -12,7 +12,8 @@ Adaptive Form Block is Form rendition block which renders the form based on Adap
 ### Local Playground
 
 * Open the project in VSC 
-* Open docs/index.html with Live Server ( Live Server is VSC extension)
+* Install the LiveServer VSC Extension
+* Open docs/index.html with LiveServer
 * On selecting template
   * Left side view will open the JSON View and
   * On Right side form will be rendered using Adaptive Form Block

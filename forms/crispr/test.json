@@ -9,6 +9,7 @@
     "items": [
         {
             "id": "firstName",
+            "fieldType": "text",
             "constraintMessages": {
                 "required": "Please fill in this field.",
                 "minLength": "First name must be at least two characters",
@@ -89,7 +90,7 @@
             "required": true,
             "placeholder": "Hello Message",
             "name": "message",
-            "fieldType": "text-area",
+            "fieldType": "textarea",
             "label": {
                 "value": "Message"
             },
@@ -173,7 +174,7 @@
         {
             "id": "testNo",
             "type": "number",
-            "fieldType": "number-input",
+            "fieldType": "number",
             "placeholder": "Enter Number",
             "required": false,
             "name": "testNo",
@@ -185,7 +186,7 @@
             "constraintMessages": {
                 "required": "Please fill in this field.",
                 "minimum": "Enter number should be greater than 50",
-                "exclusiveMaximum": "Enter number should be greater than 50"
+                "maximum": "Enter number should be less than 100"
             }
         },
         {

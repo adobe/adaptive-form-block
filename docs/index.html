@@ -1,29 +1,17 @@
 <html>
     <head>
-        <link rel="stylesheet" href="../dist/adaptiveform.modern.css"></link>
-        <link rel="stylesheet" href="../dist/adaptiveform.css"></link>
+        <link rel="stylesheet" href="../styles/adaptiveform.css"></link>
         <link rel="stylesheet" href="style.css"></link>
-        <script src="script.js"></script>
-
-        <script type="module">
-            import loadForm from "../dist/adaptiveform.modern.js"
-             await loadForm(document.getElementById("form"));
-            window.loadForm = loadForm;
-        </script>
-        <script type="module">
-            // Any one script module will be succesfully executed.
-            import loadForm from "../dist/adaptiveform.js"
-             await loadForm(document.getElementById("form"));
-            window.loadForm = loadForm;
-        </script>
+        <script type="module" src="script.js"></script>
     </head>
     <body>
         <div class="header">
             <h2>Excel Template </h2>
             <p>Select template:</p>
-            <select id="template" onchange="loadTemplate(this)">
+            <select id="template">
                 <option value="">Select</option>
                 <option value="../forms/crispr/test.json">Test</option>
+                <option value="../forms/templates/contactus.json">Contact us</option>
                 <option value="../forms/templates/registration.json">Registration</option>
                 <option value="../forms/templates/loancalculator.json">Loan Calculator</option>
             </select>

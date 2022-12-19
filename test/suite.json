@@ -1,0 +1,66 @@
+
+[
+    {
+        "component": "Text Input",
+        "name" : "Text Input field test suit",
+        "fieldId" : "firstName",
+        "value" : {
+            "model": "VJ",
+            "ui": "Test"
+        },
+        "constraint": {
+            "required": "",
+            "min" : "a",
+            "max" : "abcsss"
+        },
+        "blockName": "cmp-adaptiveform-textinput",
+        "tag": "input"
+    },
+    {
+        "component": "Email Input",
+        "name" : "Email Input field test suit",
+        "fieldId" : "email",
+        "value" : {
+            "model": "vj@test.com",
+            "ui": "test@vj.com"
+        },
+        "constraint": {
+            "required": "",
+            "pattern" : "a"
+        },
+        "blockName": "cmp-adaptiveform-textinput",
+        "tag": "input"
+    },
+    {
+        "component": "TextArea",
+        "name" : "TextArea field test suit",
+        "fieldId" : "message",
+        "value" : {
+            "model": "abcdef",
+            "ui": "Testing"
+        },
+        "constraint": {
+            "required": "",
+            "min" : "a",
+            "max" : "abcdefghijklm"
+        },
+        "blockName": "cmp-adaptiveform-textinput",
+        "tag": "textarea"
+    },
+    {
+        "component": "Number",
+        "name" : "Number field test suit",
+        "fieldId" : "testNo",
+        "value" : {
+            "model": "60",
+            "ui": "70"
+        },
+        "constraint": {
+            "required": "",
+            "min" : "40",
+            "max" : "100"
+        },
+        "blockName": "cmp-adaptiveform-numberinput",
+        "tag": "input"
+    }
+]

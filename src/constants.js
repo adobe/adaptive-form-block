@@ -12,6 +12,8 @@
     static ADAPTIVE_FORM = "cmp-adaptiveform"
 
     static TEXT_INPUT = "cmp-adaptiveform-textinput"
+    static BUTTON = 'cmp-adaptiveform-button';
+    static CHECKBOX = "cmp-adaptiveform-checkbox";
 
     static ADAPTIVE_FORM_LONG_DESC = "cmp-adaptiveform__longdescription"
     static ADAPTIVE_FORM_QM = "cmp-adaptiveform__questionmark"

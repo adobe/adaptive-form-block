@@ -10,11 +10,29 @@
         },
         "constraint": {
             "required": "",
-            "min" : "a",
-            "max" : "abcsss"
+            "minLength" : "a",
+            "maxLength" : "abcsss"
         },
         "blockName": "cmp-adaptiveform-textinput",
-        "tag": "input"
+        "widget": "input",
+        "element": "div"
+    },
+    {
+        "component": "Number",
+        "name" : "Number field test suit",
+        "fieldId" : "testNo",
+        "value" : {
+            "model": "60",
+            "ui": "70"
+        },
+        "constraint": {
+            "required": "",
+            "minimum" : "40",
+            "maximum" : "100"
+        },
+        "blockName": "cmp-adaptiveform-numberinput",
+        "widget": "input",
+        "element": "div"
     },
     {
         "component": "Email Input",
@@ -29,38 +47,35 @@
             "pattern" : "a"
         },
         "blockName": "cmp-adaptiveform-textinput",
-        "tag": "input"
+        "widget": "input",
+        "element": "div"
     },
     {
-        "component": "TextArea",
-        "name" : "TextArea field test suit",
-        "fieldId" : "message",
+        "component": "Hidden",
+        "name" : "Hidden field test suit",
+        "fieldId" : "hidden",
         "value" : {
-            "model": "abcdef",
-            "ui": "Testing"
-        },
-        "constraint": {
-            "required": "",
-            "min" : "a",
-            "max" : "abcdefghijklm"
+            "model": "hide",
+            "ui": "hidding"
         },
         "blockName": "cmp-adaptiveform-textinput",
-        "tag": "textarea"
+        "widget": "input",
+        "element": "div"
     },
     {
-        "component": "Number",
-        "name" : "Number field test suit",
-        "fieldId" : "testNo",
-        "value" : {
-            "model": "60",
-            "ui": "70"
-        },
-        "constraint": {
-            "required": "",
-            "min" : "40",
-            "max" : "100"
-        },
-        "blockName": "cmp-adaptiveform-numberinput",
-        "tag": "input"
+        "component": "Checkbox",
+        "name" : "Checkbox Boolean type field test suit",
+        "fieldId" : "subscribe",
+        "blockName": "cmp-adaptiveform-checkbox",
+        "widget": "input",
+        "element": "div"
+    },
+    {
+        "component": "button",
+        "name" : "Button field test suit",
+        "fieldId" : "submit",
+        "blockName": "cmp-adaptiveform-button",
+        "widget": "input",
+        "element": "button"
     }
 ]

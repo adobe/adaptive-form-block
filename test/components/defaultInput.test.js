@@ -20,43 +20,53 @@ suit.forEach((testCase) => {
         });
 
         it(`Validate ${testCase.component} Markup`, () => {
-            ComponentValidator.validateWidget(model, blockName, block.querySelector("div"));
-            ComponentValidator.validateLabel(model, blockName, block.querySelector("label"));
-            ComponentValidator.validateInput(model, blockName, getWidget(block));
+            ComponentValidator.validateWidget(model, blockName, block.querySelector(testCase.element));
+            if(testCase.element == "div") {
+                ComponentValidator.validateLabel(model, blockName, block.querySelector("label"));
+                ComponentValidator.validateInput(model, blockName, getWidget(block));
+            }
         });
         
         it("Model update verification", () => {
-            model.value = testCase.value.model;
-            ComponentValidator.validateInputValue(model, blockName, block, testCase.value.model, testCase.tag);
+            if(testCase.value?.model) {
+                let value = testCase.value.model;
+                model.value = value;
+                ComponentValidator.validateInputValue(model, blockName, block, value, testCase.widget);
+            }
         })
         
         it("UI Update verification", () => {
-            let value = testCase.value.ui;
-            ComponentValidator.triggerValueChange(model, blockName, block, value);
-            ComponentValidator.validateInputValue(model, blockName, block, value, testCase.tag)
+            if(testCase.value?.ui) {
+                let value = testCase.value.ui;
+                ComponentValidator.triggerValueChange(model, blockName, block, value);
+                ComponentValidator.validateInputValue(model, blockName, block, value, testCase.widget)
+            }
         })
         
         it("Validate Required Constraint", () => {
-            ComponentValidator.validateConstraint(model, blockName, block, testCase?.constraint?.required, model?.getState()?.constraintMessages?.required);
+            if(testCase.constraint?.required) 
+                ComponentValidator.validateConstraint(model, blockName, block, testCase?.constraint?.required, model?.getState()?.constraintMessages?.required);
         })
         
         it("Validate Constraint", () => {
             let state = model?.getState();
             for(let key in testCase?.constraint) {
-                if(key != "required")
+                if(key != "required") {
                     ComponentValidator.validateConstraint(model, blockName, block, testCase?.constraint?.[key], state?.constraintMessages?.[key]);
+                    break;
+                }
             }
         })
         
         it("Validate Dynamic Hide/show", async() => {
             model.visible = false;
-            ComponentValidator.validateWidget(model, blockName, block.querySelector("div"), false);
+            ComponentValidator.validateWidget(model, blockName, block.querySelector(testCase.element), false);
             model.visible = true;
         })
         
         it("Validate Dynamic Enabled/Disabled", async() => {
             model.enabled = false;
-            ComponentValidator.validateWidget(model, blockName, block.querySelector("div"), true, false);
+            ComponentValidator.validateWidget(model, blockName, block.querySelector(testCase.element), true, false);
             model.enabled = true;
         })
     });

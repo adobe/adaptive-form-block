@@ -81,8 +81,12 @@ export default class ComponentValidator {
     static validateInputValue = (model, blockName, block, expected, tag= "input") => {
         let input = block.querySelector(tag);
         expect(input).not.to.null
-        expect(input?.value).to.equal(expected);
-        expect(input?.value).to.equal(model.value+"");
+        if(input.type == "checkbox") {
+            expect(input?.checked).to.equal(expected);
+        } else {
+            expect(input?.value).to.equal(expected);
+            expect(input?.value).to.equal(model.value+"");
+        }
         this.validateErrorWidget(model, blockName, getErrorWidget(block), "");
     }
 
@@ -94,10 +98,14 @@ export default class ComponentValidator {
     static triggerValueChange = (model, blockName, block, value) => {
         let input = getWidget(block);
         expect(input).not.to.null
-        if(input) {
+        if(input.type == "checkbox") {
+            var evt = new Event("change");
+            input.checked = value;
+        }
+        else {
             var evt = new Event("blur");
             input.value = value;
-            input.dispatchEvent(evt);
         }
+        input.dispatchEvent(evt);
     }
 }

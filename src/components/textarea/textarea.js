@@ -8,8 +8,7 @@ import { DefaultField } from "../defaultInput.js";
 export class TextArea extends DefaultField {
 
      blockName = 'cmp-adaptiveform-textinput'
-
-
+     
     /**
      * @param {any} state FieldJson
      * @param {string} bemBlock 

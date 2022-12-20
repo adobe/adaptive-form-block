@@ -4156,7 +4156,7 @@ textarea.cmp-adaptiveform-textinput__widget {
   font-family: "Open Sans Regular";
 }
 
-.cmp-adaptiveform-textinput input[type="hidden"] {
+.cmp-adaptiveform-hidden {
   display: none !important;
 }
 

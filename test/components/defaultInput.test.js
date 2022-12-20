@@ -20,7 +20,7 @@ suit.forEach((testCase) => {
 
         it(`Validate ${testCase.component} Markup`, () => {
             ComponentValidator.validateWidget(model, blockName, block.querySelector(testCase.element));
-            if(testCase.element == "div") {
+            if(testCase.element == "div" && testCase.component != "Plain Text") {
                 ComponentValidator.validateLabel(model, blockName, block.querySelector("label"));
                 ComponentValidator.validateInput(model, blockName, getWidget(block));
             }

@@ -102,5 +102,13 @@
         "blockName": "cmp-adaptiveform-dropdown",
         "widget": "select",
         "element": "div"
+    },
+    {
+        "component": "Plain Text",
+        "name" : "Plain text field test suit",
+        "fieldId" : "plainmsg",
+        "blockName": "cmp-adaptiveform-text",
+        "widget": "div",
+        "element": "div"
     }
 ]

@@ -1,6 +1,5 @@
 
-import { Constants } from "../../src/constants.js";
-import { getWidget } from "../../src/lib-builder.js";
+import { getWidget } from "../../src/libs/afb-builder.js";
 import ComponentValidator from "../util/ComponentValidator.js";
 
 import { FormsEnvironment } from "../util/FormsEnvironment.js";

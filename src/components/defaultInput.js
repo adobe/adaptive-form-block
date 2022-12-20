@@ -1,5 +1,5 @@
-import { setActive, subscribe } from "../lib-interaction.js";
-import { getWidget, renderField } from "../lib-builder.js";
+import { setActive, subscribe } from "../libs/afb-interaction.js";
+import { getWidget, renderField } from "../libs/afb-builder.js";
 
 export class DefaultField {
     blockName = 'cmp-adaptiveform-textinput'

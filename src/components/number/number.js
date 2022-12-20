@@ -1,5 +1,5 @@
-import { renderField } from "../../lib-builder.js";
-import { getWidget, setActive, subscribe, updateValue } from "../../lib-interaction.js";
+import { renderField } from "../../libs/afb-builder.js";
+import { getWidget, setActive, subscribe, updateValue } from "../../libs/afb-interaction.js";
 import { DefaultField } from "../defaultInput.js";
 import NumericInputWidget from "./NumberInputWidget.js";
 

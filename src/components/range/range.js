@@ -1,8 +1,6 @@
 
 
-import { defaultInputRender, renderField, setDisabledAttribute, setReadonlyAttribute, setStringContraints } from "../../lib-builder.js";
-import { getWidget, setActive, subscribe } from "../../lib-interaction.js";
-import { getLabelValue, getTooltipValue, isLabelVisible, isTooltipVisible } from "../../lib-model.js";
+import { getWidget, setActive } from "../../libs/afb-interaction.js";
 import { DefaultField } from "../defaultInput.js";
 
 export class Range extends DefaultField {

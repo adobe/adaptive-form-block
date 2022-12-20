@@ -1,8 +1,8 @@
 import { expect } from '@esm-bundle/chai';
-import { Constants } from '../../src/constants';
-import { getWidget } from '../../src/lib-builder';
-import { getErrorWidget } from '../../src/lib-interaction';
-import { isLabelVisible } from '../../src/lib-model';
+import { Constants } from '../../src/libs/constants';
+import { getWidget } from '../../src/libs/afb-builder';
+import { getErrorWidget } from '../../src/libs/afb-interaction';
+import { isLabelVisible } from '../../src/libs/afb-model';
 
 export default class ComponentValidator {
 

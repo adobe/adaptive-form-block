@@ -1,5 +1,5 @@
 import { Constants } from "./constants.js";
-import { getLabelValue, getTooltipValue, getViewId, isLabelVisible, isTooltipVisible } from "./lib-model.js";
+import { getLabelValue, getTooltipValue, getViewId, isLabelVisible, isTooltipVisible } from "./afb-model.js";
 
 /**
  * @param {any} state FieldJson

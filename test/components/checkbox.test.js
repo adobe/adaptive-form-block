@@ -1,7 +1,6 @@
 
-import { Constants } from "../../src/constants.js";
+import { Constants } from "../../src/libs/constants.js";
 import { expect } from '@esm-bundle/chai';
-import { getWidget } from "../../src/lib-builder.js";
 import ComponentValidator from "../util/ComponentValidator.js";
 
 import { FormsEnvironment } from "../util/FormsEnvironment.js";

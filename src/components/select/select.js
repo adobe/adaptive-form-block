@@ -1,9 +1,7 @@
-import { DefaultField } from "../defaultInput.js";
-import { Click } from "../../afb-runtime.js";
-import { getLabelValue, getTooltipValue, getViewId, isArrayType } from "../../lib-model.js";
-import { getWidget, subscribe } from "../../lib-interaction.js";
-import { Constants } from "../../constants.js";
-import { defaultInputRender, renderField } from "../../lib-builder.js";
+import { isArrayType } from "../../libs/afb-model.js";
+import { getWidget, subscribe } from "../../libs/afb-interaction.js";
+import { Constants } from "../../libs/constants.js";
+import { defaultInputRender, renderField } from "../../libs/afb-builder.js";
 
 export class Select {
 

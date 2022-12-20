@@ -1,7 +1,6 @@
-import { createFormInstance } from "../../src/afb-runtime.js";
+
 import test from "../../forms/crispr/test.json" assert { type: "json" };
 import { expect } from '@esm-bundle/chai';
-import defaultDecorate from "../../src/components/defaultInput.js";
 import { AdaptiveForm } from "../../src/adaptiveform.js";
 
 class FormsEnvironment {

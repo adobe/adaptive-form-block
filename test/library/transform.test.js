@@ -1,4 +1,4 @@
-import ExcelToFormModel from "../../src/lib-transform.js";
+import ExcelToFormModel from "../../src/libs/afb-transform.js";
 import { expect } from '@esm-bundle/chai';
 
 import registrationFranklinForm from "../../forms/templates/registration_franklin.json" assert { type: "json" };

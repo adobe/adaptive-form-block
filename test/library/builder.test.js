@@ -1,10 +1,10 @@
 
 
 import { expect } from '@esm-bundle/chai';
-import { Constants } from '../../src/constants.js';
+import { Constants } from '../../src/libs/constants.js';
 
-import {createErrorHTML, createLabel, createLongDescHTML, createQuestionMarkHTML, createWidgetWrapper, defaultInputRender, renderField} from "../../src/lib-builder.js";
-import { getErrorWidget } from '../../src/lib-interaction.js';
+import {createErrorHTML, createLabel, createLongDescHTML, createQuestionMarkHTML, createWidgetWrapper, defaultInputRender, renderField} from "../../src/libs/afb-builder.js";
+import { getErrorWidget } from '../../src/libs/afb-interaction.js';
 import ComponentValidator from '../util/ComponentValidator.js';
 
 import { FormsEnvironment } from "../util/FormsEnvironment.js";

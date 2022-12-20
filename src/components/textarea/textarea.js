@@ -1,8 +1,7 @@
 
 
-import { defaultInputRender, renderField, setDisabledAttribute, setReadonlyAttribute, setStringContraints } from "../../lib-builder.js";
-import { subscribe } from "../../lib-interaction.js";
-import { getLabelValue, getTooltipValue, isLabelVisible, isTooltipVisible } from "../../lib-model.js";
+import { defaultInputRender, renderField } from "../../libs/afb-builder.js";
+import { subscribe } from "../../libs/afb-interaction.js";
 import { DefaultField } from "../defaultInput.js";
 
 export class TextArea extends DefaultField {

@@ -1,6 +1,6 @@
-import ExcelToFormModel from "./lib-transform.js";
+import ExcelToFormModel from "./libs/afb-transform.js";
 import defaultInput from "./components/defaultInput.js";
-import { createFormInstance } from "./afb-runtime.js";
+import { createFormInstance } from "./libs/afb-runtime.js";
 
 export class AdaptiveForm {
 

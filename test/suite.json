@@ -110,5 +110,17 @@
         "blockName": "cmp-adaptiveform-text",
         "widget": "div",
         "element": "div"
+    },
+    {
+        "component": "Radio Group",
+        "name" : "Radio group field test suit",
+        "fieldId" : "gender",
+        "blockName": "cmp-adaptiveform-radiobutton",
+        "widget": "input",
+        "element": "div",
+        "value" : {
+            "model": "M",
+            "ui": "F"
+        }
     }
 ]

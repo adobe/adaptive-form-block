@@ -74,6 +74,21 @@
             "value": "We need your phone number for the demo. We'll never use it for any other purposes."
         },
         {
+            "id": "gender",
+            "fieldType": "radio",
+            "enum": ["M", "F"],
+            "enumNames" : ["Male", "Female"],
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "required": true,
+            "placeholder": "E.g. Male",
+            "name": "gender",
+            "label": {
+                "value": "Gender"
+            }
+        },
+        {
             "id": "company",
             "constraintMessages": {
                 "required": "Please fill in this field."

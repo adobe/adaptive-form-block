@@ -15,6 +15,7 @@
     static BUTTON = 'cmp-adaptiveform-button';
     static SELECT = 'cmp-adaptiveform-dropdown';
     static CHECKBOX = "cmp-adaptiveform-checkbox";
+    static RADIO = "cmp-adaptiveform-radiobutton";
     static TEXT = "cmp-adaptiveform-text";
 
     static ADAPTIVE_FORM_LONG_DESC = "cmp-adaptiveform__longdescription"

@@ -10,9 +10,13 @@ export default class ComponentValidator {
         expect(input).not.to.null;
         expect(input?.title).to.equal(state.tooltip || "");
         expect(input?.name).to.equal(state.name);
-        expect(input?.className).to.equal(blockName+"__widget");
+        if(state.fieldType == "radio") {
+            expect(input?.className).to.equal(blockName+"__option__widget");
+        } else {
+            expect(input?.className).to.equal(blockName+"__widget");
+            expect(input?.getAttribute("aria-label")).to.equal(state?.label?.value)
+        }
         expect(input?.placeholder).to.equal(state.placeholder);
-        expect(input?.getAttribute("aria-label")).to.equal(state?.label?.value)
         if(state.getState().minLength) {
             expect(input?.minLength).to.equal(state.getState().minLength);
         }
@@ -91,6 +95,16 @@ export default class ComponentValidator {
                 }
             }
             expect(array.join(",")).to.equal(model.value.join(","));
+        } else if(input.type == "radio") {
+            let checkedValue;
+            let widget = block.querySelectorAll(tag);
+            for (const option of widget) {
+                if(option.checked) {
+                    checkedValue = (option.value);
+                    break;
+                }
+            }
+            expect(checkedValue).to.equal(expected);
         } else if(input.type == "checkbox") {
             expect(input?.checked).to.equal(expected);
         } else {
@@ -114,7 +128,18 @@ export default class ComponentValidator {
         } else if(input.type == "checkbox") {
             var evt = new Event("change");
             input.checked = value;
-        }
+        } else if(input.type == "radio") {
+            let checkedValue;
+            let widget = block.querySelectorAll("input");
+            for (const option of widget) {
+                if(option.value == value) {
+                    input = option;
+                    break;
+                }
+            }
+            var evt = new Event("change");
+            input.checked = true;
+        } 
         else {
             var evt = new Event("blur");
             input.value = value;

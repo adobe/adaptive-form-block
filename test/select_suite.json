@@ -1,0 +1,51 @@
+
+[
+    {
+        "component": "Select",
+        "name" : "Select with single selection",
+        "fieldId" : "companySize",
+        "blockName": "cmp-adaptiveform-dropdown",
+        "widget": "select",
+        "element": "div",
+        "model" : [
+                {
+                    "set": "11-50",
+                    "expected": "11-50"
+                }
+            ],
+        "ui": [
+            {
+                "selectedIndex": 3,
+                "expected": "51-200"
+            },
+            {
+                "selectedIndex": 5,
+                "expected": "501-1000"
+            }
+        ]
+    },
+    {
+        "component": "Select",
+        "name" : "Select with Multi selection",
+        "fieldId" : "companySizeMultiple",
+        "blockName": "cmp-adaptiveform-dropdown",
+        "widget": "select",
+        "element": "div",
+        "model" : [
+                {
+                    "set": ["11-50", "51-200"],
+                    "expected":  "11-50, 51-200"
+                }
+            ],
+        "ui": [
+            {
+                "selectedIndex": 3,
+                "expected": "51-200"
+            },
+            {
+                "selectedIndex": 5,
+                "expected": "501-1000"
+            }
+        ]
+    }
+]

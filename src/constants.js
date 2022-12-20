@@ -13,6 +13,7 @@
 
     static TEXT_INPUT = "cmp-adaptiveform-textinput"
     static BUTTON = 'cmp-adaptiveform-button';
+    static SELECT = 'cmp-adaptiveform-dropdown';
     static CHECKBOX = "cmp-adaptiveform-checkbox";
 
     static ADAPTIVE_FORM_LONG_DESC = "cmp-adaptiveform__longdescription"

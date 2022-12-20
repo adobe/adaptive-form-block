@@ -1,6 +1,6 @@
 
 
-import { renderField, setDisabledAttribute, setReadonlyAttribute, setStringContraints } from "../../lib-builder.js";
+import { defaultInputRender, renderField, setDisabledAttribute, setReadonlyAttribute, setStringContraints } from "../../lib-builder.js";
 import { subscribe } from "../../lib-interaction.js";
 import { getLabelValue, getTooltipValue, isLabelVisible, isTooltipVisible } from "../../lib-model.js";
 import { DefaultField } from "../defaultInput.js";
@@ -15,20 +15,8 @@ export class TextArea extends DefaultField {
      * 
      * @return {Element}
      */
-    createInputHTML(state, bemBlock) {
-          let input = document.createElement("textarea");
-          input.className = `${bemBlock}__widget`;
-          input.title = isTooltipVisible(state) ? getTooltipValue(state) : '';
-          input.name = state.name || "";
-          input.value = state?.default || "";
-          input.placeholder = state?.placeholder || "";
-          input.required = state.required === true;
-          input.setAttribute("aria-label", isLabelVisible(state) ? getLabelValue(state) : '' );
-
-          setDisabledAttribute(state, input);
-          setReadonlyAttribute(state, input);
-          setStringContraints(state, input);
-          return input;
+    createInputHTML = () => {
+          return defaultInputRender(this.model?.getState(), this.blockName, "textarea");
      }
 
     render() {

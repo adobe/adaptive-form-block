@@ -5,7 +5,7 @@ import { createFormInstance } from "./afb-runtime.js";
 export class AdaptiveForm {
 
   defaultInputTypes = ["color", "date", "datetime-local", "email", "hidden",
-                "month", "password", "range", "tel", "text", "time",
+                "month", "password", "tel", "text", "time",
                 "url", "week"];
     model;
     #form;

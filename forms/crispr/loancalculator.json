@@ -41,7 +41,7 @@
         },
         {
             "name": "term",
-            "fieldType": "slider",
+            "fieldType": "range",
             "type": "number",
             "default": "2",
             "required": true,
@@ -141,7 +141,7 @@
         },
         {
             "name": "rate",
-            "fieldType": "slider",
+            "fieldType": "range",
             "type": "number",
             "default": "18.25",
             "minimum": "8.25",

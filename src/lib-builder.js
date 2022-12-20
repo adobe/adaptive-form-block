@@ -7,9 +7,8 @@ import { getLabelValue, getTooltipValue, getViewId, isLabelVisible, isTooltipVis
  * 
  * @return {HTMLInputElement}
  */
-export let defaultInputRender = (state, bemBlock) => {
-    let input = document.createElement("input");
-        input.type = state?.fieldType || "text";
+export let defaultInputRender = (state, bemBlock, tag = "input") => {
+    let input = document.createElement(tag);
         input.className = `${bemBlock}__widget`;
         input.title = isTooltipVisible(state) ? getTooltipValue(state) : '';
         input.name = state?.name || "";
@@ -20,7 +19,12 @@ export let defaultInputRender = (state, bemBlock) => {
         setDisabledAttribute(state, input);
         setReadonlyAttribute(state, input);
         setStringContraints(state, input);
-        return input;
+        setNumberConstraints(state, input);
+
+    if(input instanceof HTMLInputElement) {
+        input.type = state?.fieldType || "text";
+    }
+    return input;
 }
 
 /**

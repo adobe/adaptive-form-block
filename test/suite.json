@@ -77,5 +77,30 @@
         "blockName": "cmp-adaptiveform-button",
         "widget": "input",
         "element": "button"
+    },
+    {
+        "component": "Text Area",
+        "name" : "Text Area field test suit",
+        "fieldId" : "message",
+        "value" : {
+            "model": "ABCDEF",
+            "ui": "Testing"
+        },
+        "constraint": {
+            "required": "",
+            "minLength" : "a",
+            "maxLength" : "abcdesasdfac"
+        },
+        "blockName": "cmp-adaptiveform-textinput",
+        "widget": "textarea",
+        "element": "div"
+    },
+    {
+        "component": "Select",
+        "name" : "Select field test suit",
+        "fieldId" : "companySize",
+        "blockName": "cmp-adaptiveform-dropdown",
+        "widget": "select",
+        "element": "div"
     }
 ]

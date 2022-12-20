@@ -125,6 +125,29 @@
             ]
         },
         {
+            "id": "companySizeMultiple",
+            "type": "string[]",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "required": true,
+            "placeholder": "Select One",
+            "name": "companySizeMultiple",
+            "fieldType": "select",
+            "label": {
+                "value": "Company Size"
+            },
+            "enum": [
+                "1-10",
+                "11-50",
+                "51-200",
+                "201-500",
+                "501-1000",
+                "1001-5000",
+                "+5000"
+            ]
+        },
+        {
             "id": "doboptions",
             "fieldType": "checkbox-group",
             "type": "string[]",

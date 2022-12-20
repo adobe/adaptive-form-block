@@ -27,36 +27,35 @@ suit.forEach((testCase) => {
             }
         });
         
-        it("Model update verification", () => {
-            if(testCase.value?.model) {
+        if(testCase.value?.model) {
+            it("Model update verification", () => {
                 let value = testCase.value.model;
                 model.value = value;
                 ComponentValidator.validateInputValue(model, blockName, block, value, testCase.widget);
-            }
-        })
+            })
+        }
         
-        it("UI Update verification", () => {
-            if(testCase.value?.ui) {
+        if(testCase.value?.ui) {
+            it("UI Update verification", () => {
                 let value = testCase.value.ui;
                 ComponentValidator.triggerValueChange(model, blockName, block, value);
                 ComponentValidator.validateInputValue(model, blockName, block, value, testCase.widget)
-            }
-        })
+            })
+        }
         
         it("Validate Required Constraint", () => {
             if(testCase.constraint?.required) 
                 ComponentValidator.validateConstraint(model, blockName, block, testCase?.constraint?.required, model?.getState()?.constraintMessages?.required);
         })
         
-        it("Validate Constraint", () => {
-            let state = model?.getState();
-            for(let key in testCase?.constraint) {
-                if(key != "required") {
+        for(let key in testCase?.constraint) {
+            if(key != "required") {
+                it(`Validate ${key} Constraint`, () => {
+                    let state = model?.getState();
                     ComponentValidator.validateConstraint(model, blockName, block, testCase?.constraint?.[key], state?.constraintMessages?.[key]);
-                    break;
-                }
+                })
             }
-        })
+        }
         
         it("Validate Dynamic Hide/show", async() => {
             model.visible = false;

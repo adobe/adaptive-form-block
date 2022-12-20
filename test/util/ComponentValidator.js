@@ -8,7 +8,6 @@ export default class ComponentValidator {
 
     static validateInput = (state, blockName, input) =>{
         expect(input).not.to.null;
-        expect(input?.type).to.equal(state.fieldType);
         expect(input?.title).to.equal(state.tooltip || "");
         expect(input?.name).to.equal(state.name);
         expect(input?.className).to.equal(blockName+"__widget");
@@ -21,6 +20,9 @@ export default class ComponentValidator {
             expect(input?.hasAttribute("required")).to.be.true;
         } else {
             expect(input?.hasAttribute("required")).to.be.false;
+        }
+        if(input instanceof HTMLInputElement) {
+            expect(input?.type).to.equal(state.fieldType);
         }
     }
 
@@ -81,7 +83,15 @@ export default class ComponentValidator {
     static validateInputValue = (model, blockName, block, expected, tag= "input") => {
         let input = block.querySelector(tag);
         expect(input).not.to.null
-        if(input.type == "checkbox") {
+        if(input.type == "select-multiple") {
+            let array = []
+            for (const option of input?.options) {
+                if(option.selected) {
+                    array.push(option.value);
+                }
+            }
+            expect(array.join(",")).to.equal(model.value.join(","));
+        } else if(input.type == "checkbox") {
             expect(input?.checked).to.equal(expected);
         } else {
             expect(input?.value).to.equal(expected);
@@ -98,7 +108,10 @@ export default class ComponentValidator {
     static triggerValueChange = (model, blockName, block, value) => {
         let input = getWidget(block);
         expect(input).not.to.null
-        if(input.type == "checkbox") {
+        if(["select-one", "select-multiple"].includes(input.type)) {
+            var evt = new Event("blur");
+            input.selectedIndex = value;
+        } else if(input.type == "checkbox") {
             var evt = new Event("change");
             input.checked = value;
         }

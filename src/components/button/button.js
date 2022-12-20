@@ -4,9 +4,17 @@ import { getLabelValue, getTooltipValue, getViewId } from "../../lib-model.js";
 import { subscribe } from "../../lib-interaction.js";
 import { Constants } from "../../constants.js";
 
-export class Button extends DefaultField {
+export class Button {
 
     blockName = Constants.BUTTON;
+    block;
+    element;
+    model;
+
+    constructor(block, model) {
+        this.block = block;
+        this.model = model;
+    }
 
     addListener() {
         this.element?.addEventListener("click", () => {

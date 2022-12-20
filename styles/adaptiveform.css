@@ -3376,7 +3376,7 @@ html,body {
   }
 }
 
-.cmp-button {
+.cmp-adaptiveform-button {
   color: #666;
   cursor: pointer;
   background: #fff;
@@ -3388,12 +3388,12 @@ html,body {
   position: relative
 }
 
-.cmp-button:hover {
+.cmp-adaptiveform-button:hover {
   color: #fff;
   background: #666
 }
 
-.cmp-button[data-cmp-enabled]:not([data-cmp-enabled=true]) {
+.cmp-adaptiveform-button[data-cmp-enabled]:not([data-cmp-enabled=true]) {
   color: #e6e6e6;
   background: #888
 }
@@ -3547,7 +3547,7 @@ html,body {
 
 .cmp-adaptiveform-dropdown__widget {
   width: 100%;
-  height: 40px;
+  min-height: 40px;
   color: #666;
   border: 1px solid #666;
   border-radius: .25rem;
@@ -4091,10 +4091,6 @@ textarea.cmp-adaptiveform-textinput__widget {
   display:none
 }
 
-.cmp-adaptiveform-hidden {
-  display: none !important;
-}
-
 
 /* Form 2 column Layout*/
 
@@ -4158,6 +4154,10 @@ textarea.cmp-adaptiveform-textinput__widget {
 .personalloan .cmp-adaptiveform-radiobutton__option span {
   font-weight: normal;
   font-family: "Open Sans Regular";
+}
+
+.cmp-adaptiveform-textinput input[type="hidden"] {
+  display: none !important;
 }
 
  .cmp-adaptiveform-textinput .muted input {

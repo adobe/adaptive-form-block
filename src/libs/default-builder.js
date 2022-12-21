@@ -1,6 +1,7 @@
 import { Constants } from "./constants.js";
 import { getLabelValue, getTooltipValue, getViewId, isLabelVisible, isTooltipVisible } from "./afb-model.js";
 import * as builder from "./afb-builder.js";
+import defaultInput from "../components/defaultInput.js";
 
 /**
  * @param {any} state FieldJson
@@ -181,4 +182,38 @@ export const setNumberConstraints = ( state, element) => {
  */
 export const getWidget = (element) => {
     return element?.querySelector(`[class$='${Constants.WIDGET}']`)
+}
+
+/** 
+ * @param {(import("afcore").ContainerJson | import("afcore").FieldJson) & import("afcore").State<import("afcore").ContainerJson | import("afcore").FieldJson>} field
+ **/
+ export const getRender = async (fieldModel) => {
+    const block = document.createElement('div');
+    try {
+        let component, fieldType = fieldModel?.fieldType;
+        if(!Constants.DEFAULT_INPUT_TYPES.includes(fieldType) && fieldType) {
+            component = await loadComponent(fieldType);
+        }
+        if(component && component.default) {
+            await component?.default(block, fieldModel);
+        } else {
+            defaultInput(block, fieldModel)
+        }
+    } catch (error) {
+        console.error("Unexpected error ", error);
+    }
+    return block;
+  }
+    /**
+     * @param {string} componentName 
+     * @return {Promise<any>} component
+     */
+ export const loadComponent = async(componentName) => {
+    let modulePath = `../components/${componentName}/${componentName}.js`;
+    try {
+        return await import(modulePath);
+    } catch(error) {
+        console.error(`Unable to find module ${componentName}`, error )
+    }
+    return undefined;
 }

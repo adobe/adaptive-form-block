@@ -2,6 +2,7 @@
 import test from "../../forms/crispr/test.json" assert { type: "json" };
 import { expect } from '@esm-bundle/chai';
 import { AdaptiveForm } from "../../src/adaptiveform.js";
+import { getRender } from "../../src/libs/default-builder";
 
 class FormsEnvironment {
 
@@ -16,7 +17,7 @@ class FormsEnvironment {
 
     getFieldView = async (adaptiveForm, id) => {
         let model = adaptiveForm.getModel(id);
-        let block = await adaptiveForm.getRender(model);
+        let block = await getRender(model);
         return [model, block];
     }
 }

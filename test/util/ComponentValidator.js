@@ -1,6 +1,6 @@
 import { expect } from '@esm-bundle/chai';
 import { Constants } from '../../src/libs/constants';
-import { getWidget } from '../../src/libs/afb-builder';
+import * as builder from '../../src/libs/afb-builder';
 import { getErrorWidget } from '../../src/libs/afb-interaction';
 import { isLabelVisible } from '../../src/libs/afb-model';
 
@@ -35,7 +35,7 @@ export default class ComponentValidator {
             expect(label).not.to.null
             expect(label?.id).to.equal(blockName+"-"+state.id+"-label");
             expect(label?.htmlFor).to.equal(blockName+"-"+state.id);
-            expect(label?.textContent).to.equal(state.label?.value);
+            expect(label?.textContent).to.equal(state.required ? state.label?.value + " *" : state.label?.value);
             expect(label?.className).to.equal(blockName+"__label");
         } else {
             expect(label).to.undefined
@@ -120,7 +120,7 @@ export default class ComponentValidator {
     }
 
     static triggerValueChange = (model, blockName, block, value) => {
-        let input = getWidget(block);
+        let input = builder?.default?.getWidget(block);
         expect(input).not.to.null
         if(["select-one", "select-multiple"].includes(input.type)) {
             var evt = new Event("blur");

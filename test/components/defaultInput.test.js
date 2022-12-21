@@ -1,5 +1,5 @@
 
-import { getWidget } from "../../src/libs/afb-builder.js";
+import * as builder from "../../src/libs/afb-builder.js";
 import ComponentValidator from "../util/ComponentValidator.js";
 
 import { FormsEnvironment } from "../util/FormsEnvironment.js";
@@ -22,7 +22,7 @@ suit.forEach((testCase) => {
             ComponentValidator.validateWidget(model, blockName, block.querySelector(testCase.element));
             if(testCase.element == "div" && testCase.component != "Plain Text") {
                 ComponentValidator.validateLabel(model, blockName, block.querySelector("label"));
-                ComponentValidator.validateInput(model, blockName, getWidget(block));
+                ComponentValidator.validateInput(model, blockName, builder?.default?.getWidget(block));
             }
         });
         

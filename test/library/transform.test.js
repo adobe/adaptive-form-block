@@ -20,7 +20,7 @@ describe('Excel to Form Model test suit', () => {
 
   it('Registration Template to Crispr Form', () => {
     let response = transform.transform(registrationTemplate, "/registration.json")
-    console.log("re", JSON.stringify(response.formDef));
+    //console.log("re", JSON.stringify(response.formDef));
     verify(response, registrationTemplate, registrationForm);
   })
 

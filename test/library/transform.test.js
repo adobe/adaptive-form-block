@@ -6,6 +6,7 @@ import registrationTemplate from "../../forms/templates/registration.json" asser
 import personalloanTemplate from "../../forms/templates/loancalculator.json" assert { type: "json" };
 
 import registrationForm from "../../forms/crispr/registration.json" assert { type: "json" };
+import registration_franklin from "../../forms/crispr/registration_franklin.json" assert { type: "json" };
 import personalloan from "../../forms/crispr/loancalculator.json" assert { type: "json" };
 
 let transform = new ExcelToFormModel();
@@ -13,11 +14,13 @@ let transform = new ExcelToFormModel();
 describe('Excel to Form Model test suit', () => {
   it('Franklin Form to Crispr Form', () => {
     let response = transform.transform(registrationFranklinForm, "/registration.json")
-    verify(response, registrationFranklinForm, registrationForm);
+    //console.log("re", JSON.stringify(response.formDef));
+    verify(response, registrationFranklinForm, registration_franklin);
   });
 
   it('Registration Template to Crispr Form', () => {
     let response = transform.transform(registrationTemplate, "/registration.json")
+    console.log("re", JSON.stringify(response.formDef));
     verify(response, registrationTemplate, registrationForm);
   })
 

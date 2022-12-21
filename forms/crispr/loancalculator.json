@@ -10,6 +10,7 @@
         {
             "name": "loanAmount",
             "description": "Enter an amount between R2,000 and R300,000",
+            "fieldType": "number",
             "type": "number",
             "default": "2000",
             "required": true,
@@ -26,6 +27,8 @@
         },
         {
             "name": "emi",
+            "fieldType": "number",
+            "type": "number",
             "readOnly": "true",
             "style": "muted input-bold input-green",
             "constraintMessages": {
@@ -35,7 +38,7 @@
                 "value": "How much you’ll pay back each month"
             },
             "rules": {
-                "value": "round(part2 + (rate / monthwise * (part1 + rate / monthwise * part1 + part2) / (1 - power(1 + rate / monthwise, -1 * (12 *term)))),2)"
+                "value": "round(insuranceOption + part2 + (rate / monthwise * (part1 + rate / monthwise * part1 + part2) / (1 - power(1 + rate / monthwise, -1 * (12 *term)))),2)"
             },
             "required": false
         },
@@ -47,7 +50,7 @@
             "required": true,
             "minimum": "1",
             "maximum": "6",
-            "style": "row-2-item input-green",
+            "style": "input-green",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
@@ -57,6 +60,8 @@
         },
         {
             "name": "total",
+            "fieldType": "number",
+            "type": "number",
             "readOnly": "true",
             "style": "muted input-bold",
             "constraintMessages": {
@@ -109,6 +114,7 @@
         },
         {
             "name": "rateDisplay",
+            "fieldType": "text",
             "type": "string",
             "readOnly": "true",
             "style": "muted input-bold",
@@ -143,9 +149,9 @@
             "name": "rate",
             "fieldType": "range",
             "type": "number",
-            "default": "18.25",
-            "minimum": "8.25",
-            "maximum": "25.75",
+            "default": "18",
+            "minimum": "10.5",
+            "maximum": "28",
             "style": "input-green",
             "constraintMessages": {
                 "required": "Please fill in this field."

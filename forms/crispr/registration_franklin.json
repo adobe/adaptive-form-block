@@ -8,77 +8,76 @@
     "rules": {},
     "items": [
         {
-            "name": "firstName",
-            "placeholder": "E.g. Buzz",
-            "fieldType": "text",
-            "required": true,
-            "minLength": "2",
             "constraintMessages": {
                 "required": "Please fill in this field.",
                 "minLength": "First name must be at least two characters"
             },
+            "minLength": "2",
+            "placeholder": "E.g. Buzz",
+            "name": "firstName",
+            "required": true,
             "label": {
                 "value": "First Name"
             }
         },
         {
-            "name": "lastName",
-            "placeholder": "E.g. Ligthyear",
-            "fieldType": "text",
-            "required": true,
-            "minLength": "2",
             "constraintMessages": {
                 "required": "Please fill in this field.",
                 "minLength": "Last name must be at least two characters"
             },
+            "minLength": "2",
+            "placeholder": "E.g. Ligthyear",
+            "name": "lastName",
+            "required": true,
             "label": {
                 "value": "Last Name"
             }
         },
         {
-            "name": "fullName",
-            "fieldType": "text",
-            "readOnly": "true",
             "constraintMessages": {
                 "required": "Please fill in this field."
+            },
+            "name": "fullName",
+            "readOnly": "true",
+            "rules": {
+                "value": "firstName & ' ' & lastName"
             },
             "label": {
                 "value": "Full Name"
             },
-            "rules": {
-                "value": "firstName & ' ' & lastName"
-            },
             "required": false
         },
         {
-            "name": "email",
-            "placeholder": "E.g. buzz@nasa.gov",
-            "fieldType": "email",
-            "required": true,
-            "pattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
             "constraintMessages": {
                 "required": "Please fill in this field.",
                 "pattern": "Please enter valid email address"
             },
+            "pattern": "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
+            "placeholder": "E.g. buzz@nasa.gov",
+            "name": "email",
+            "fieldType": "email",
+            "required": true,
             "label": {
                 "value": "E-Mail"
             }
         },
         {
-            "name": "company",
-            "placeholder": "E.g. Nasa",
-            "fieldType": "text",
-            "required": true,
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
+            "placeholder": "E.g. Nasa",
+            "name": "company",
+            "required": true,
             "label": {
                 "value": "Company Name"
             }
         },
         {
-            "name": "company-size",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
             "placeholder": "Select One",
+            "name": "company-size",
             "fieldType": "select",
             "required": true,
             "enum": [
@@ -90,59 +89,47 @@
                 "1001-5000",
                 "+5000"
             ],
-            "enumNames": [
-                "1-10",
-                "11-50",
-                "51-200",
-                "201-500",
-                "501-1000",
-                "1001-5000",
-                "+5000"
-            ],
-            "constraintMessages": {
-                "required": "Please fill in this field."
-            },
             "label": {
                 "value": "Company Size"
             }
         },
         {
-            "name": "phone",
-            "placeholder": "E.g. +1 555 555 5555",
-            "fieldType": "text",
-            "required": true,
-            "pattern": "^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10}$",
             "constraintMessages": {
                 "required": "Please fill in this field.",
                 "pattern": "Phone Number Should be 10 digit number with optional country code."
             },
+            "pattern": "^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10}$",
+            "placeholder": "E.g. +1 555 555 5555",
+            "name": "phone",
+            "fieldType": "string",
+            "required": true,
             "label": {
                 "value": "Phone"
             }
         },
         {
-            "name": "subscribe",
-            "fieldType": "checkbox",
-            "description": "We need your phone number for the demo. We'll never use it for any other purposes.",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
+            "name": "subscribe",
+            "description": "We need your phone number for the demo. We'll never use it for any other purposes.",
+            "fieldType": "checkbox",
             "label": {
                 "value": "Subscribe to Superside's blog and get the best in design thinking delivered biweekly."
             },
             "required": false
         },
         {
-            "name": "submit",
-            "fieldType": "button",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
-            "label": {
-                "value": "Let's chat"
-            },
+            "name": "submit",
+            "fieldType": "button",
             "events": {
                 "click": "submitForm()"
+            },
+            "label": {
+                "value": "Let's chat"
             },
             "required": false
         }

@@ -1,0 +1,123 @@
+
+[
+    {
+        "component": "Checkbox",
+        "name" : "Checkbox boolean type test case",
+        "fieldId" : "subscribe",
+        "blockName": "cmp-adaptiveform-checkbox",
+        "widget": "input",
+        "element": "div",
+        "model" : [
+                {
+                    "set": true,
+                    "expected": true
+                },
+                {
+                    "set": null,
+                    "expected": false
+                }
+            ],
+        "ui": [
+            {
+                "set": true,
+                "expected": true,
+                "value": true
+            },
+            {
+                "set": false,
+                "expected": false,
+                "value": false
+            }
+        ]
+    },
+    {
+        "component": "Checkbox",
+        "name" : "Checkbox with only 'on' value test case",
+        "fieldId" : "switchOn",
+        "blockName": "cmp-adaptiveform-checkbox",
+        "widget": "input",
+        "element": "div",
+        "model" : [
+            {
+                "set": "on",
+                "expected": true
+            },
+            {
+                "set": null,
+                "expected": false
+            }
+        ],
+        "ui": [
+            {
+                "set": true,
+                "expected": true,
+                "value": "on"
+            },
+            {
+                "set": false,
+                "expected": false,
+                "value": null
+            }
+        ]
+    },
+    {
+        "component": "Checkbox",
+        "name" : "Checkbox with only 'on & off' value test case",
+        "fieldId" : "switchOnOff",
+        "blockName": "cmp-adaptiveform-checkbox",
+        "widget": "input",
+        "element": "div",
+        "model" : [
+            {
+                "set": "on",
+                "expected": true
+            },
+            {
+                "set": "off",
+                "expected": false
+            }
+        ],
+        "ui": [
+            {
+                "set": true,
+                "expected": true,
+                "value": "on"
+            },
+            {
+                "set": false,
+                "expected": false,
+                "value": "off"
+            }
+        ]
+    },
+    {
+        "component": "Checkbox",
+        "name" : "Checkbox with only 'True & False' value test case",
+        "fieldId" : "switchTrueFalse",
+        "blockName": "cmp-adaptiveform-checkbox",
+        "widget": "input",
+        "element": "div",
+        "model" : [
+            {
+                "set": true,
+                "expected": true
+            },
+            {
+                "set": null,
+                "expected": false
+            }
+        ],
+        "ui": [
+            {
+                "set": true,
+                "expected": true,
+                "value": "true"
+            },
+            {
+                "set": false,
+                "expected": false,
+                "value": "false"
+            }
+        ]
+    }
+]

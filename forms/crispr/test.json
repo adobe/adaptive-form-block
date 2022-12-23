@@ -9,6 +9,7 @@
     "items": [
         {
             "id": "firstName",
+            "fieldType": "text",
             "constraintMessages": {
                 "required": "Please fill in this field.",
                 "minLength": "First name must be at least two characters",
@@ -73,6 +74,21 @@
             "value": "We need your phone number for the demo. We'll never use it for any other purposes."
         },
         {
+            "id": "gender",
+            "fieldType": "radio",
+            "enum": ["M", "F"],
+            "enumNames" : ["Male", "Female"],
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "required": true,
+            "placeholder": "E.g. Male",
+            "name": "gender",
+            "label": {
+                "value": "Gender"
+            }
+        },
+        {
             "id": "company",
             "constraintMessages": {
                 "required": "Please fill in this field."
@@ -89,7 +105,7 @@
             "required": true,
             "placeholder": "Hello Message",
             "name": "message",
-            "fieldType": "text-area",
+            "fieldType": "textarea",
             "label": {
                 "value": "Message"
             },
@@ -109,6 +125,29 @@
             "required": true,
             "placeholder": "Select One",
             "name": "companySize",
+            "fieldType": "select",
+            "label": {
+                "value": "Company Size"
+            },
+            "enum": [
+                "1-10",
+                "11-50",
+                "51-200",
+                "201-500",
+                "501-1000",
+                "1001-5000",
+                "+5000"
+            ]
+        },
+        {
+            "id": "companySizeMultiple",
+            "type": "string[]",
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "required": true,
+            "placeholder": "Select One",
+            "name": "companySizeMultiple",
             "fieldType": "select",
             "label": {
                 "value": "Company Size"
@@ -173,7 +212,7 @@
         {
             "id": "testNo",
             "type": "number",
-            "fieldType": "number-input",
+            "fieldType": "number",
             "placeholder": "Enter Number",
             "required": false,
             "name": "testNo",
@@ -185,7 +224,7 @@
             "constraintMessages": {
                 "required": "Please fill in this field.",
                 "minimum": "Enter number should be greater than 50",
-                "exclusiveMaximum": "Enter number should be greater than 50"
+                "maximum": "Enter number should be less than 100"
             }
         },
         {
@@ -216,6 +255,7 @@
         },
         {
             "id": "subscribe",
+            "placeholder": "Subscribe (true/false",
             "type": "boolean",
             "constraintMessages": {
                 "required": "Please fill in this field."
@@ -233,6 +273,7 @@
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
+            "type": "string",
             "required": false,
             "name": "switchOn",
             "fieldType": "checkbox",
@@ -254,6 +295,7 @@
             "label": {
                 "value": "Switch On or Off"
             },
+            "type": "string",
             "enum": [
                 "on",
                 "off"
@@ -277,6 +319,7 @@
             ]
         },
         {
+            "id": "submit",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },

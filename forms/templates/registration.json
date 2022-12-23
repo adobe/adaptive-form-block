@@ -7,7 +7,7 @@
             "name": "firstName",
             "label.value": "First Name",
             "placeholder": "E.g. Buzz",
-            "fieldType": "",
+            "fieldType": "text",
             "readOnly": "",
             "description": "",
             "required": "true",
@@ -16,6 +16,7 @@
             "constraintMessages.minLength": "First name must be at least two characters",
             "constraintMessages.pattern": "",
             "enum": "",
+            "enumNames": "",
             "rules.value": "",
             "events.click": ""
         },
@@ -23,7 +24,7 @@
             "name": "lastName",
             "label.value": "Last Name",
             "placeholder": "E.g. Ligthyear",
-            "fieldType": "",
+            "fieldType": "text",
             "readOnly": "",
             "description": "",
             "required": "true",
@@ -32,6 +33,7 @@
             "constraintMessages.minLength": "Last name must be at least two characters",
             "constraintMessages.pattern": "",
             "enum": "",
+            "enumNames": "",
             "rules.value": "",
             "events.click": ""
         },
@@ -39,7 +41,7 @@
             "name": "fullName",
             "label.value": "Full Name",
             "placeholder": "",
-            "fieldType": "",
+            "fieldType": "text",
             "readOnly": "true",
             "description": "",
             "required": "",
@@ -48,6 +50,7 @@
             "constraintMessages.minLength": "",
             "constraintMessages.pattern": "",
             "enum": "",
+            "enumNames": "",
             "rules.value": "firstName & ' ' & lastName",
             "events.click": ""
         },
@@ -64,6 +67,7 @@
             "constraintMessages.minLength": "",
             "constraintMessages.pattern": "Please enter valid email address",
             "enum": "",
+            "enumNames": "",
             "rules.value": "",
             "events.click": ""
         },
@@ -71,7 +75,7 @@
             "name": "company",
             "label.value": "Company Name",
             "placeholder": "E.g. Nasa",
-            "fieldType": "",
+            "fieldType": "text",
             "readOnly": "",
             "description": "",
             "required": "true",
@@ -80,6 +84,7 @@
             "constraintMessages.minLength": "",
             "constraintMessages.pattern": "",
             "enum": "",
+            "enumNames": "",
             "rules.value": "",
             "events.click": ""
         },
@@ -96,6 +101,7 @@
             "constraintMessages.minLength": "",
             "constraintMessages.pattern": "",
             "enum": "1-10, 11-50, 51-200, 201-500, 501-1000, 1001-5000, +5000",
+            "enumNames": "1-10, 11-50, 51-200, 201-500, 501-1000, 1001-5000, +5000",
             "rules.value": "",
             "events.click": ""
         },
@@ -103,7 +109,7 @@
             "name": "phone",
             "label.value": "Phone",
             "placeholder": "E.g. +1 555 555 5555",
-            "fieldType": "string",
+            "fieldType": "text",
             "readOnly": "",
             "description": "",
             "required": "true",
@@ -112,6 +118,7 @@
             "constraintMessages.minLength": "",
             "constraintMessages.pattern": "Phone Number Should be 10 digit number with optional country code.",
             "enum": "",
+            "enumNames": "",
             "rules.value": "",
             "events.click": ""
         },
@@ -128,6 +135,7 @@
             "constraintMessages.minLength": "",
             "constraintMessages.pattern": "",
             "enum": "",
+            "enumNames": "",
             "rules.value": "",
             "events.click": ""
         },
@@ -144,6 +152,7 @@
             "constraintMessages.minLength": "",
             "constraintMessages.pattern": "",
             "enum": "",
+            "enumNames": "",
             "rules.value": "",
             "events.click": "submitForm()"
         }

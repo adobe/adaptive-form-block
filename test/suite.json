@@ -1,0 +1,126 @@
+
+[
+    {
+        "component": "Text Input",
+        "name" : "Text Input field test suit",
+        "fieldId" : "firstName",
+        "value" : {
+            "model": "VJ",
+            "ui": "Test"
+        },
+        "constraint": {
+            "required": "",
+            "minLength" : "a",
+            "maxLength" : "abcsss"
+        },
+        "blockName": "cmp-adaptiveform-textinput",
+        "widget": "input",
+        "element": "div"
+    },
+    {
+        "component": "Number",
+        "name" : "Number field test suit",
+        "fieldId" : "testNo",
+        "value" : {
+            "model": "60",
+            "ui": "70"
+        },
+        "constraint": {
+            "required": "",
+            "minimum" : "40",
+            "maximum" : "100"
+        },
+        "blockName": "cmp-adaptiveform-numberinput",
+        "widget": "input",
+        "element": "div"
+    },
+    {
+        "component": "Email Input",
+        "name" : "Email Input field test suit",
+        "fieldId" : "email",
+        "value" : {
+            "model": "vj@test.com",
+            "ui": "test@vj.com"
+        },
+        "constraint": {
+            "required": "",
+            "pattern" : "a"
+        },
+        "blockName": "cmp-adaptiveform-textinput",
+        "widget": "input",
+        "element": "div"
+    },
+    {
+        "component": "Hidden",
+        "name" : "Hidden field test suit",
+        "fieldId" : "hidden",
+        "value" : {
+            "model": "hide",
+            "ui": "hidding"
+        },
+        "blockName": "cmp-adaptiveform-textinput",
+        "widget": "input",
+        "element": "div"
+    },
+    {
+        "component": "Checkbox",
+        "name" : "Checkbox Boolean type field test suit",
+        "fieldId" : "subscribe",
+        "blockName": "cmp-adaptiveform-checkbox",
+        "widget": "input",
+        "element": "div"
+    },
+    {
+        "component": "button",
+        "name" : "Button field test suit",
+        "fieldId" : "submit",
+        "blockName": "cmp-adaptiveform-button",
+        "widget": "input",
+        "element": "button"
+    },
+    {
+        "component": "Text Area",
+        "name" : "Text Area field test suit",
+        "fieldId" : "message",
+        "value" : {
+            "model": "ABCDEF",
+            "ui": "Testing"
+        },
+        "constraint": {
+            "required": "",
+            "minLength" : "a",
+            "maxLength" : "abcdesasdfac"
+        },
+        "blockName": "cmp-adaptiveform-textinput",
+        "widget": "textarea",
+        "element": "div"
+    },
+    {
+        "component": "Select",
+        "name" : "Select field test suit",
+        "fieldId" : "companySize",
+        "blockName": "cmp-adaptiveform-dropdown",
+        "widget": "select",
+        "element": "div"
+    },
+    {
+        "component": "Plain Text",
+        "name" : "Plain text field test suit",
+        "fieldId" : "plainmsg",
+        "blockName": "cmp-adaptiveform-text",
+        "widget": "div",
+        "element": "div"
+    },
+    {
+        "component": "Radio Group",
+        "name" : "Radio group field test suit",
+        "fieldId" : "gender",
+        "blockName": "cmp-adaptiveform-radiobutton",
+        "widget": "input",
+        "element": "div",
+        "value" : {
+            "model": "M",
+            "ui": "F"
+        }
+    }
+]

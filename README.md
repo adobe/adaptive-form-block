@@ -70,10 +70,19 @@ It generate ESM module in production mode and optimizes the build for the best p
 
 # Links 
 
-* [Adaptive Form Block Documentation](https://main--crispr--jalagari.hlx.page/).
-* [Supported Features](https://main--crispr--jalagari.hlx.page/features)
+* [Adaptive Form Block Documentation](https://main--afb--jalagari.hlx.page/).
+* [Supported Features](https://main--afb--jalagari.hlx.page/features)
 
 ## Templates
 
-* [Registration Template](https://main--crispr--jalagari.hlx.page/templates/registration/)
-* [Personal Loan Calculator](https://main--crispr--jalagari.hlx.page/templates/calculator/)
+* [Registration Template](https://main--afb--jalagari.hlx.page/templates/registration/)
+* [Personal Loan Calculator](https://main--afb--jalagari.hlx.page/templates/calculator/)
+
+
+### Contributing
+
+Contributions are welcomed! Read the [Contributing Guide](./.github/CONTRIBUTING.md) for more information.
+
+### Licensing
+
+This project is licensed under the Apache V2 License. See [LICENSE](LICENSE) for more information.

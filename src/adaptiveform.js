@@ -1,6 +1,8 @@
 import ExcelToFormModel from "./libs/afb-transform.js";
-import { createFormInstance } from "./libs/afb-runtime.js";
+import { createFormInstance, FunctionRuntime } from "./libs/afb-runtime.js";
 import * as builder from "./libs/afb-builder.js"
+import {customFunctions} from "./customization/custom-functions.js";
+
 
 export class AdaptiveForm {
     model;
@@ -14,6 +16,7 @@ export class AdaptiveForm {
      constructor(element, formJson) {
         this.element = element;
         this.model = createFormInstance(formJson, undefined);
+        FunctionRuntime?.registerFunctions(customFunctions);
      }
  
   /**
@@ -73,6 +76,7 @@ export class AdaptiveForm {
       //@ts-ignore
       window.adaptiveform = adaptiveform
       console.timeEnd('Form Model Instance Creation');
+      return adaptiveform;
     }
   }
   
@@ -82,6 +86,6 @@ export class AdaptiveForm {
   export default async function decorate(block) {
     const formLink = block?.querySelector('a[href$=".json"]');
     if(formLink && formLink?.href) {
-        await createFormContainer(formLink);
+        return await createFormContainer(formLink);
     }
   }

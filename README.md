@@ -42,31 +42,77 @@ Usually, there is a Adaptive Form block that takes a reference to the spreadshee
 
 ![Form Reference](images/reference.png)
 
-More details in [Adaptive Form Block documentation](https://main--crispr--jalagari.hlx.page/).
+More details in [Adaptive Form Block documentation](https://main--afb--jalagari.hlx.page/).
+
+## Libraries
+
+**AFB** include following libraries which are used in building component DOM structure, interaction with DOM & Form Model, etc. 
+
+- [afb-builder](./libs/afb-builder.js "afb-builder") -- Include reusabled function for generating component mark like createLabel, defaultInputRender, renderField, createWidgetWrapper, etc. 
+- [afb-interaction](./libs/afb-interaction.js "afb-interaction") -- Reusable methods for interaction between components (UI Widget) and AF Core Models
+- [afb-transform](./libs/afb-transform.js "afb-transform") -- Transform the excel based from to headless [Adaptive Form Specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest "Adaptive Form Specification").
 
 
-## Developer Mode 
+# Customization
 
-### `npm i --force`
+[afb-builder](../libs/afb-builder.js "afb-builder") which include reusabled function for generating component mark like createLabel, defaultInputRender, renderField, createWidgetWrapper, etc. which can be override for customization of component.
 
-Install all the depedency packages.
+Below are customization supported in AFB
+* **Components Customization**
+	* **Component Design** (DOM Manipulation)
+		* Include asterisk (\*) sybmol in label if field is marked as required.
+		* Show allow characters (mininum & maximum characters allowed) in field description or any other place in field.
+		* Inline button like reset, validate, etc. in input fields.
+		* **Icons** -- Showing error or success icon inside input fields based on validation result.
+	* **Component Interaction**
+        * ~~Update model on key press instead of blur~~
+* **Custom component** -- Create a different component which is not supported in OOTB block.
+* **Custom Functions** -- Reistering custom funtions.
 
-### `npm run dev`
+### Include asterisk (\*) sybmol in label
+1. Goto [custom-builder.js](./customization/custom-builder.js "custom-builder.js") available under **./customization/**
+2. Import default builder i.e. ``import {createLabel as cl} from '../libs/default-builder.js'``
+2. Create **createLabel** function which append the asterisk (\*) to label if field is marked as required
 
-Any changes made in code, style is auto reload.
+```
+import {createLabel as cl} from '../libs/default-builder.js'
 
+export const createLabel = (state, bemBlock) => {
+    const label = cl(state, bemBlock)
+    if(label) {
+        label.textContent = state?.required ? label?.textContent + " *" : label?.textContent;
+        return label;
+    }
+}
+```
+### Custom Functions
 
-## Prod Build
+In Rules, Author can either use [JMESPath](https://jmespath.org/proposals/functions.html "JMESPath") or [JSON Formula functions ](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_functions_extensions "JSON Formula functions ") or they can include there own functions which are reusable across forms.
 
-For build Adaptive Form Block for Frankling run following command
+1. Goto [custom-functions.js](./customization/custom-functions.js "custom-functions.js") available under **./customization/**
+2. Create JS function and export it 
 
-### `npm run build`
+**Example**
+```
+/**
+ *
+ * @param str {string} json string to convert custom function to object
+ * @return {object} JSON Object after parsing the string as json. In case of
+ * exceptions empty object is returned
+ */
+ function toObject(str) {
+    try {
+        return JSON.parse(str);
+    }
+    catch (e) {
+        return {}
+    }
+}
 
-It generate ESM module in production mode and optimizes the build for the best performance. It will generate 2 fields in [dist](dist)
-
-* adaptiveform.js -- Java Script file which provide export decorator for Franklin.
-* adaptiveform.css -- Form default styling file.
-
+export const customFunctions = {
+    toObject
+}
+```
 
 # Links 
 

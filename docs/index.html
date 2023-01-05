@@ -3,6 +3,11 @@
         <link rel="stylesheet" href="../styles/adaptiveform.css"></link>
         <link rel="stylesheet" href="style.css"></link>
         <script type="module" src="script.js"></script>
+
+        <script src=https://ajaxorg.github.io/ace-builds/src-noconflict/ace.js></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.2/ace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.2/mode-json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.2/worker-json.min.js" integrity="sha512-8PeKq5s4wXW1hBlFs8iurh7aHffuwT8mZNN4eR4mL7Vl7kZV3bpcBY41NtxLJvfTcMj84eMYo9bRr+TJshS19Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </head>
     <body>
         <div class="header">
@@ -19,9 +24,7 @@
         <div class="row">
             <div class="side"> 
                 <h2>JSON Details</h2>
-                <pre id='json_view'>
-                    
-                </pre>
+                <div id="editor" class="viewer"></div>
             </div>  
             <div class="main">
                 <h2>Adaptive Form Block</h2>

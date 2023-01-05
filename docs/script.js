@@ -17,15 +17,23 @@ let loadTemplate = async (event) => {
 }
 
 let loadJson = async (templateUrl) => {
-    let view = document.getElementById("json_view");
     if(templateUrl) {
         let response = await fetch(templateUrl);
         let json = await response.json();
+        setJSON(json);
         view.innerHTML = (JSON.stringify(json, undefined, 2));
     } else {
-        let view = document.getElementById("json_view");
-        view.innerHTML = "";
+        setJSON();
     }
+}
 
+let setJSON = (data) => {
+    let editor = ace.edit("editor");
+    editor.session.setUseWorker(false);
+    editor.getSession().setMode("ace/mode/json");
+    editor.getSession().setUseWrapMode(true);editor.setOptions({
+        maxLines: 400
+    });
+    editor.setValue(JSON.stringify(data, null , 2));
 }
 document.querySelector("[id='template']")?.addEventListener("change", loadTemplate);

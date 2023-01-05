@@ -122,5 +122,24 @@
             "model": "M",
             "ui": "F"
         }
+    },
+    {
+        "component": "Radio",
+        "name" : "Radio field test suit",
+        "fieldId" : "radioOn",
+        "blockName": "cmp-adaptiveform-radiobutton",
+        "widget": "input",
+        "element": "div",
+        "value" : {
+            "ui": true
+        }
+    },
+    {
+        "component": "Checkbox Group",
+        "name" : "Checkbox Group type field test suit",
+        "fieldId" : "doboptions",
+        "blockName": "cmp-adaptiveform-checkboxgroup",
+        "widget": "input",
+        "element": "div"
     }
 ]

@@ -24,12 +24,12 @@ class FormsEnvironment {
 
 class RegistrationForm {
     adaptiveForm;
-    firstNameId = "firstName";
-    emailFieldId = "email";
-    messageFieldId = "message";
-    phoneNoFieldId = "phone";
-    testNoFieldId = "testNo";
-    hiddenFieldId = "hidden";
+    static firstNameId = "firstName";
+    static emailFieldId = "email";
+    static messageFieldId = "message";
+    static phoneNoFieldId = "phone";
+    static testNoFieldId = "testNo";
+    static hiddenFieldId = "hidden";
     constructor(adaptiveForm) {
         this.adaptiveForm = adaptiveForm;
     }

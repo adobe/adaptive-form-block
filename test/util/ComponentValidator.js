@@ -10,7 +10,7 @@ export default class ComponentValidator {
         expect(input).not.to.null;
         expect(input?.title).to.equal(state.tooltip || "");
         expect(input?.name).to.equal(state.name);
-        if(state.fieldType == "radio") {
+        if(state.fieldType == "radio-group") {
             expect(input?.className).to.equal(blockName+"__option__widget");
         } else {
             expect(input?.className).to.equal(blockName+"__widget");
@@ -25,7 +25,11 @@ export default class ComponentValidator {
         } else {
             expect(input?.hasAttribute("required")).to.be.false;
         }
-        if(input instanceof HTMLInputElement) {
+        if(state.fieldType == "checkbox-group") {
+            expect(input?.type).to.equal("checkbox");
+        } else if(state.fieldType == "radio-group") {
+            expect(input?.type).to.equal("radio");
+        } else if(input instanceof HTMLInputElement) {
             expect(input?.type).to.equal(state.fieldType);
         }
     }
@@ -35,7 +39,11 @@ export default class ComponentValidator {
             expect(label).not.to.null
             expect(label?.id).to.equal(blockName+"-"+state.id+"-label");
             expect(label?.htmlFor).to.equal(blockName+"-"+state.id);
-            expect(label?.textContent).to.equal(state.required ? state.label?.value + " *" : state.label?.value);
+            if(state.fieldType == "radio") {
+                expect(label?.textContent).to.equal(state.label?.value);
+            } else {
+                expect(label?.textContent).to.equal(state.required ? state.label?.value + " *" : state.label?.value);
+            }
             expect(label?.className).to.equal(blockName+"__label");
         } else {
             expect(label).to.undefined
@@ -94,8 +102,8 @@ export default class ComponentValidator {
                     array.push(option.value);
                 }
             }
-            expect(array.join(",")).to.equal(model.value.join(","));
-        } else if(input.type == "radio") {
+            expect(array.join(",")).to.equal(model.value?.join(","));
+        } else if(model.fieldType == "radio-group") {
             let checkedValue;
             let widget = block.querySelectorAll(tag);
             for (const option of widget) {
@@ -105,7 +113,16 @@ export default class ComponentValidator {
                 }
             }
             expect(checkedValue).to.equal(expected);
-        } else if(input.type == "checkbox") {
+        } else if(model.fieldType == "checkbox-group") {
+            let array = []
+            let widget = block.querySelectorAll(tag);
+            for (const option of widget) {
+                if(option.checked) {
+                    array.push(option.value);
+                }
+            }
+            expect(array.join(",")).to.equal(model.value?.join(","));
+        } else if(input.type == "checkbox" || input.type == "radio") {
             expect(input?.checked).to.equal(expected);
         } else {
             expect(input?.value).to.equal(expected);
@@ -129,7 +146,6 @@ export default class ComponentValidator {
             var evt = new Event("change");
             input.checked = value;
         } else if(input.type == "radio") {
-            let checkedValue;
             let widget = block.querySelectorAll("input");
             for (const option of widget) {
                 if(option.value == value) {
@@ -138,12 +154,20 @@ export default class ComponentValidator {
                 }
             }
             var evt = new Event("change");
-            input.checked = true;
+            input.checked = value;
         } 
         else {
             var evt = new Event("blur");
             input.value = value;
         }
         input.dispatchEvent(evt);
+    }
+
+    static setValue = (adaptiveForm, formEl, fieldId, blockName, value) => {
+        let model = adaptiveForm.getModel(fieldId);
+        let widget = formEl.querySelector("#"+blockName+"-"+fieldId);
+        expect(model).not.to.null;
+        expect(widget).not.to.null;
+        ComponentValidator.validateConstraint(model, blockName, widget, value)
     }
 }

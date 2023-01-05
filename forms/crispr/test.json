@@ -75,7 +75,7 @@
         },
         {
             "id": "gender",
-            "fieldType": "radio",
+            "fieldType": "radio-group",
             "enum": ["M", "F"],
             "enumNames" : ["Male", "Female"],
             "constraintMessages": {
@@ -86,6 +86,83 @@
             "name": "gender",
             "label": {
                 "value": "Gender"
+            }
+        },
+        {
+            "id": "educationUG",
+            "fieldType": "radio",
+            "enum": [
+                "UG"
+            ],
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "placeholder": "",
+            "name": "education",
+            "label": {
+                "value": "Under Graducate"
+            }
+        },
+        {
+            "id": "radioOn",
+            "fieldType": "radio",
+            "enum": [
+                "on"
+            ],
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "required": true,
+            "placeholder": "E.g. Male",
+            "name": "radioOn",
+            "label": {
+                "value": "Radio On"
+            }
+        },
+        {
+            "id": "educationG",
+            "fieldType": "radio",
+            "enum": [
+                "Graducate"
+            ],
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "placeholder": "",
+            "name": "education",
+            "label": {
+                "value": "Graducate"
+            }
+        },
+        {
+            "id": "radioOnOff",
+            "fieldType": "radio",
+            "enum": [
+                "on"
+            ],
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "required": false,
+            "placeholder": "E.g. Male",
+            "name": "radioOnOff",
+            "label": {
+                "value": "radioOnOff"
+            }
+        },
+        {
+            "id": "educationPG",
+            "fieldType": "radio",
+            "enum": [
+                "PG"
+            ],
+            "constraintMessages": {
+                "required": "Please fill in this field."
+            },
+            "placeholder": "",
+            "name": "education",
+            "label": {
+                "value": "Post Graducate"
             }
         },
         {
@@ -164,6 +241,7 @@
         },
         {
             "id": "doboptions",
+            "placeholder": "",
             "fieldType": "checkbox-group",
             "type": "string[]",
             "name": "doboptions",

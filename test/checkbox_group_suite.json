@@ -1,0 +1,33 @@
+
+[
+    {
+        "component": "Checkbox",
+        "name" : "Checkbox boolean type test case",
+        "fieldId" : "doboptions",
+        "blockName": "cmp-adaptiveform-checkboxgroup",
+        "widget": "input",
+        "element": "div",
+        "model" : [
+                {
+                    "set": ["1", "3"],
+                    "expected": "1, 3"
+                },
+                {
+                    "set": ["2"],
+                    "expected": "2"
+                }
+            ],
+        "ui": [
+            {
+                "set": true,
+                "expected": true,
+                "value": ["1"]
+            },
+            {
+                "set": false,
+                "expected": false,
+                "value": []
+            }
+        ]
+    }
+]

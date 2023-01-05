@@ -7,15 +7,15 @@ import * as builder from "../../src/libs/afb-builder.js";
 import { getErrorWidget } from '../../src/libs/afb-interaction.js';
 import ComponentValidator from '../util/ComponentValidator.js';
 
-import { FormsEnvironment } from "../util/FormsEnvironment.js";
+import { FormsEnvironment, RegistrationForm } from "../util/FormsEnvironment.js";
 
 let formEnv = new FormsEnvironment();
-let {adaptiveForm, firstNameId} =  formEnv.registrationForm();
+let {adaptiveForm} =  formEnv.registrationForm();
 let model;
 let blockName = Constants.TEXT_INPUT;
 
 beforeEach(() => {
-  model = adaptiveForm.getModel(firstNameId);
+  model = adaptiveForm.getModel(RegistrationForm.firstNameId);
 });
 
 

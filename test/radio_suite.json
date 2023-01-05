@@ -1,0 +1,114 @@
+
+[
+    {
+        "component": "Radio",
+        "name" : "Radio with same name test case",
+        "fieldId" : "educationUG",
+        "blockName": "cmp-adaptiveform-radiobutton",
+        "widget": "input",
+        "element": "div",
+        "model" : [
+                {
+                    "set": "UG",
+                    "expected": true
+                },
+                {
+                    "set": null,
+                    "expected": false
+                }
+            ],
+        "ui": [
+            {
+                "set": true,
+                "expected": true,
+                "value": "UG"
+            },
+            {
+                "set": false,
+                "expected": false,
+                "value": null
+            }
+        ]
+    },
+    {
+        "component": "Radio",
+        "name" : "Radio with same name test case",
+        "fieldId" : "educationPG",
+        "blockName": "cmp-adaptiveform-radiobutton",
+        "widget": "input",
+        "element": "div",
+        "model" : [
+                {
+                    "set": "PG",
+                    "expected": true
+                },
+                {
+                    "set": null,
+                    "expected": false
+                }
+            ],
+        "ui": [
+            {
+                "set": true,
+                "expected": true,
+                "value": "PG"
+            },
+            {
+                "set": false,
+                "expected": false,
+                "value": null
+            }
+        ]
+    },
+    {
+        "component": "Radio",
+        "name" : "Radio with On only test case",
+        "fieldId" : "radioOn",
+        "blockName": "cmp-adaptiveform-radiobutton",
+        "widget": "input",
+        "element": "div",
+        "model" : [
+                {
+                    "set": "on",
+                    "expected": true
+                }
+            ],
+        "ui": [
+            {
+                "set": true,
+                "expected": true,
+                "value": "on"
+            }
+        ]
+    },
+    {
+        "component": "Radio",
+        "name" : "Radio with On & Off only test case",
+        "fieldId" : "radioOnOff",
+        "blockName": "cmp-adaptiveform-radiobutton",
+        "widget": "input",
+        "element": "div",
+        "model" : [
+                {
+                    "set": "on",
+                    "expected": true
+                },
+                {
+                    "set": "off",
+                    "expected": false
+                }
+            ],
+        "ui": [
+            {
+                "set": true,
+                "expected": true,
+                "value": "on"
+            },
+            {
+                "set": false,
+                "expected": false,
+                "value": null
+            }
+        ]
+    }
+]

@@ -60,16 +60,16 @@ More details in [Adaptive Form Block documentation](https://main--afb--jalagari.
 Below are customization supported in AFB
 * **Components Customization**
 	* **Component Design** (DOM Manipulation)
-		* Include asterisk (\*) sybmol in label if field is marked as required.
-		* Show allow characters (mininum & maximum characters allowed) in field description or any other place in field.
+		* Include asterisk (\*) symbol in label if field is marked as required.
+		* Show allow characters (minimum & maximum characters allowed) in field description or any other place in field.
 		* Inline button like reset, validate, etc. in input fields.
 		* **Icons** -- Showing error or success icon inside input fields based on validation result.
 	* **Component Interaction**
         * ~~Update model on key press instead of blur~~
 * **Custom component** -- Create a different component which is not supported in OOTB block.
-* **Custom Functions** -- Reistering custom funtions.
+* **Custom Functions** -- Registering custom functions.
 
-### Include asterisk (\*) sybmol in label
+### Include asterisk (\*) symbol in label
 1. Goto [custom-builder.js](./customization/custom-builder.js "custom-builder.js") available under **./customization/**
 2. Import default builder i.e. ``import {createLabel as cl} from '../libs/default-builder.js'``
 2. Create **createLabel** function which append the asterisk (\*) to label if field is marked as required

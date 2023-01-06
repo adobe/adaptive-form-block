@@ -1,0 +1,48 @@
+[
+    {
+        "component": "Panel",
+        "name" : "Test Column1 Panel",
+        "fieldId" : "column1",
+        "element": "div",
+        "items": [
+            {
+                "fieldId": "firstName"
+            },
+            {
+                "fieldId": "fullName"
+            },
+            {
+                "fieldId": "company"
+            },
+            {
+                "fieldId": "phone"
+            }
+        ]
+    },
+    {
+        "component": "Panel",
+        "name" : "Test Column2 Panel",
+        "fieldId" : "column2",
+        "element": "div",
+        "items": [
+            {
+                "fieldId": "lastName"
+            },
+            {
+                "fieldId": "email"
+            },
+            {
+                "fieldId": "companySize"
+            },
+            {
+                "fieldId": "companySizeMultiple"
+            },
+            {
+                "fieldId": "plainmsg"
+            },
+            {
+                "fieldId": "subscribe"
+            }
+        ]
+    }
+]

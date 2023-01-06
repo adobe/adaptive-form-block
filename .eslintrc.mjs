@@ -1,5 +1,3 @@
-
-
 export default {
     root: true,
     extends: 'airbnb-base',

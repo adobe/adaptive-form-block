@@ -21,7 +21,6 @@ let loadJson = async (templateUrl) => {
         let response = await fetch(templateUrl);
         let json = await response.json();
         setJSON(json);
-        view.innerHTML = (JSON.stringify(json, undefined, 2));
     } else {
         setJSON();
     }

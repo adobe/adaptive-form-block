@@ -3,6 +3,7 @@ const PROPERTY = "property";
 const PROPERTY_RULES = "rules.properties";
 
 export default class ExcelToFormModel {
+    panelMap = new Map();
     
     fieldPropertyMapping = {
         "Default" : "default",
@@ -101,22 +102,23 @@ export default class ExcelToFormModel {
             throw new Error("Unable to retrieve the form details from " + formPath);
         }
         const formDef = this.#initFormDef(formPath);
-        var stack = [];
-        stack.push(formDef.items);
-        let currentPanel = formDef;
+        
+        this.panelMap.set("root", formDef);
+        
         exData.data.forEach((/** @type {{ [s: string]: any; } | ArrayLike<any>} */ item)=> {
 
             let source = Object.fromEntries(Object.entries(item).filter(([_, v]) => (v != null && v!= "")));
             let field = {...source, ...this.#initField()};
             this.#transformFieldNames(field);
 
-            if(this.#isProperty(field)) {
+            if (this.#isProperty(field)) {
                 this.#handleProperites(formDef, field);
-            }
-             else {
-                currentPanel.items.push(this.#handleField(field));
+            } else {
+                field?.fieldType === "panel" && this.panelMap.set(field?.name, field);
+                this.#addToParent(this.#handleField(field));
             }
         });
+
         this.#transformPropertyRules(formDef);
         return {formDef : formDef, excelData : exData};
     }
@@ -232,5 +234,17 @@ export default class ExcelToFormModel {
      */
     #isProperty(field) {
         return field && field.fieldType == PROPERTY;
+    }
+
+    /**
+     * Add the field to its relevant parent items.
+     * @param {Object} field 
+     */
+    #addToParent(field) {
+        let parent = field?.parent || "root";
+        let parentField = this.panelMap.get(this.panelMap.has(parent) ? parent : "root");
+        parentField.items = parentField.items || [];
+        parentField.items.push(field);
+        delete field?.parent;
     }
 }

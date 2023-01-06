@@ -32,7 +32,7 @@ export class AdaptiveForm {
         this.#form = form;
 
         let state = this.model?.getState();
-        await this.renderChildrens(form, state);
+        await this.renderChildren(form, state);
         this.element.replaceWith(form);
         return form;
     }
@@ -40,7 +40,7 @@ export class AdaptiveForm {
    * @param {HTMLFormElement}  form
    * @param {import("afcore").State<import("afcore").FormJson>} state
    * */  
-    renderChildrens = async (form, state) => {
+    renderChildren = async (form, state) => {
         console.time("Rendering childrens")
         let fields = state?.items;
         if(fields && fields.length>0) {
@@ -58,34 +58,34 @@ export class AdaptiveForm {
  /** 
   * @param {HTMLLinkElement} formLink
   * */
-  let createFormContainer = async (formLink) => {
-    if(formLink && formLink?.href) {
-      
-      let url = formLink.href;
-      console.log("Loading & Converting excel form to Crispr Form")
-      
-      console.time('Json Transformation (including Get)');
-      const transform = new ExcelToFormModel();
-      const convertedData = await transform.getFormModel(url);
-      console.timeEnd('Json Transformation (including Get)')
-      console.log(convertedData);
+  let createFormContainer = async (placeholder, url) => {
+    console.log("Loading & Converting excel form to Crispr Form")
+    
+    console.time('Json Transformation (including Get)');
+    const transform = new ExcelToFormModel();
+    const convertedData = await transform.getFormModel(url);
+    console.timeEnd('Json Transformation (including Get)')
+    console.log(convertedData);
 
-      console.time('Form Model Instance Creation');
-      let adaptiveform = new AdaptiveForm(formLink, convertedData?.formDef);
-      await adaptiveform.render();
-      //@ts-ignore
-      window.adaptiveform = adaptiveform
-      console.timeEnd('Form Model Instance Creation');
-      return adaptiveform;
-    }
+    console.time('Form Model Instance Creation');
+    let adaptiveform = new AdaptiveForm(placeholder, convertedData?.formDef);
+    window.adaptiveform = adaptiveform;
+    await adaptiveform.render();
+    
+    console.timeEnd('Form Model Instance Creation');
+    return adaptiveform;
   }
   
   /**
    * @param {{ querySelector: (arg0: string) => HTMLLinkElement | null; }} block
    */
   export default async function decorate(block) {
-    const formLink = block?.querySelector('a[href$=".json"]');
-    if(formLink && formLink?.href) {
-        return await createFormContainer(formLink);
+    const formLinkWrapper = block.querySelector('div.button-container:has(> a[href$=".json"]');
+    const formLink = (formLinkWrapper == null ? block : formLinkWrapper).querySelector('a[href$=".json"]');
+
+    if (!formLink || !formLink.href) {
+        throw new Error("No formdata action is provided, can't render adaptiveformblock");
     }
+
+    return await createFormContainer(formLinkWrapper || formLink, formLink.href);
   }

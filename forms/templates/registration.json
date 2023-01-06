@@ -1,8 +1,44 @@
 {
-    "total": 9,
+    "total": 11,
     "offset": 0,
-    "limit": 9,
+    "limit": 11,
     "data": [
+        {
+            "name": "column1",
+            "label.value": "",
+            "placeholder": "",
+            "fieldType": "panel",
+            "readOnly": "",
+            "description": "",
+            "required": "",
+            "minLength": "",
+            "pattern": "",
+            "constraintMessages.minLength": "",
+            "constraintMessages.pattern": "",
+            "enum": "",
+            "enumNames": "",
+            "rules.value": "",
+            "events.click": "",
+            "parent": ""
+        },
+        {
+            "name": "column2",
+            "label.value": "",
+            "placeholder": "",
+            "fieldType": "panel",
+            "readOnly": "",
+            "description": "",
+            "required": "",
+            "minLength": "",
+            "pattern": "",
+            "constraintMessages.minLength": "",
+            "constraintMessages.pattern": "",
+            "enum": "",
+            "enumNames": "",
+            "rules.value": "",
+            "events.click": "",
+            "parent": ""
+        },
         {
             "name": "firstName",
             "label.value": "First Name",
@@ -18,7 +54,8 @@
             "enum": "",
             "enumNames": "",
             "rules.value": "",
-            "events.click": ""
+            "events.click": "",
+            "parent": "column1"
         },
         {
             "name": "lastName",
@@ -35,7 +72,8 @@
             "enum": "",
             "enumNames": "",
             "rules.value": "",
-            "events.click": ""
+            "events.click": "",
+            "parent": "column2"
         },
         {
             "name": "fullName",
@@ -51,8 +89,9 @@
             "constraintMessages.pattern": "",
             "enum": "",
             "enumNames": "",
-            "rules.value": "firstName & ' ' & lastName",
-            "events.click": ""
+            "rules.value": "firstName & ' ' & $form.column2.lastName",
+            "events.click": "",
+            "parent": "column1"
         },
         {
             "name": "email",
@@ -69,7 +108,8 @@
             "enum": "",
             "enumNames": "",
             "rules.value": "",
-            "events.click": ""
+            "events.click": "",
+            "parent": "column2"
         },
         {
             "name": "company",
@@ -86,7 +126,8 @@
             "enum": "",
             "enumNames": "",
             "rules.value": "",
-            "events.click": ""
+            "events.click": "",
+            "parent": "column1"
         },
         {
             "name": "company-size",
@@ -103,7 +144,8 @@
             "enum": "1-10, 11-50, 51-200, 201-500, 501-1000, 1001-5000, +5000",
             "enumNames": "1-10, 11-50, 51-200, 201-500, 501-1000, 1001-5000, +5000",
             "rules.value": "",
-            "events.click": ""
+            "events.click": "",
+            "parent": "column2"
         },
         {
             "name": "phone",
@@ -120,7 +162,8 @@
             "enum": "",
             "enumNames": "",
             "rules.value": "",
-            "events.click": ""
+            "events.click": "",
+            "parent": "column1"
         },
         {
             "name": "subscribe",
@@ -137,7 +180,8 @@
             "enum": "",
             "enumNames": "",
             "rules.value": "",
-            "events.click": ""
+            "events.click": "",
+            "parent": "column2"
         },
         {
             "name": "submit",
@@ -154,7 +198,8 @@
             "enum": "",
             "enumNames": "",
             "rules.value": "",
-            "events.click": "submitForm()"
+            "events.click": "submitForm()",
+            "parent": "column2"
         }
     ],
     ":type": "sheet"

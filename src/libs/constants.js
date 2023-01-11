@@ -93,4 +93,4 @@
     static DEFAULT_INPUT_TYPES = ["color", "date", "datetime-local", "email", "hidden",
                 "month", "password", "tel", "text", "time",
                 "url", "week"];
-}
+   }

@@ -74,9 +74,35 @@ export default class ComponentValidator {
         if(state?.tooltip) {
             expect(button).not.to.null
             expect(button?.className).to.equal(blockName + `__${Constants.QM} ${Constants.ADAPTIVE_FORM_QM}`);
-            expect(button?.title).to.equal(state?.tooltip);
+            expect(button?.dataset.text).to.equal(state?.tooltip);
         } else {
             expect(button).to.undefined
+        }
+    }
+
+    static validateQMEvents = (state, blockName, qm) =>{
+        if(state?.tooltip) {
+            document.body.append(qm);
+            qm.dispatchEvent(new Event('mouseenter'));
+
+            let tooltip = document.querySelector(`.${blockName}__${Constants.TOOLTIP}`);
+            this.validateTooltip(state, blockName, tooltip);
+
+            qm.dispatchEvent(new Event('mouseleave'));
+            expect(tooltip.parentElement).to.null;
+            qm.remove();
+        } else {
+            expect(button).to.undefined
+        }
+    }
+
+    static validateTooltip = (state, blockName, tooltip) => {
+        if(tooltip) {
+            expect(tooltip).not.to.null;
+            expect(tooltip?.className).to.contains(blockName + `__${Constants.TOOLTIP} ${Constants.ADAPTIVE_FORM_TOOLTIP}`);
+            expect(tooltip?.textContent).to.equal(state?.tooltip);
+        } else {
+            expect(tooltip).to.undefined
         }
     }
     

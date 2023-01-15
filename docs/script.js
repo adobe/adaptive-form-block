@@ -1,6 +1,5 @@
 import loadForm from "../src/adaptiveform.js"
 
-
 let loadTemplate = async (event) => {
     let selectEl = event.target;
     let templateUrl = selectEl.value;

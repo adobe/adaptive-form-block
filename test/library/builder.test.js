@@ -64,6 +64,22 @@ describe('Form Builder (Markup) test suit', () => {
       ComponentValidator.validateQM(state, blockName, button)
     });
 
+    it('Short (QM) desc events ', () => {
+      let state = model?.getState();
+      state.tooltip = "Testing";
+      let button = builder?.default?.createQuestionMarkHTML(state, blockName);
+      ComponentValidator.validateQMEvents(state, blockName, button)
+      state.tooltip = "";
+    });
+
+    it('Tooltip Markup ', () => {
+      let state = model?.getState();
+      state.tooltip = "Testing";
+      let tooltip = builder?.default?.createTooltipHTML(state, blockName);
+      ComponentValidator.validateTooltip(state, blockName, tooltip)
+      state.tooltip = "";
+    });
+    
     it('Error Markup with blank ', () => {
       let div = builder?.default?.createErrorHTML(model?.getState(), blockName);
       ComponentValidator.validateErrorWidget(model, blockName, div, "")

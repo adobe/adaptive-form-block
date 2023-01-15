@@ -86,6 +86,7 @@ export default class ComponentValidator {
             qm.dispatchEvent(new Event('mouseenter'));
 
             let tooltip = document.querySelector(`.${blockName}__${Constants.TOOLTIP}`);
+            expect(tooltip).not.to.null;
             this.validateTooltip(state, blockName, tooltip);
 
             qm.dispatchEvent(new Event('mouseleave'));

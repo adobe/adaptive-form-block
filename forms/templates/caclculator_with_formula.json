@@ -33,7 +33,7 @@
             "type": "number",
             "default": "245.73",
             "required": "",
-            "rules.value": "round(((insuranceOption + part2) + (((rate / monthwise) * ((part1 + ((rate / monthwise) * part1)) + part2)) / (1 - power((1 + (rate / monthwise)),(-1 * (12 * term)))))),2)",
+            "rules.value": "=ROUND(((F6 + F21) + (((F10 / F19) * ((F20 + ((F10 / F19) * F20)) + F21)) / (1 - POWER((1 + (F10 / F19)),(-1 * (12 * F4)))))),2)",
             "minimum": "",
             "maximum": "",
             "constraintMessages.minimum": "",
@@ -45,8 +45,7 @@
             "rules.visible": "",
             "visible": "",
             "rules.enum": "",
-            "rules.enumNames": "",
-            "tooltip": "This estimate covers all fees, the loan instalment, the interest charged for the month and your insurance, if you’ve included the monthly premium."
+            "rules.enumNames": ""
         },
         {
             "name": "term",
@@ -68,8 +67,7 @@
             "rules.visible": "",
             "visible": "",
             "rules.enum": "",
-            "rules.enumNames": "",
-            "displayFormat": "{} years"
+            "rules.enumNames": ""
         },
         {
             "name": "total",
@@ -79,7 +77,7 @@
             "type": "number",
             "default": "5897.52",
             "required": "",
-            "rules.value": "round(((12 * term) * emi),2)",
+            "rules.value": "=ROUND( (12 * F4 *F3), 2)",
             "minimum": "",
             "maximum": "",
             "constraintMessages.minimum": "",
@@ -91,8 +89,7 @@
             "rules.visible": "",
             "visible": "",
             "rules.enum": "",
-            "rules.enumNames": "",
-            "tooltip": "This estimate covers all fees, the loan instalments, the total interest charged over the full loan term and your insurance, if you’ve included the monthly premium."
+            "rules.enumNames": ""
         },
         {
             "name": "insuranceOption",
@@ -114,8 +111,7 @@
             "rules.visible": "",
             "visible": "",
             "rules.enum": "[insuranceAmount & '', 0]",
-            "rules.enumNames": "['Add R' & insuranceAmount & ' to the loan amount for insurance', 'I have my own insurance']",
-            "tooltip": "This covers your repayments if you lose your income, become disabled or when you die. You need to have insurance for the full loan term."
+            "rules.enumNames": "['Add R' & insuranceAmount & ' to the loan amount for insurance', 'I have my own insurance']"
         },
         {
             "name": "insuranceAmount",
@@ -125,7 +121,7 @@
             "type": "",
             "default": "11.97",
             "required": "",
-            "rules.value": "round((insuranceMultipliercal * part1),2)",
+            "rules.value": "=ROUND( (F18 * F20), 2)",
             "minimum": "",
             "maximum": "",
             "constraintMessages.minimum": "",
@@ -159,8 +155,7 @@
             "rules.visible": "",
             "visible": "",
             "rules.enum": "",
-            "rules.enumNames": "",
-            "tooltip": "After you apply, we’ll make you an offer with a personal interest rate based on your risk profile."
+            "rules.enumNames": ""
         },
         {
             "name": "exploreRate",
@@ -204,8 +199,7 @@
             "rules.visible": "exploreRate == 'true'",
             "visible": "",
             "rules.enum": "",
-            "rules.enumNames": "",
-            "displayFormat": "{}%"
+            "rules.enumNames": ""
         },
         {
             "name": "maxncafee",
@@ -413,7 +407,7 @@
             "type": "",
             "default": "3419.75",
             "required": "",
-            "rules.value": "(loanAmount + (min([(partncalfee + ((loanAmount - basencafee) * percent1ncafee)),(loanAmount * percent2ncafee),maxncafee]) * (1 + vatratecal)))",
+            "rules.value": "=(F2 + MIN((F14 + (F2 - F13) * F15), (F2 * F16), F11) * (1 + F12))",
             "minimum": "",
             "maximum": "",
             "constraintMessages.minimum": "",
@@ -435,7 +429,7 @@
             "type": "",
             "default": "69",
             "required": "",
-            "rules.value": "(monthlyServiceFeeExclVATcal * (1 + vatratecal))",
+            "rules.value": "=F17* ( 1 + F12)",
             "minimum": "",
             "maximum": "",
             "constraintMessages.minimum": "",

@@ -11,7 +11,7 @@
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
-            "name": "column1",
+            "name": null,
             "fieldType": "panel",
             "required": false,
             "items": [
@@ -38,7 +38,7 @@
                     "fieldType": "text",
                     "readOnly": "true",
                     "rules": {
-                        "value": "firstName & ' ' & $form.column2.lastName"
+                        "value": "firstName & ' ' & lastName"
                     },
                     "label": {
                         "value": "Full Name"
@@ -77,7 +77,7 @@
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
-            "name": "column2",
+            "name": null,
             "fieldType": "panel",
             "required": false,
             "items": [

@@ -29,6 +29,7 @@
             "name": "emi",
             "fieldType": "number",
             "type": "number",
+            "default": "245.73",
             "readOnly": "true",
             "style": "muted input-bold input-green",
             "constraintMessages": {
@@ -38,7 +39,7 @@
                 "value": "How much you’ll pay back each month"
             },
             "rules": {
-                "value": "round(insuranceOption + part2 + (rate / monthwise * (part1 + rate / monthwise * part1 + part2) / (1 - power(1 + rate / monthwise, -1 * (12 *term)))),2)"
+                "value": "round(((insuranceOption + part2) + (((rate / monthwise) * ((part1 + ((rate / monthwise) * part1)) + part2)) / (1 - power((1 + (rate / monthwise)),(-1 * (12 * term)))))),2)"
             },
             "required": false,
             "tooltip": "This estimate covers all fees, the loan instalment, the interest charged for the month and your insurance, if you’ve included the monthly premium."
@@ -64,6 +65,7 @@
             "name": "total",
             "fieldType": "number",
             "type": "number",
+            "default": "5897.52",
             "readOnly": "true",
             "style": "muted input-bold",
             "constraintMessages": {
@@ -73,7 +75,7 @@
                 "value": "How much you’ll pay back in total"
             },
             "rules": {
-                "value": "round (12 * term * emi, 2)"
+                "value": "round(((12 * term) * emi),2)"
             },
             "required": false,
             "tooltip": "This estimate covers all fees, the loan instalments, the total interest charged over the full loan term and your insurance, if you’ve included the monthly premium."
@@ -106,13 +108,14 @@
         },
         {
             "name": "insuranceAmount",
+            "default": "11.97",
             "fieldType": "hidden",
             "readOnly": "true",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
             "rules": {
-                "value": "round(insuranceMultipliercal * part1,2)"
+                "value": "round((insuranceMultipliercal * part1),2)"
             },
             "required": false
         },
@@ -254,22 +257,24 @@
         {
             "name": "part1",
             "fieldType": "hidden",
+            "default": "3419.75",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
             "rules": {
-                "value": "(loanAmount + min([(partncalfee + (loanAmount - basencafee) * percent1ncafee), (loanAmount * percent2ncafee), maxncafee]) * (1 + vatratecal))"
+                "value": "(loanAmount + (min([(partncalfee + ((loanAmount - basencafee) * percent1ncafee)),(loanAmount * percent2ncafee),maxncafee]) * (1 + vatratecal)))"
             },
             "required": false
         },
         {
             "name": "part2",
             "fieldType": "hidden",
+            "default": "69",
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
             "rules": {
-                "value": "monthlyServiceFeeExclVATcal * (1 + vatratecal)"
+                "value": "(monthlyServiceFeeExclVATcal * (1 + vatratecal))"
             },
             "required": false
         }

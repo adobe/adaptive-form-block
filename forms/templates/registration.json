@@ -89,7 +89,7 @@
             "constraintMessages.pattern": "",
             "enum": "",
             "enumNames": "",
-            "rules.value": "firstName & ' ' & $form.column2.lastName",
+            "rules.value": "firstName & ' ' & lastName",
             "events.click": "",
             "parent": "column1"
         },

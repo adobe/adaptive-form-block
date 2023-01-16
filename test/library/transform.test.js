@@ -4,6 +4,7 @@ import { expect } from '@esm-bundle/chai';
 import registrationFranklinForm from "../../forms/templates/registration_franklin.json" assert { type: "json" };
 import registrationTemplate from "../../forms/templates/registration.json" assert { type: "json" };
 import personalloanTemplate from "../../forms/templates/loancalculator.json" assert { type: "json" };
+import caclculatorWithExcelFormula from "../../forms/templates/caclculator_with_formula.json" assert { type: "json" };
 
 import registrationForm from "../../forms/crispr/registration.json" assert { type: "json" };
 import registration_franklin from "../../forms/crispr/registration_franklin.json" assert { type: "json" };
@@ -28,6 +29,12 @@ describe('Excel to Form Model test suit', () => {
     let response = transform.transform(personalloanTemplate, "/personalloan.json")
     //console.log("re", JSON.stringify(response.formDef));
     verify(response, personalloanTemplate, personalloan);
+  })
+
+  it('Calculator Template with Excel Formula to Crispr Form', () => {
+    let response = transform.transform(caclculatorWithExcelFormula, "/personalloan.json")
+    console.log("re", JSON.stringify(response.formDef));
+    verify(response, caclculatorWithExcelFormula, personalloan);
   })
 });
 

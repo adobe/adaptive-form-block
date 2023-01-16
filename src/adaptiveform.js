@@ -1,5 +1,5 @@
 import ExcelToFormModel from "./libs/afb-transform.js";
-import { createFormInstance, FunctionRuntime } from "./libs/afb-runtime.js";
+import { createFormInstance, registerFunctions } from "./libs/afb-runtime.js";
 import * as builder from "./libs/afb-builder.js"
 import {customFunctions} from "./customization/custom-functions.js";
 
@@ -16,7 +16,7 @@ export class AdaptiveForm {
      constructor(element, formJson) {
         this.element = element;
         this.model = createFormInstance(formJson, undefined);
-        FunctionRuntime?.registerFunctions(customFunctions);
+        registerFunctions(customFunctions);
      }
  
   /**

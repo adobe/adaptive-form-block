@@ -8,7 +8,19 @@ import { FormsEnvironment, RegistrationForm } from "../util/FormsEnvironment.js"
 
 let block, adaptiveForm;
 let form, formEnv = new FormsEnvironment();
-let expectedData = {"firstName":"Vijay","lastName":"Kumar","fullName":"Vijay Kumar","education": "PG","email":"vj@abc.com","gender":"M","company":"Abc","message":"Testing","companySize":"11-50","companySizeMultiple":["201-500"],"doboptions":[1],"dob":"2022-12-03","testNo":80,"phone":9876543210,"radioOn": "on","radioOnOff": "on","submit": undefined,"hid":"20","subscribe":true,"switchOn":"on","switchOnOff":"on","switchTrueFalse":"true"};
+let expectedData = {
+    "firstName": "Vijay",
+    "lastName": "Kumar",
+    "fullName": "Vijay Kumar",
+    "education": "PG",
+    "email": "vj@abc.com", 
+    "gender": "M", 
+    "company": "Abc", 
+    "message": "Testing", 
+    "companySize": "11-50", 
+    "companySizeMultiple": ["201-500"], 
+    "doboptions": [1], "dob": "2022-12-03", "testNo": 80, "phone": 9876543210, "radioOn": "on", "radioOnOff": "on", "submit": undefined, "hid": 20, "subscribe": true, "switchOn": "on", "switchOnOff": "on", "switchTrueFalse": "true"
+};
 
 describe("Adaptive Form test suit", () => {
 
@@ -17,7 +29,7 @@ describe("Adaptive Form test suit", () => {
         let a = document.createElement("a");
         a.href = "../../forms/crispr/test.json"
         block.appendChild(a);
-        adaptiveForm =  await decorate(block)
+        adaptiveForm = await decorate(block)
 
         expect(adaptiveForm).not.to.null;
         expect(block).not.to.null;
@@ -26,7 +38,7 @@ describe("Adaptive Form test suit", () => {
         expect(form).not.to.null;
         expect(form instanceof HTMLFormElement).to.be.true;
     })
-    
+
     it("Fill Form", async () => {
         ComponentValidator.setValue(adaptiveForm, form, RegistrationForm.firstNameId, Constants.TEXT_INPUT, "Vijay");
         ComponentValidator.setValue(adaptiveForm, form, "lastName", Constants.TEXT_INPUT, "Kumar");
@@ -47,7 +59,7 @@ describe("Adaptive Form test suit", () => {
         ComponentValidator.setValue(adaptiveForm, form, "radioOn", Constants.RADIO, true);
         ComponentValidator.setValue(adaptiveForm, form, "radioOnOff", Constants.RADIO, true);
     });
-    
+
     it("Export Data", async () => {
         let data = adaptiveForm?.model?.exportData();
         console.log(data);

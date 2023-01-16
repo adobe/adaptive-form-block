@@ -1,5 +1,5 @@
 import { ExcelToJsonFormula } from "./afb-transformrules.js";
-import { Formula } from "./json-formula.js";
+import Formula from "./json-formula.js";
 
 const PROPERTY = "property";
 const PROPERTY_RULES = "rules.properties";
@@ -39,7 +39,7 @@ export default class ExcelToFormModel {
         ["checkbox-group", "checkbox-group"],
         ["plain-text", "plain-text"],
         ["checkbox", "checkbox"],
-        ["multiline-input", "text-area"],
+        ["multiline-input", "textarea"],
         ["panel", "panel"],
         ["submit", "button"]
     ]);
@@ -286,14 +286,15 @@ export default class ExcelToFormModel {
             let valueRule = field?.rules?.value;
             if(valueRule && valueRule.charAt(0) == "=") {
                 try {
-                    let expresson = valueRule?.slice(1)?.replaceAll('"', "'")?.toLowerCase(); // better way to handle double to single quotes 
-                    let ast = new Formula(expresson, undefined, undefined, undefined); 
-                    let result = this.interpreter.transform(ast?.node);
+                    let excelExpression = valueRule?.slice(1)?.replaceAll('"', "'")?.toLowerCase(); // better way to handle double to single quotes 
+                    let formula = new Formula(); 
+                    let ast = formula.compile(excelExpression)
+                    let jsonExpression = this.interpreter.transform(ast);
                     if(validate) {
-                        let resultAST = new Formula(result, undefined, undefined, undefined); 
-                        resultAST.search({})
+                        formula = new Formula(); 
+                        formula.search(jsonExpression, {})
                     }
-                    field.rules.value = result;
+                    field.rules.value = jsonExpression;
                 } catch (e) {
                     this.errors.push({rule: valueRule, error: e.message})
                 }

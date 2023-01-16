@@ -23,7 +23,8 @@
             "rules.visible": "",
             "visible": "",
             "rules.enum": "",
-            "rules.enumNames": ""
+            "rules.enumNames": "",
+            "displayFormat" : "currency/ZAR"
         },
         {
             "name": "emi",
@@ -46,6 +47,7 @@
             "visible": "",
             "rules.enum": "",
             "rules.enumNames": "",
+            "displayFormat" : "currency/ZAR",
             "tooltip": "This estimate covers all fees, the loan instalment, the interest charged for the month and your insurance, if you’ve included the monthly premium."
         },
         {
@@ -92,6 +94,7 @@
             "visible": "",
             "rules.enum": "",
             "rules.enumNames": "",
+            "displayFormat" : "currency/ZAR",
             "tooltip": "This estimate covers all fees, the loan instalments, the total interest charged over the full loan term and your insurance, if you’ve included the monthly premium."
         },
         {

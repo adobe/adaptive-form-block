@@ -1,7 +1,7 @@
 import { getWidget, setActive } from "../../libs/afb-interaction.js";
 import { DefaultField } from "../defaultInput.js";
 import * as builder from "../../libs/afb-builder.js";
-
+import { formatNumber } from "../../libs/afb-formatters.js";
 export class Range extends DefaultField {
 
     blockName = 'cmp-adaptiveform-textinput'
@@ -12,9 +12,9 @@ export class Range extends DefaultField {
 
             widget?.addEventListener('change', (e) => {
                 let hover = this.element.querySelector(`.${this.blockName}__widget-value`);
-                let state = this.model?.getState();
 
                 this.model.value = e.target.value;
+                let state = this.model?.getState();
                 this.element && setActive(this.element, false);
                 this.#updateView(state, hover, e.target);
             });
@@ -26,7 +26,7 @@ export class Range extends DefaultField {
     }
 
     #getFormattedValue(state, value) {
-        return state?.displayFormat ? state?.displayFormat.replace("{}", value) : value;
+        return state.displayValue;
     }
 
     /**
@@ -57,7 +57,8 @@ export class Range extends DefaultField {
 
     renderInput(state, bemBlock) {
         let input =  builder?.default?.defaultInputRender(state, bemBlock);
-
+        input.value = state.value;
+        input.step = state.step;
         let div = document.createElement("div");
         div.className = `${bemBlock}__widget-wrapper`;
 
@@ -67,12 +68,20 @@ export class Range extends DefaultField {
 
         let min = document.createElement("span");
         min.className = `${bemBlock}__widget-min`;
-        min.textContent = this.#getFormattedValue(state, input.min);
-
+        try {
+           min.textContent = format(state.minimum, 'en-US', state.displayFormat);
+        } catch (e) {
+            console.error(e)
+            min.textContent = state.minimum
+        }
         let max = document.createElement("span");
         max.className = `${bemBlock}__widget-max`;
-        max.textContent = this.#getFormattedValue(state, input.max);
-        
+        try {
+            max.textContent = format(state.maximum, 'en-US', state.displayFormat);
+        } catch (e) {
+            console.error(e)
+            max.textContent = state.maximum
+        }
         div.append(hover, input, min, max);
         return div;
     }

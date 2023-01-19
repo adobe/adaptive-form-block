@@ -173,7 +173,7 @@ export const setDisabledAttribute = (state, element) => {
  * @param {HTMLInputElement | HTMLTextAreaElement} element 
  */
 export const setReadonlyAttribute = (state,element) => {
-    element.readOnly = state?.readOnly === 'true'
+    element.readOnly = state?.readOnly === true
 }
 
 /**

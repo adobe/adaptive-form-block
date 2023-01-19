@@ -1,6 +1,6 @@
 import { propertyChange, ExecuteRule, Initialize, CustomEvent, Submit, RemoveInstance, AddInstance, Reset, RemoveItem, AddItem, Click, Change, FormLoad, FieldChanged, ValidationComplete, Valid, Invalid } from './afb-events.js';
 import Formula from './json-formula.js';
-import { formatDate, formatNumber, getSkeleton } from './afb-formatters.js';
+import { format, parseDateSkeleton, formatDate } from './afb-formatters.js';
 
 class ValidationError {
     fieldName;
@@ -848,7 +848,9 @@ class BaseNode {
             if (this.parent) {
                 this._lang = this.parent.language;
             }
-            this._lang = Intl.DateTimeFormat().resolvedOptions().locale;
+            else {
+                this._lang = Intl.DateTimeFormat().resolvedOptions().locale;
+            }
         }
         return this._lang;
     }
@@ -2229,16 +2231,15 @@ class Form extends Container {
             super.dispatch(action);
         }
     }
-    executeAction(action) {
-        if ((action.type !== 'submit') || this._invalidFields.length === 0) {
-            super.executeAction(action);
-        }
-    }
     submit(action, context) {
         if (this.validate().length === 0) {
             const payload = action?.payload || {};
             submit(context, payload?.success, payload?.error, payload?.submit_as, payload?.data);
         }
+    }
+    reset() {
+        super.reset();
+        this._invalidFields = [];
     }
     getElement(id) {
         if (id == this.id) {
@@ -2312,7 +2313,8 @@ class RuleEngine {
 }
 
 const defaults = {
-    visible: true
+    visible: true,
+    enabled: true
 };
 class Fieldset extends Container {
     constructor(params, _options) {
@@ -2812,10 +2814,10 @@ class Field extends Scriptable {
         }
     }
     get editFormat() {
-        return this._jsonModel.editFormat;
+        return this.withCategory(this._jsonModel.editFormat);
     }
     get displayFormat() {
-        return this._jsonModel.displayFormat;
+        return this.withCategory(this._jsonModel.displayFormat);
     }
     get placeholder() {
         return this._jsonModel.placeholder;
@@ -2887,23 +2889,43 @@ class Field extends Scriptable {
     isEmpty() {
         return this._jsonModel.value === undefined || this._jsonModel.value === null || this._jsonModel.value === '';
     }
+    withCategory(df) {
+        if (df) {
+            const hasCategory = df?.match(/^(?:date|num)\|/);
+            if (hasCategory === null) {
+                if (this.format === 'date') {
+                    df = `date|${df}`;
+                }
+                else if (this.type === 'number') {
+                    df = `num|${df}`;
+                }
+                return df;
+            }
+        }
+        return df;
+    }
     get editValue() {
-        const format = this.editFormat;
-        if (this.format == 'date' && this.isNotEmpty(this.value) && this.valid !== false) {
-            return formatDate(new Date(this.value), this.language, format);
+        const df = this.editFormat;
+        if (df && this.isNotEmpty(this.value) && this.valid !== false) {
+            try {
+                return format(this.value, this.language, df);
+            }
+            catch (e) {
+                return this.value;
+            }
         }
         else {
             return this.value;
         }
     }
     get displayValue() {
-        const format = this.displayFormat;
-        if (this.isNotEmpty(this.value) && this.valid !== false) {
-            if (this.format === 'date') {
-                return formatDate(new Date(this.value), this.language, format);
+        const df = this.displayFormat;
+        if (df && this.isNotEmpty(this.value) && this.valid !== false) {
+            try {
+                return format(this.value, this.language, df);
             }
-            else if (this.fieldType === 'number-input') {
-                return formatNumber(this.value, this.language, format);
+            catch (e) {
+                return this.value;
             }
         }
         else {
@@ -3035,11 +3057,30 @@ class Field extends Scriptable {
     }
     checkStep() {
         const value = this._jsonModel.value;
-        if (typeof this._jsonModel.step === 'number') {
-            const initialValue = this._jsonModel.minimum || this._jsonModel.default || 0;
-            return (value - initialValue) % this._jsonModel.step === 0;
+        const step = this._jsonModel.step;
+        if (typeof step === 'number') {
+            const prec = step.toString().split('.')?.[1]?.length || 0;
+            const factor = Math.pow(10, prec);
+            const fStep = step * factor;
+            const fVal = value * factor;
+            const iv = this._jsonModel.minimum || this._jsonModel.default || 0;
+            const fIVal = iv * factor;
+            const qt = (fVal - fIVal) / fStep;
+            const valid = (fVal - fIVal) % fStep < .001;
+            let next, prev;
+            if (!valid) {
+                next = (Math.ceil(qt) * fStep + fIVal) / factor;
+                prev = (next - fStep) / factor;
+            }
+            return {
+                valid,
+                next,
+                prev
+            };
         }
-        return true;
+        return {
+            valid: true
+        };
     }
     checkValidationExpression() {
         if (typeof this._jsonModel.validationExpression === 'string') {
@@ -3176,7 +3217,7 @@ class Field extends Scriptable {
                 valid = this.checkEnum(value, Constraints);
                 constraint = 'enum';
                 if (valid && this.type === 'number') {
-                    valid = this.checkStep();
+                    valid = this.checkStep().valid;
                     constraint = 'step';
                 }
                 if (valid) {
@@ -3228,6 +3269,8 @@ class Field extends Scriptable {
     getState() {
         return {
             ...super.getState(),
+            editFormat: this.editFormat,
+            displayFormat: this.displayFormat,
             editValue: this.editValue,
             displayValue: this.displayValue
         };
@@ -3256,9 +3299,6 @@ __decorate([
 __decorate([
     include('date-input', 'number-input')
 ], Field.prototype, "editValue", null);
-__decorate([
-    include('date-input', 'number-input')
-], Field.prototype, "displayValue", null);
 __decorate([
     dependencyTracked()
 ], Field.prototype, "value", null);
@@ -3442,7 +3482,7 @@ class DateField extends Field {
             this._jsonModel.displayFormat = this._jsonModel.editFormat;
         }
         if (!this._jsonModel.placeholder) {
-            this._jsonModel.placeholder = getSkeleton(this._jsonModel.editFormat, locale);
+            this._jsonModel.placeholder = parseDateSkeleton(this._jsonModel.editFormat, locale);
         }
         if (!this._jsonModel.description) {
             this._jsonModel.description = `To enter today's date use ${formatDate(new Date(), locale, this._jsonModel.editFormat)}`;
@@ -3518,19 +3558,25 @@ class FormFieldFactoryImpl {
 const FormFieldFactory = new FormFieldFactoryImpl();
 
 const createFormInstance = (formModel, callback, logLevel = 'error', fModel = undefined) => {
-    let f = fModel;
-    if (f == null) {
-        f = new Form({ ...formModel }, FormFieldFactory, new RuleEngine(), new EventQueue(new Logger(logLevel)), logLevel);
+    try {
+        let f = fModel;
+        if (f == null) {
+            f = new Form({ ...formModel }, FormFieldFactory, new RuleEngine(), new EventQueue(new Logger(logLevel)), logLevel);
+        }
+        const formData = formModel?.data;
+        if (formData) {
+            f.importData(formData);
+        }
+        if (typeof callback === 'function') {
+            callback(f);
+        }
+        f.getEventQueue().runPendingQueue();
+        return f;
     }
-    const formData = formModel?.data;
-    if (formData) {
-        f.importData(formData);
+    catch (e) {
+        console.error(`Unable to create an instance of the Form ${e}`);
+        throw new Error(e);
     }
-    if (typeof callback === 'function') {
-        callback(f);
-    }
-    f.getEventQueue().runPendingQueue();
-    return f;
 };
 const validateFormInstance = (formModel, data) => {
     try {

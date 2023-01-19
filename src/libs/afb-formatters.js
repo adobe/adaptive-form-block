@@ -695,9 +695,14 @@ const getCurrency = function (locale) {
 
 const NUMBER_REGEX =
     // eslint-disable-next-line max-len
-    /(?:[#]+|[@]+(?:#+)?|[0]+|[,]|[.]|[-]|[+]|[%]|[¤]{1,4}(?:\/([a-zA-Z]{3}))?|[;]|[K]{1,2}|E{1,2}[+]?|'(?:[^']|'')*')|[^a-zA-Z']+/g;
-
-const ShorthandStyles = [/^currency(?:\/([a-zA-Z]{3}))?$/, /^integer$/, /^decimal$/, /^percent$/];
+    /(?:[#]+|[@]+(#+)?|[0]+|[,]|[.]|[-]|[+]|[%]|[¤]{1,4}(?:\/([a-zA-Z]{3}))?|[;]|[K]{1,2}|E{1,2}[+]?|'(?:[^']|'')*')|[^a-zA-Z']+/g;
+const supportedUnits = ['acre', 'bit', 'byte', 'celsius', 'centimeter', 'day',
+    'degree', 'fahrenheit', 'fluid-ounce', 'foot', 'gallon', 'gigabit',
+    'gigabyte', 'gram', 'hectare', 'hour', 'inch', 'kilobit', 'kilobyte',
+    'kilogram', 'kilometer', 'liter', 'megabit', 'megabyte', 'meter', 'mile',
+    'mile-scandinavian', 'milliliter', 'millimeter', 'millisecond', 'minute', 'month',
+    'ounce', 'percent', 'petabyte', 'pound', 'second', 'stone', 'terabit', 'terabyte', 'week', 'yard', 'year'].join('|');
+const ShorthandStyles = [/^currency(?:\/([a-zA-Z]{3}))?$/, /^decimal$/, /^integer$/,  /^percent$/, new RegExp(`^unit\/(${supportedUnits})$`)];
 
 
 function parseNumberSkeleton(skeleton, language) {
@@ -728,6 +733,12 @@ function parseNumberSkeleton(skeleton, language) {
                 break;
             case 4:
                 options.style = 'percent';
+                options.maximumFractionDigits = 2;
+                break;
+            case 5:
+                options.style = "unit";
+                options.unitDisplay = "long";
+                options.unit = match[1];
                 break;
         }
         return {
@@ -739,7 +750,7 @@ function parseNumberSkeleton(skeleton, language) {
     options.minimumIntegerDigits = 1;
     options.maximumFractionDigits = 0;
     options.minimumFractionDigits = 0;
-    skeleton.replace(NUMBER_REGEX, (match, offset) => {
+    skeleton.replace(NUMBER_REGEX, (match, maxSignificantDigits, currencySymbol, offset) => {
         const len = match.length;
         switch(match[0]) {
             case '#':
@@ -752,10 +763,10 @@ function parseNumberSkeleton(skeleton, language) {
                 if (options?.minimumSignificantDigits) {
                     throw "@ symbol should occur together"
                 }
-                order.push(['@', len]);
-                options.minimumSignificantDigits = len;
-                const hashes = match.match(/#+/) || "";
-                options.maximumSignificantDigits = len + hashes.length;
+                const hashes = maxSignificantDigits || "";
+                order.push(['@', len - hashes.length]);
+                options.minimumSignificantDigits = len - hashes.length;
+                options.maximumSignificantDigits = len;
                 order.push(['digit', hashes.length]);
                 break;
             case ',':
@@ -780,6 +791,9 @@ function parseNumberSkeleton(skeleton, language) {
                 }
                 if (options?.decimal === true) {
                     options.minimumFractionDigits = len;
+                    if (!options.maximumFractionDigits) {
+                        options.maximumFractionDigits = len;
+                    }
                 } else {
                     options.minimumIntegerDigits = len;
                 }
@@ -803,18 +817,20 @@ function parseNumberSkeleton(skeleton, language) {
             case '¤':
                 if (offset !== 0 && offset !== skeleton.length - 1) {
                     console.error("currency display should be either in the beginning or at the end");
+                } else {
+                    options.style = 'currency';
+                    options.currencyDisplay = ['symbol', 'code', 'name', 'narrowSymbol'][len - 1];
+                    options.currency = currencySymbol || getCurrency(language);
+                    order.push(['currency', len]);
                 }
-                options.style = 'currency';
-                options.currencyDisplay = ['symbol', 'code', 'name', 'narrowSymbol'][len -1];
-                options.currency = getCurrency(language);
-                order.push(['currency', len]);
                 break;
             case '%':
                 if (offset !== 0 && offset !== skeleton.length - 1) {
                     console.error("percent display should be either in the beginning or at the end");
+                } else {
+                    order.push(['%', 1]);
+                    options.style = 'percent';
                 }
-                order.push(['%', 1]);
-                options.style = 'percent';
                 break;
             case 'E':
                 order.push(['E', len]);
@@ -863,6 +879,7 @@ function getMetaInfo(language, skel) {
     options = nf.formatToParts(987654321);
     gather('plusSign');
     gather('exponentSeparator');
+    gather('unit');
     return parts;
 }
 
@@ -874,6 +891,7 @@ function parseNumber(numberString, language, skel) {
         const meta = getMetaInfo(language, skel);
         if (meta.group) number = number.replaceAll(meta.group, '');
         number = number.replace(meta.decimal, '.');
+        if (meta.unit) number = number.replaceAll(meta.unit, '');
         if (meta.minusSign && number.includes(meta.minusSign)) {
             number = number.replace(meta.minusSign, '');
             factor *= -1;
@@ -903,4 +921,36 @@ function parseNumber(numberString, language, skel) {
     }
 }
 
-export { formatDate, formatNumber, getSkeleton, parseDate, parseNumber };
+const getCategory = function (skeleton) {
+    const chkCategory = skeleton?.match(/^(?:(num|date)\|)?(.+)/);
+    return [chkCategory?.[1], chkCategory?.[2]]
+};
+
+const format = function (value, locale, skeleton, timezone) {
+    const [category, skelton] = getCategory(skeleton);
+    switch (category) {
+        case 'date':
+            if (!(value instanceof Date)) {
+                value = new Date(value);
+            }
+            return formatDate(value, locale, skelton, timezone)
+        case 'num':
+            return formatNumber(value, locale, skelton)
+        default:
+            throw `unable to deduce the format. The skeleton should be date|<format> for date formats and num|<format> for numbers`
+    }
+};
+
+const parse = function (value, locale, skeleton, timezone) {
+    const [category, skelton] = getCategory(skeleton);
+    switch (category) {
+        case 'date':
+            return parseDate(value, locale, skelton, timezone)
+        case 'number':
+            return parseNumber(value, locale, skelton)
+        default:
+            throw `unable to deduce the format. The skeleton should be date|<format> for date formats and num|<format> for numbers`
+    }
+};
+
+export { format, formatDate, formatNumber, parse, parseDate, getSkeleton as parseDateSkeleton, parseNumber };

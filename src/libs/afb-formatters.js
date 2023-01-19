@@ -489,6 +489,9 @@ function formatDateToParts(dateValue, language, skeleton, timeZone) {
  * @param timeZone {string}
  */
 function formatDate(dateValue, language, skeleton, timeZone) {
+    if (skeleton.startsWith('date|')) {
+        skeleton = skeleton.split('|')[1];
+    }
     if (ShorthandStyles$1.find(type => skeleton.includes(type))) {
         const options = {timeZone};
         // the skeleton could have two keywords -- one for date, one for time
@@ -515,6 +518,9 @@ function formatDate(dateValue, language, skeleton, timeZone) {
 function parseDate(dateString, language, skeleton, timeZone, bUseUTC = false) {
     // start by getting all the localized parts of a date/time picture:
     // digits, calendar name
+    if (skeleton.startsWith('date|')) {
+        skeleton = skeleton.split('|')[1];
+    }
     const lookups = [];
     const regexParts = [];
     const calendar = calendarName(language);
@@ -847,6 +853,9 @@ function parseNumberSkeleton(skeleton, language) {
 }
 
 function formatNumber(numberValue, language, skeletn) {
+    if (skeletn.startsWith('num|')) {
+        skeletn = skel.split('|')[1];
+    }
     if (!skeletn) return numberValue
     language = language || "en";
     const {options, order} = parseNumberSkeleton(skeletn, language);
@@ -886,6 +895,9 @@ function getMetaInfo(language, skel) {
 function parseNumber(numberString, language, skel) {
     try {
         // factor will be updated to reflect: negative, percent, exponent etc.
+        if (skel.startsWith('num|')) {
+            skel = skel.split('|')[1];
+        }
         let factor = 1;
         let number = numberString;
         const meta = getMetaInfo(language, skel);

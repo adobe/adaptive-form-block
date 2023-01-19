@@ -3066,7 +3066,7 @@ class Field extends Scriptable {
             const iv = this._jsonModel.minimum || this._jsonModel.default || 0;
             const fIVal = iv * factor;
             const qt = (fVal - fIVal) / fStep;
-            const valid = (fVal - fIVal) % fStep < .001;
+            const valid = Math.abs(fVal - fIVal) % fStep < .001;
             let next, prev;
             if (!valid) {
                 next = (Math.ceil(qt) * fStep + fIVal) / factor;

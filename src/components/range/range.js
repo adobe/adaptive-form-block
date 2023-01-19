@@ -1,7 +1,7 @@
 import { getWidget, setActive } from "../../libs/afb-interaction.js";
 import { DefaultField } from "../defaultInput.js";
 import * as builder from "../../libs/afb-builder.js";
-import { formatNumber } from "../../libs/afb-formatters.js";
+import { format } from "../../libs/afb-formatters.js";
 export class Range extends DefaultField {
 
     blockName = 'cmp-adaptiveform-textinput'

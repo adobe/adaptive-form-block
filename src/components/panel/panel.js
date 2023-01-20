@@ -1,12 +1,14 @@
-import { subscribe } from "../../libs/afb-interaction.js";
-import { Constants } from "../../libs/constants.js";
-import * as builder from "../../libs/afb-builder.js";
+import { subscribe } from '../../libs/afb-interaction.js';
+import { Constants } from '../../libs/constants.js';
+import * as builder from '../../libs/afb-builder.js';
 
 export class Panel {
     blockName = Constants.PANEL;
 
     block;
+
     element;
+
     model;
 
     constructor(block, model) {
@@ -14,43 +16,43 @@ export class Panel {
         this.model = model;
     }
 
-    async renderChildren(parent, state) {
-        let fields = state?.items;
-        let length = fields ? fields.length : 0;
+    async renderChildren(state) {
+        const fields = state?.items;
+        const length = fields ? fields.length : 0;
 
-        for(let i = 0; i < length; i++) {
-            let field = fields[i];
-            let fieldModel = adaptiveform.model?.getElement(field.id);
-            let element = await builder?.default?.getRender(fieldModel);
+        for (let i = 0; i < length; i++) {
+            const field = fields[i];
+            const fieldModel = adaptiveform.model?.getElement(field.id); // eslint-disable-line no-undef
+            const element = await builder?.default?.getRender(fieldModel); // eslint-disable-line no-await-in-loop
 
-            parent.append(element);
+            this.element.append(element);
             // @todo trigger add event
         }
     }
 
-    renderField = (state) => {    
-        let element = builder?.default?.createWidgetWrapper(state, this.blockName);
-        
-        let label = builder?.default?.createLabel(state, this.blockName);
+    renderField = (state) => {
+        const element = builder?.default?.createWidgetWrapper(state, this.blockName);
+
+        const label = builder?.default?.createLabel(state, this.blockName);
         label.tabIndex = label.textContent ? 0 : -1;
 
-        let longDesc = builder?.default?.createLongDescHTML(state, this.blockName);
-        let help = builder?.default?.createQuestionMarkHTML(state, this.blockName);
-    
+        const longDesc = builder?.default?.createLongDescHTML(state, this.blockName);
+        const help = builder?.default?.createQuestionMarkHTML(state, this.blockName);
+
         label ? element.appendChild(label) : null;
-        longDesc ?  element.appendChild(longDesc) : null;
+        longDesc ? element.appendChild(longDesc) : null;
         help ? element.appendChild(help) : null;
-    
-        state?.name && element.setAttribute("name", state.name);
+
+        state?.name && element.setAttribute('name', state.name);
 
         return element;
-    }
+    };
 
     async render() {
-        let state = this.model.getState();
+        const state = this.model.getState();
 
         this.element = this.renderField(state);
-        await this.renderChildren(this.element, state);
+        await this.renderChildren(state);
 
         if(state.name || state.dataName) {
             this.block.classList.add(state.name || state.dataName);
@@ -62,6 +64,6 @@ export class Panel {
 }
 
 export default async function decorate(block, model) {
-    let panel = new Panel(block, model);
+    const panel = new Panel(block, model);
     await panel.render();
 }

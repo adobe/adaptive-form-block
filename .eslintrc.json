@@ -16,7 +16,7 @@
     "quotes": ["error", "single"],
     "indent": ["error", 4],
     "no-unused-expressions": ["warn"],
-    "no-underscore-dangle": ["error", { "allowAfterThis": true, "allow": [""] }],
+    "no-underscore-dangle": ["error", { "allowAfterThis": true, "allow": ["_jsonModel"] }],
     "max-len": ["error", 140],
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "linebreak-style": ["error", "unix"],

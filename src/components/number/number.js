@@ -1,23 +1,21 @@
-import * as builder from "../../libs/afb-builder.js";
-import { getWidget, subscribe, updateValue } from "../../libs/afb-interaction.js";
-import { Constants } from "../../libs/constants.js";
-import { DefaultField } from "../defaultInput.js";
-import NumericInputWidget from './NumberInputWidget.js'
+import * as builder from '../../libs/afb-builder.js';
+import { getWidget, subscribe, updateValue } from '../../libs/afb-interaction.js';
+import { Constants } from '../../libs/constants.js';
+import { DefaultField } from '../defaultInput.js';
+import NumericInputWidget from './NumberInputWidget.js';
 
 export class NumberInput extends DefaultField {
-
     blockName = Constants.NUMBER;
 
     widgetFormatter;
 
-    _updateValue = (element ,value) =>{
-        let widget = getWidget(element);
+    _updateValue = (element, value) => {
         if (this.widgetFormatter) {
             this.widgetFormatter.setValue(value);
         } else {
             updateValue(element, value);
         }
-    }
+    };
 
     render() {
         this.element = builder?.default?.renderField(this.model, this.blockName);
@@ -29,11 +27,11 @@ export class NumberInput extends DefaultField {
         if (!this.widgetFormatter) {
             this.addListener();
         }
-        subscribe(this.model, this.element, {value : this._updateValue});
+        subscribe(this.model, this.element, { value: this._updateValue });
     }
 }
 
 export default async function decorate(block, model) {
-    let component = new NumberInput(block, model);
+    const component = new NumberInput(block, model);
     component.render();
 }

@@ -17,7 +17,6 @@
     "import/extensions": ["error", {
       "js": "always"
     }],
-    "quotes": ["error", "single"],
     "indent": ["error", 4],
     "no-unused-expressions": ["warn"],
     "no-underscore-dangle": ["warn"],

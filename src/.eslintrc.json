@@ -26,7 +26,6 @@
   "ignorePatterns": [
     "libs/afb-runtime.js",
     "libs/json-formula.js",
-    "libs/afb-formatters.js",
-    "libs/afb-events.js"
+    "libs/afb-formatters.js"
   ]
 }

@@ -1,38 +1,51 @@
+/* eslint-disable max-classes-per-file */
 class ActionImpl {
     _metadata;
+
     _type;
+
     _payload;
+
     _target;
+
     constructor(payload, type, _metadata) {
         this._metadata = _metadata;
         this._payload = payload;
         this._type = type;
     }
+
     get type() {
         return this._type;
     }
+
     get payload() {
         return this._payload;
     }
+
     get metadata() {
         return this._metadata;
     }
+
     get target() {
         return this._target;
     }
-    get isCustomEvent() {
+
+    get isCustomEvent() { // eslint-disable-line class-methods-use-this
         return false;
     }
+
     payloadToJson() {
         return this.payload;
     }
+
     toJson() {
         return {
             payload: this.payloadToJson(),
             type: this.type,
-            isCustomEvent: this.isCustomEvent
+            isCustomEvent: this.isCustomEvent,
         };
     }
+
     toString() {
         return JSON.stringify(this.toJson());
     }
@@ -41,6 +54,7 @@ class Change extends ActionImpl {
     constructor(payload, dispatch = false) {
         super(payload, 'change', { dispatch });
     }
+
     withAdditionalChange(change) {
         return new Change(this.payload.changes.concat(change.payload.changes), this.metadata);
     }
@@ -60,17 +74,15 @@ class ExecuteRule extends ActionImpl {
         super(payload, 'executeRule', { dispatch });
     }
 }
-const propertyChange = (propertyName, currentValue, prevValue) => {
-    return new Change({
-        changes: [
-            {
-                propertyName,
-                currentValue,
-                prevValue
-            }
-        ]
-    });
-};
+const propertyChange = (propertyName, currentValue, prevValue) => new Change({
+    changes: [
+        {
+            propertyName,
+            currentValue,
+            prevValue,
+        },
+    ],
+});
 class Initialize extends ActionImpl {
     constructor(payload, dispatch = false) {
         super(payload, 'initialize', { dispatch });
@@ -115,7 +127,7 @@ class FieldChanged extends ActionImpl {
     constructor(changes, field) {
         super({
             field,
-            changes
+            changes,
         }, 'fieldChanged');
     }
 }
@@ -123,7 +135,8 @@ class CustomEvent extends ActionImpl {
     constructor(eventName, payload = {}, dispatch = false) {
         super(payload, eventName, { dispatch });
     }
-    get isCustomEvent() {
+
+    get isCustomEvent() { // eslint-disable-line class-methods-use-this
         return true;
     }
 }
@@ -148,4 +161,24 @@ class RemoveInstance extends ActionImpl {
     }
 }
 
-export { AddInstance, AddItem, Blur, Change, Click, CustomEvent, ExecuteRule, FieldChanged, Focus, FormLoad, Initialize, Invalid, RemoveInstance, RemoveItem, Reset, Submit, Valid, ValidationComplete, propertyChange };
+export {
+    AddInstance,
+    AddItem,
+    Blur,
+    Change,
+    Click,
+    CustomEvent,
+    ExecuteRule,
+    FieldChanged,
+    Focus,
+    FormLoad,
+    Initialize,
+    Invalid,
+    RemoveInstance,
+    RemoveItem,
+    Reset,
+    Submit,
+    Valid,
+    ValidationComplete,
+    propertyChange,
+};

@@ -52,7 +52,7 @@ export default class NumericInputWidget {
         this.#model = model;
         // initialize options for backward compatibility
         this.#options = { ...this.#defaultOptions, ...this.#model._jsonModel };
-        const matchStr = this.#matchArray[this.#options.dataType];
+        let matchStr = this.#matchArray[this.#options.dataType];
         if (matchStr) {
             const ld = this.#options.leadDigits;
             const fd = this.#options.fracDigits;
@@ -60,7 +60,7 @@ export default class NumericInputWidget {
                 : '*';
             const fdstr = fd && fd !== -1 ? `{0,${fd}}`
                 : '*';
-            const matchStr = matchStr.replace('{leading}', ldstr)
+            matchStr = matchStr.replace('{leading}', ldstr)
                 .replace('{fraction}', fdstr);
             const localeStr = matchStr.replace(/{digits}/g, this.#getDigits())
                 .replace('{decimal}', this.#escape(this.#options.decimal));

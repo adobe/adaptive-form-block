@@ -11,9 +11,9 @@ export class AdaptiveForm {
     element;
 
     /**
-   * @param {HTMLLinkElement} element
-   * @param {any} formJson
-   */
+     * @param {HTMLLinkElement} element
+     * @param {any} formJson
+     */
     constructor(element, formJson) {
         this.element = element;
         this.model = createFormInstance(formJson, undefined);
@@ -21,8 +21,8 @@ export class AdaptiveForm {
     }
 
     /**
-   * @param {string} id
-   */
+     * @param {string} id
+     */
     getModel(id) {
         return this.model?.getElement(id);
     }
@@ -38,9 +38,9 @@ export class AdaptiveForm {
     };
 
     /**
-   * @param {HTMLFormElement}  form
-   * @param {import("afcore").State<import("afcore").FormJson>} state
-   * */
+     * @param {HTMLFormElement}  form
+     * @param {import("afcore").State<import("afcore").FormJson>} state
+     */
     renderChildren = async (form, state) => {
         console.time('Rendering childrens');
         const fields = state?.items;
@@ -57,8 +57,8 @@ export class AdaptiveForm {
 }
 
 /**
-  * @param {HTMLLinkElement} formLink
-  * */
+ * @param {HTMLLinkElement} formLink
+ */
 const createFormContainer = async (placeholder, url) => {
     console.log('Loading & Converting excel form to Crispr Form');
 

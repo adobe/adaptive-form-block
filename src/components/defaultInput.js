@@ -1,12 +1,14 @@
-import { setActive, subscribe } from "../libs/afb-interaction.js";
-import * as builder from "../libs/afb-builder.js";
-import { Constants } from "../libs/constants.js";
+import { setActive, subscribe } from '../libs/afb-interaction.js';
+import * as builder from '../libs/afb-builder.js'; // eslint-disable-line import/no-cycle
+import { Constants } from '../libs/constants.js';
 
 export class DefaultField {
-    blockName = 'cmp-adaptiveform-textinput'
+    blockName = 'cmp-adaptiveform-textinput';
 
     block;
+
     element;
+
     model;
 
     constructor(block, model) {
@@ -15,16 +17,14 @@ export class DefaultField {
     }
 
     addListener() {
-        if(this.element) {
-            let widget = builder?.default?.getWidget(this.block);
+        if (this.element) {
+            const widget = builder?.default?.getWidget(this.block);
             widget?.addEventListener('blur', (e) => {
                 this.model.value = e.target.value;
-                if(this.element)
-                    setActive(this.element, false);
+                if (this.element) setActive(this.element, false);
             });
-            widget?.addEventListener('focus', (e) => {
-                if(this.element)
-                    setActive(this.element, true);
+            widget?.addEventListener('focus', () => {
+                if (this.element) setActive(this.element, true);
             });
         }
     }
@@ -33,9 +33,8 @@ export class DefaultField {
         if (this.model.fieldType === 'hidden') {
             const state = this.model.getState();
             return builder?.default?.defaultInputRender(state, this.blockName);
-        } else {
-            return builder?.default?.renderField(this.model, this.blockName)
         }
+        return builder?.default?.renderField(this.model, this.blockName);
     }
 
     render() {
@@ -50,6 +49,6 @@ export class DefaultField {
 }
 
 export default async function decorate(block, model) {
-    let textinput = new DefaultField(block, model);
+    const textinput = new DefaultField(block, model);
     textinput.render();
 }

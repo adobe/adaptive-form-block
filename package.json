@@ -1,5 +1,5 @@
 {
-  "name": "adaptiveform",
+  "name": "@adobe/adaptiveformblock",
   "type": "module",
   "version": "0.0.1",
   "description": "Adaptive Form Block for AEM Form",

@@ -23,5 +23,11 @@
     "no-underscore-dangle": ["warn"],
     "max-len": ["error", 140],
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
-  }
+  },
+  "ignorePatterns": [
+    "libs/afb-runtime.js",
+    "libs/json-formula.js",
+    "libs/afb-formatters.js",
+    "libs/afb-events.js"
+  ]
 }

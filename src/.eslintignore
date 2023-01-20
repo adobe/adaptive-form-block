@@ -1,5 +1,0 @@
-# afb block eslint ignore files
-/src/libs/afb-runtime.js
-/src/libs/json-formula.js
-/src/libs/afb-formatters.js
-/src/libs/afb-events.js

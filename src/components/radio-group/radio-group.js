@@ -1,6 +1,6 @@
 import { getLayoutProperties, getTooltipValue, getViewId } from '../../libs/afb-model.js';
 import { subscribe } from '../../libs/afb-interaction.js';
-import { Constants } from '../../libs/constants.js';
+import Constants from '../../libs/constants.js';
 import * as builder from '../../libs/afb-builder.js';
 
 import { DefaultField } from '../defaultInput.js';

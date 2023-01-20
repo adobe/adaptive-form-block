@@ -1,6 +1,6 @@
 import { setActive, subscribe } from '../libs/afb-interaction.js';
 import * as builder from '../libs/afb-builder.js'; // eslint-disable-line import/no-cycle
-import { Constants } from '../libs/constants.js';
+import Constants from '../libs/constants.js';
 
 export class DefaultField {
     blockName = 'cmp-adaptiveform-textinput';

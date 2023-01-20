@@ -1,6 +1,6 @@
-import { Constants } from "./constants.js";
+import Constants from "./constants.js";
 import { getLabelValue, getTooltipValue, getViewId, isLabelVisible, isTooltipVisible } from "./afb-model.js";
-import * as builder from "./afb-builder.js";
+import * as builder from "./afb-builder.js"; // eslint-disable-line import/no-cycle
 import defaultInput from "../components/defaultInput.js";
 
 /**

@@ -1,5 +1,5 @@
 import { getWidget } from '../../libs/afb-interaction.js';
-import { Constants } from '../../libs/constants.js';
+import Constants from '../../libs/constants.js';
 import { Checkbox } from '../checkbox/checkbox.js';
 
 export class Radio extends Checkbox {

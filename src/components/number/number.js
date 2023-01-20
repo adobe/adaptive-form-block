@@ -1,6 +1,6 @@
 import * as builder from '../../libs/afb-builder.js';
 import { getWidget, subscribe, updateValue } from '../../libs/afb-interaction.js';
-import { Constants } from '../../libs/constants.js';
+import Constants from '../../libs/constants.js';
 import { DefaultField } from '../defaultInput.js';
 import NumericInputWidget from './NumberInputWidget.js';
 

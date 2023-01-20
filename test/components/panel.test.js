@@ -1,4 +1,4 @@
-import { Constants } from "../../src/libs/constants.js";
+import Constants from "../../src/libs/constants.js";
 import { expect } from '@esm-bundle/chai';
 import ComponentValidator from "../util/ComponentValidator.js";
 

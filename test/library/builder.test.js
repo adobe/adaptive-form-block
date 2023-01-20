@@ -1,7 +1,7 @@
 
 
 import { expect } from '@esm-bundle/chai';
-import { Constants } from '../../src/libs/constants.js';
+import Constants from '../../src/libs/constants.js';
 
 import * as builder from "../../src/libs/afb-builder.js";
 import { getErrorWidget } from '../../src/libs/afb-interaction.js';

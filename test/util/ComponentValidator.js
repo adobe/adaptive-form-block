@@ -1,5 +1,5 @@
 import { expect } from '@esm-bundle/chai';
-import { Constants } from '../../src/libs/constants';
+import Constants from '../../src/libs/constants';
 import * as builder from '../../src/libs/afb-builder';
 import { getErrorWidget } from '../../src/libs/afb-interaction';
 import { isLabelVisible } from '../../src/libs/afb-model';

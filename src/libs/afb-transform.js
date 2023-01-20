@@ -1,4 +1,4 @@
-import { ExcelToJsonFormula } from './afb-transformrules.js';
+import ExcelToJsonFormula from './afb-transformrules.js';
 import Formula from './json-formula.js';
 
 const PROPERTY = 'property';

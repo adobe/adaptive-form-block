@@ -6,10 +6,12 @@ import { Constants } from "../../libs/constants.js";
 import * as builder from "../../libs/afb-builder.js";
 
 export class Button {
-
     blockName = Constants.BUTTON;
+
     block;
+
     element;
+
     model;
 
     constructor(block, model) {
@@ -18,22 +20,22 @@ export class Button {
     }
 
     addListener() {
-        this.element?.addEventListener("click", () => {
-            this.model.dispatch(new Click())
+        this.element?.addEventListener('click', () => {
+            this.model.dispatch(new Click());
         });
     }
 
     renderField = () => {
-        let state = this.model.getState();
-        let button = document.createElement("button");
-        button.type = "button"
+        const state = this.model.getState();
+        const button = document.createElement('button');
+        button.type = 'button';
         button.id = getViewId(state, this.blockName);
         button.className = this.blockName;
         button.title = getTooltipValue(state);
-        button.dataset.cmpVisible = (state?.visible === true) + "";
-        button.dataset.cmpEnabled = (state?.enabled === true) + "";
+        button.dataset.cmpVisible = `${state?.visible === true}`;
+        button.dataset.cmpEnabled = `${state?.enabled === true}`;
         button.dataset.cmpIs = this.blockName;
-        button.setAttribute("aria-label", getLabelValue(state));
+        button.setAttribute('aria-label', getLabelValue(state));
 
         builder.default.addStyle(button, state);
 
@@ -43,10 +45,10 @@ export class Button {
 
         button.appendChild(span);
         return button;
-    }
+    };
 
     render() {
-        this.element = this.renderField()
+        this.element = this.renderField();
         this.block.appendChild(this.element);
         this.addListener();
         subscribe(this.model, this.element);
@@ -54,6 +56,6 @@ export class Button {
 }
 
 export default async function decorate(block, model) {
-    let button = new Button(block, model);
+    const button = new Button(block, model);
     button.render();
 }

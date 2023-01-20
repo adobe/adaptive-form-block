@@ -10,7 +10,7 @@ let loadTemplate = async (event) => {
     document.getElementById("form").innerHTML = "<div id='placeholder'></div>";
     document.getElementById("placeholder").appendChild(a);
     if(templateUrl) {
-        loadForm(document.getElementById("form"))
+        await loadForm(document.getElementById("form"))
     } 
     await loadJson(templateUrl);
 }

@@ -1,0 +1,3 @@
+# afb block eslint ignore files
+/src/libs/afb-runtime.js
+/src/libs/json-formula.js

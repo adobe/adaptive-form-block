@@ -16,6 +16,12 @@
     "linebreak-style": ["error", "unix"],
     "import/extensions": ["error", {
       "js": "always"
-    }]
+    }],
+    "quotes": ["error", "single"],
+    "indent": ["error", 4],
+    "no-unused-expressions": ["warn"],
+    "no-underscore-dangle": ["warn"],
+    "max-len": ["error", 140],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
   }
 }

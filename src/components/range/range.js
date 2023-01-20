@@ -77,7 +77,7 @@ export class Range extends DefaultField {
         return div;
     }
 
-    renderElement() {
+    renderField() {
         return builder?.default?.renderField(this.model, this.blockName, this.renderInput.bind(this));
     }
 }

@@ -29,7 +29,7 @@ export class DefaultField {
         }
     }
 
-    renderElement() {
+    renderField() {
         if (this.model.fieldType === 'hidden') {
             const state = this.model.getState();
             return builder?.default?.defaultInputRender(state, this.blockName);
@@ -39,7 +39,7 @@ export class DefaultField {
     }
 
     render() {
-        this.element = this.renderElement();
+        this.element = this.renderField();
         this.block.classList.add(Constants.ADAPTIVE_FORM+"-"+this.model?.fieldType)
         this.block.appendChild(this.element);
         if (this.model.fieldType !== 'hidden') {

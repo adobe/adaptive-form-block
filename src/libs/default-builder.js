@@ -69,12 +69,9 @@ export const createWidgetWrapper = (state, bemBlock) => {
     element.dataset.cmpEnabled = (state?.enabled === true) + "";
     element.dataset.cmpIs = bemBlock;
     //element.dataset.cmpAdaptiveformcontainerPath = getFormContainerPath();
-
-    //@ts-ignore
-    if(state?.style) {
-        //@ts-ignore
-        element.className += " " + state?.style;
-    }
+    
+    addStyle(element, state);
+    
     return element;
 }
 
@@ -279,4 +276,9 @@ export function renderTooltip(target, tooltip, bemBlock) {
     tooltip.style.left = left + "px";
     tooltip.className += ` ${Constants.ADAPTIVE_FORM_TOOLTIP}-${placement}`
     tooltip.style.visibility = "visible";
+}
+
+export function addStyle(element, state) {
+    // add support for comma separated styles.
+    element.className += state?.style ? ' ' + state?.style : '';
 }

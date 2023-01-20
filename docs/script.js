@@ -7,8 +7,8 @@ let loadTemplate = async (event) => {
     a.id = "form";
     a.href = templateUrl;
     a.textContent = selectEl.options[selectEl.selectedIndex].text
-    document.getElementById("form").innerHTML = "";
-    document.getElementById("form").appendChild(a);
+    document.getElementById("form").innerHTML = "<div id='placeholder'></div>";
+    document.getElementById("placeholder").appendChild(a);
     if(templateUrl) {
         loadForm(document.getElementById("form"))
     } 

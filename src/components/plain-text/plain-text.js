@@ -1,14 +1,14 @@
-
-import { getViewId } from "../../libs/afb-model.js";
-import { subscribe } from "../../libs/afb-interaction.js";
-import { Constants } from "../../libs/constants.js";
-import * as builder from "../../libs/afb-builder.js";
+import { subscribe } from '../../libs/afb-interaction.js';
+import { Constants } from '../../libs/constants.js';
+import * as builder from '../../libs/afb-builder.js';
 
 export class PlainText {
-
     blockName = Constants.TEXT;
+
     block;
+
     element;
+
     model;
 
     constructor(block, model) {
@@ -17,26 +17,26 @@ export class PlainText {
     }
 
     renderField = () => {
-        let state = this.model.getState();
-        
-        let element = builder?.default?.createWidgetWrapper(state, this.blockName);
+        const state = this.model.getState();
 
-        let child = document.createElement("div");
-        child.className = this.blockName + "__widget";
+        const element = builder?.default?.createWidgetWrapper(state, this.blockName);
+
+        const child = document.createElement('div');
+        child.className = `${this.blockName}__widget`;
         child.tabIndex = 0;
         child.textContent = state?.value;
         element.append(child);
         return element;
-    }
+    };
 
     render() {
-        this.element = this.renderField()
+        this.element = this.renderField();
         this.block.appendChild(this.element);
         subscribe(this.model, this.element);
     }
 }
 
 export default async function decorate(block, model) {
-    let text = new PlainText(block, model);
+    const text = new PlainText(block, model);
     text.render();
 }

@@ -1,13 +1,15 @@
-import { isArrayType } from "../../libs/afb-model.js";
-import { getWidget, subscribe } from "../../libs/afb-interaction.js";
-import { Constants } from "../../libs/constants.js";
-import * as builder from "../../libs/afb-builder.js";
+import { isArrayType } from '../../libs/afb-model.js';
+import { getWidget, subscribe } from '../../libs/afb-interaction.js';
+import { Constants } from '../../libs/constants.js';
+import * as builder from '../../libs/afb-builder.js';
 
 export class Select {
-
     blockName = Constants.SELECT;
+
     block;
+
     element;
+
     model;
 
     constructor(block, model) {
@@ -16,23 +18,24 @@ export class Select {
     }
 
     updateValue = (element, value) => {
-        let isMultiSelect = isArrayType(this.model);
-        if(this.element) {
-            let select = getWidget(element);
-            for(let index = 0; index< select?.options?.length; index++) {
-                let option = select?.options?.[index];
-                option.selected = (isMultiSelect && value?.includes(option.value)) 
-                    || (value === option.value)
+        const isMultiSelect = isArrayType(this.model);
+        if (this.element) {
+            const select = getWidget(element);
+            for (let index = 0; index < select?.options?.length; index++) {
+                const option = select?.options?.[index];
+                option.selected = (isMultiSelect && value?.includes(option.value))
+                    || (value === option.value);
             }
         }
-    }
+    };
+
     addListener = () => {
         getWidget(this.element)?.addEventListener('blur', (e) => {
-            if(isArrayType(this.model)) {
-                let valueArray = [];
-                let select = getWidget(this.element);
-                for(let index = 0; index< select?.options?.length; index++) {
-                    let option = select?.options?.[index];
+            if (isArrayType(this.model)) {
+                const valueArray = [];
+                const select = getWidget(this.element);
+                for (let index = 0; index < select?.options?.length; index++) {
+                    const option = select?.options?.[index];
                     option.selected ? valueArray.push(option.value) : null;
                 }
                 this.model.value = valueArray;
@@ -40,44 +43,45 @@ export class Select {
                 this.model.value = e.target.value;
             }
         });
-    }
+    };
 
     createInputHTML = (state) => {
-        let select = builder?.default?.defaultInputRender(state, this.blockName, "select");
+        const select = builder?.default?.defaultInputRender(state, this.blockName, 'select');
         select.multiple = isArrayType(state);
-        if(state.placeholder) {
-           let option = this.createOption("", state.placeholder, true, true);
-           select.appendChild(option);
+        if (state.placeholder) {
+            const option = this.createOption('', state.placeholder, true, true);
+            select.appendChild(option);
         }
         this.createOptions(state, select);
         return select;
-    }
+    };
 
     createOptions = (state, select) => {
         state?.enum?.forEach((enumVal, index) => {
+            // eslint-disable-next-line eqeqeq
             select.appendChild(this.createOption(enumVal, this.model?.enumNames?.[index], (enumVal == state.default), false));
-        })
-    }
+        });
+    };
 
     createOption = (enumValue, enumDisplayName, selected, disabled = false) => {
-        let option = document.createElement("option");
+        const option = document.createElement('option');
         option.value = enumValue;
         option.disabled = disabled;
         option.textContent = enumDisplayName || enumValue;
         option.selected = selected;
-        option.className = this.blockName + "__option";
+        option.className = `${this.blockName}__option`;
         return option;
-    }
+    };
 
     render() {
-        this.element = builder?.default?.renderField(this.model, this.blockName, this.createInputHTML)
+        this.element = builder?.default?.renderField(this.model, this.blockName, this.createInputHTML);
         this.block.appendChild(this.element);
         this.addListener();
-        subscribe(this.model, this.element, {value : this.updateValue});
+        subscribe(this.model, this.element, { value: this.updateValue });
     }
 }
 
 export default async function decorate(block, model) {
-    let select = new Select(block, model);
+    const select = new Select(block, model);
     select.render();
 }

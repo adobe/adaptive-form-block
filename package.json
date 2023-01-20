@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "description": "Adaptive Form Block for AEM Form",
-  "main": "src/adaptiveform.ts",
+  "main": "src/adaptiveform.js",
   "scripts": {
     "clear": "rimraf dist",
     "package": "renamer --chain bundle.mjs dist/* ",
@@ -22,7 +22,7 @@
     "update:core": "rollup -c rollup/af-core.config.js",
     "update:formatters": "rollup -c rollup/af-formatters.config.js",
     "update:formula": "rollup -c rollup/json-formula.config.js",
-    "update:all" : "npm run update:core && npm run update:formula && npm run update:formatters"
+    "update:all": "npm run update:core && npm run update:formula && npm run update:formatters"
   },
   "author": "Vijay Kumar J (jalagari@adobe.com)",
   "license": "ISC",
@@ -42,6 +42,8 @@
     "renamer": "^4.0.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.79.1",
+    "rollup-plugin-cleanup": "^3.2.1",
+    "rollup-plugin-license": "^3.0.1",
     "stylelint": "^14.16.1",
     "wtr": "^1.0.4"
   }

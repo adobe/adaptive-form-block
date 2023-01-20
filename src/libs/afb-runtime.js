@@ -13,110 +13,14 @@
 * Dissemination of this information or reproduction of this material
 * is strictly forbidden unless prior written permission is obtained
 * from Adobe.
+
 * Adobe permits you to use and modify this file solely in accordance with
 * the terms of the Adobe license agreement accompanying it.
 *************************************************************************/
+
 import { propertyChange, ExecuteRule, Initialize, CustomEvent, Submit, RemoveInstance, AddInstance, Reset, RemoveItem, AddItem, Click, Change, FormLoad, FieldChanged, ValidationComplete, Valid, Invalid } from './afb-events.js';
 import Formula from './json-formula.js';
 import { format, parseDateSkeleton, formatDate } from './afb-formatters.js';
-
-class ValidationError {
-    fieldName;
-    errorMessages;
-    constructor(fieldName = '', errorMessages = []) {
-        this.errorMessages = errorMessages;
-        this.fieldName = fieldName;
-    }
-}
-
-const objToMap = (o) => new Map(Object.entries(o));
-const stringViewTypes = objToMap({ 'date': 'date-input', 'data-url': 'file-input', 'binary': 'file-input' });
-const typeToViewTypes = objToMap({
-    'number': 'number-input',
-    'boolean': 'checkbox',
-    'object': 'panel',
-    'array': 'panel',
-    'file': 'file-input',
-    'file[]': 'file-input'
-});
-const arrayTypes = ['string[]', 'boolean[]', 'number[]', 'array'];
-const defaultFieldTypes = (schema) => {
-    const type = schema.type || 'string';
-    if ('enum' in schema) {
-        const enums = schema.enum;
-        if (enums.length > 2 || arrayTypes.indexOf(type) > -1) {
-            return 'drop-down';
-        }
-        else {
-            return 'checkbox';
-        }
-    }
-    if (type === 'string' || type === 'string[]') {
-        return stringViewTypes.get(schema.format) || 'text-input';
-    }
-    return typeToViewTypes.get(type) || 'text-input';
-};
-
-const getProperty = (data, key, def) => {
-    if (key in data) {
-        return data[key];
-    }
-    else if (!key.startsWith(':')) {
-        const prefixedKey = `:${key}`;
-        if (prefixedKey in data) {
-            return data[prefixedKey];
-        }
-    }
-    return def;
-};
-const isFile = function (item) {
-    return (item?.type === 'file' || item?.type === 'file[]') ||
-        ((item?.type === 'string' || item?.type === 'string[]') &&
-            (item?.format === 'binary' || item?.format === 'data-url'));
-};
-const isCheckbox = function (item) {
-    const fieldType = item?.fieldType || defaultFieldTypes(item);
-    return fieldType === 'checkbox';
-};
-const isCheckboxGroup = function (item) {
-    const fieldType = item?.fieldType || defaultFieldTypes(item);
-    return fieldType === 'checkbox-group';
-};
-const isDateField = function (item) {
-    const fieldType = item?.fieldType || defaultFieldTypes(item);
-    return (fieldType === 'text-input' && item?.format === 'date') || fieldType === 'date-input';
-};
-function deepClone(obj, idGenerator) {
-    let result;
-    if (obj instanceof Array) {
-        result = [];
-        result = obj.map(x => deepClone(x, idGenerator));
-    }
-    else if (typeof obj === 'object' && obj !== null) {
-        result = {};
-        Object.entries(obj).forEach(([key, value]) => {
-            result[key] = deepClone(value, idGenerator);
-        });
-    }
-    else {
-        result = obj;
-    }
-    if (idGenerator && result && result.id) {
-        result.id = idGenerator();
-    }
-    return result;
-}
-const jsonString = (obj) => {
-    return JSON.stringify(obj, null, 2);
-};
-const isRepeatable = (obj) => {
-    return ((obj.repeatable &&
-        ((obj.minOccur === undefined && obj.maxOccur === undefined) ||
-            (obj.minOccur !== undefined && obj.maxOccur !== undefined && obj.maxOccur !== 0) ||
-            (obj.minOccur !== undefined && obj.maxOccur !== undefined && obj.minOccur !== 0 && obj.maxOccur !== 0) ||
-            (obj.minOccur !== undefined && obj.minOccur >= 0) ||
-            (obj.maxOccur !== undefined && obj.maxOccur !== 0))) || false);
-};
 
 class DataValue {
     $_name;
@@ -491,12 +395,12 @@ const resolveData = (data, input, create) => {
     return result;
 };
 
-var __decorate$3 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+function __decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+}
 const editableProperties = [
     'value',
     'label',
@@ -927,21 +831,110 @@ class BaseNode {
         }
     }
 }
-__decorate$3([
+__decorate([
     dependencyTracked()
 ], BaseNode.prototype, "index", null);
-__decorate$3([
+__decorate([
     dependencyTracked()
 ], BaseNode.prototype, "description", null);
-__decorate$3([
+__decorate([
     dependencyTracked()
 ], BaseNode.prototype, "visible", null);
-__decorate$3([
+__decorate([
     dependencyTracked()
 ], BaseNode.prototype, "label", null);
-__decorate$3([
+__decorate([
     dependencyTracked()
 ], BaseNode.prototype, "properties", null);
+
+const objToMap = (o) => new Map(Object.entries(o));
+const stringViewTypes = objToMap({ 'date': 'date-input', 'data-url': 'file-input', 'binary': 'file-input' });
+const typeToViewTypes = objToMap({
+    'number': 'number-input',
+    'boolean': 'checkbox',
+    'object': 'panel',
+    'array': 'panel',
+    'file': 'file-input',
+    'file[]': 'file-input'
+});
+const arrayTypes = ['string[]', 'boolean[]', 'number[]', 'array'];
+const defaultFieldTypes = (schema) => {
+    const type = schema.type || 'string';
+    if ('enum' in schema) {
+        const enums = schema.enum;
+        if (enums.length > 2 || arrayTypes.indexOf(type) > -1) {
+            return 'drop-down';
+        }
+        else {
+            return 'checkbox';
+        }
+    }
+    if (type === 'string' || type === 'string[]') {
+        return stringViewTypes.get(schema.format) || 'text-input';
+    }
+    return typeToViewTypes.get(type) || 'text-input';
+};
+
+const getProperty = (data, key, def) => {
+    if (key in data) {
+        return data[key];
+    }
+    else if (!key.startsWith(':')) {
+        const prefixedKey = `:${key}`;
+        if (prefixedKey in data) {
+            return data[prefixedKey];
+        }
+    }
+    return def;
+};
+const isFile = function (item) {
+    return (item?.type === 'file' || item?.type === 'file[]') ||
+        ((item?.type === 'string' || item?.type === 'string[]') &&
+            (item?.format === 'binary' || item?.format === 'data-url'));
+};
+const isCheckbox = function (item) {
+    const fieldType = item?.fieldType || defaultFieldTypes(item);
+    return fieldType === 'checkbox';
+};
+const isCheckboxGroup = function (item) {
+    const fieldType = item?.fieldType || defaultFieldTypes(item);
+    return fieldType === 'checkbox-group';
+};
+const isDateField = function (item) {
+    const fieldType = item?.fieldType || defaultFieldTypes(item);
+    return (fieldType === 'text-input' && item?.format === 'date') || fieldType === 'date-input';
+};
+function deepClone(obj, idGenerator) {
+    let result;
+    if (obj instanceof Array) {
+        result = [];
+        result = obj.map(x => deepClone(x, idGenerator));
+    }
+    else if (typeof obj === 'object' && obj !== null) {
+        result = {};
+        Object.entries(obj).forEach(([key, value]) => {
+            result[key] = deepClone(value, idGenerator);
+        });
+    }
+    else {
+        result = obj;
+    }
+    if (idGenerator && result && result.id) {
+        result.id = idGenerator();
+    }
+    return result;
+}
+const jsonString = (obj) => {
+    return JSON.stringify(obj, null, 2);
+};
+const isRepeatable = (obj) => {
+    return ((obj.repeatable &&
+        ((obj.minOccur === undefined && obj.maxOccur === undefined) ||
+            (obj.minOccur !== undefined && obj.maxOccur !== undefined && obj.maxOccur !== 0) ||
+            (obj.minOccur !== undefined && obj.maxOccur !== undefined && obj.minOccur !== 0 && obj.maxOccur !== 0) ||
+            (obj.minOccur !== undefined && obj.minOccur >= 0) ||
+            (obj.maxOccur !== undefined && obj.maxOccur !== 0))) || false);
+};
 
 class Scriptable extends BaseNode {
     _events = {};
@@ -1105,12 +1098,6 @@ class Scriptable extends BaseNode {
     }
 }
 
-var __decorate$2 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 class Container extends Scriptable {
     _children = [];
     _childrenReference;
@@ -1380,13 +1367,13 @@ class Container extends Scriptable {
         }
     }
 }
-__decorate$2([
+__decorate([
     dependencyTracked()
 ], Container.prototype, "maxItems", null);
-__decorate$2([
+__decorate([
     dependencyTracked()
 ], Container.prototype, "minItems", null);
-__decorate$2([
+__decorate([
     dependencyTracked()
 ], Container.prototype, "activeChild", null);
 
@@ -2375,12 +2362,6 @@ class Fieldset extends Container {
     }
 }
 
-var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 class InstanceManager extends Fieldset {
     get maxOccur() {
         return this._jsonModel.maxItems;
@@ -2398,12 +2379,21 @@ class InstanceManager extends Fieldset {
         return this.removeItem(action);
     }
 }
-__decorate$1([
+__decorate([
     dependencyTracked()
 ], InstanceManager.prototype, "maxOccur", null);
-__decorate$1([
+__decorate([
     dependencyTracked()
 ], InstanceManager.prototype, "minOccur", null);
+
+class ValidationError {
+    fieldName;
+    errorMessages;
+    constructor(fieldName = '', errorMessages = []) {
+        this.errorMessages = errorMessages;
+        this.fieldName = fieldName;
+    }
+}
 
 const dateRegex = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
 const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -2678,12 +2668,6 @@ const Constraints = {
     }
 };
 
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 const validTypes = ['string', 'number', 'boolean', 'file', 'string[]', 'number[]', 'boolean[]', 'file[]', 'array', 'object'];
 class Field extends Scriptable {
     constructor(params, _options) {

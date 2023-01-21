@@ -11,6 +11,7 @@
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
+            "dataName": "column1",
             "name": null,
             "fieldType": "panel",
             "required": false,
@@ -77,9 +78,10 @@
             "constraintMessages": {
                 "required": "Please fill in this field."
             },
-            "name": null,
+            "dataName": "column2",
             "fieldType": "panel",
             "required": false,
+            "name": null,
             "items": [
                 {
                     "constraintMessages": {

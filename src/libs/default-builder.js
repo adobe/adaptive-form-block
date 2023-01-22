@@ -5,6 +5,11 @@ import {
 import * as builder from './afb-builder.js'; // eslint-disable-line import/no-cycle
 import defaultInput from '../components/defaultInput.js'; // eslint-disable-line import/no-cycle
 
+export function addStyle(element, state) {
+    // add support for comma separated styles.
+    element.className += state?.style ? ` ${state?.style}` : '';
+}
+
 /**
  * @param {any} state FieldJson
  * @param {string} bemBlock
@@ -70,10 +75,10 @@ export const createWidgetWrapper = (state, bemBlock) => {
     element.dataset.cmpVisible = `${state?.visible === true}`;
     element.dataset.cmpEnabled = `${state?.enabled === true}`;
     element.dataset.cmpIs = bemBlock;
-    //element.dataset.cmpAdaptiveformcontainerPath = getFormContainerPath();
-    
+    // element.dataset.cmpAdaptiveformcontainerPath = getFormContainerPath();
+
     addStyle(element, state);
-    
+
     return element;
 };
 

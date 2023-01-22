@@ -118,12 +118,12 @@ export default class ExcelToFormModel {
 
         const transformRules = [];
         let rowNo = 2;
-        
-        exData.data.forEach((/** @type {{ [s: string]: any; } | ArrayLike<any>} */ item)=> {
-            let source = Object.fromEntries(Object.entries(item).filter(([_, v]) => (v != null && v!= "")));
-            let field = {...source, ...this.#initField()};
-            
-            if(item.name || item.Field) {
+
+        exData.data.forEach((/** @type {{ [s: string]: any; } | ArrayLike<any>} */ item) => {
+            const source = Object.fromEntries(Object.entries(item).filter(([_, v]) => (v != null && v != '')));
+            let field = { ...source, ...this.#initField() };
+
+            if (item.name || item.Field) {
                 this.#transformFieldNames(field);
 
                 if (this.#isProperty(field)) {
@@ -258,7 +258,7 @@ export default class ExcelToFormModel {
     #handlePanel(field) {
         if (field?.fieldType === 'panel') {
             // Ignore name if type is not defined on panel.
-            if (typeof field?.type === "undefined") {
+            if (typeof field?.type === 'undefined') {
                 field.dataName = field.name;
                 field.name = null;
             }

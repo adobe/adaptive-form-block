@@ -26,14 +26,14 @@ export class RadioGroup extends DefaultField {
     };
 
     createRadioButton = (state, enumValue, enumDisplayName, index) => {
-        let div = document.createElement("div");
-        div.className = this.blockName + "__option";
+        const div = document.createElement('div');
+        div.className = `${this.blockName}__option`;
 
-        let orientation = getLayoutProperties(state)?.orientation;
-        div.className += (orientation ? ' ' + orientation : '');
-        
-        let label = document.createElement("label");
-        label.className = this.blockName + "__option__label";
+        const orientation = getLayoutProperties(state)?.orientation;
+        div.className += (orientation ? ` ${orientation}` : '');
+
+        const label = document.createElement('label');
+        label.className = `${this.blockName}__option__label`;
         label.title = getTooltipValue(state);
         label.setAttribute('aria-label', enumDisplayName || enumValue);
         label.setAttribute('aria-describedby', '_desc');

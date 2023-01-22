@@ -2,7 +2,7 @@ import { Click } from '../../libs/afb-events.js';
 import { getLabelValue, getTooltipValue, getViewId } from '../../libs/afb-model.js';
 import { subscribe } from '../../libs/afb-interaction.js';
 import Constants from '../../libs/constants.js';
-import * as builder from "../../libs/afb-builder.js";
+import * as builder from '../../libs/afb-builder.js';
 
 export class Button {
     blockName = Constants.BUTTON;
@@ -38,7 +38,7 @@ export class Button {
 
         builder.default.addStyle(button, state);
 
-        let span = document.createElement("span");
+        const span = document.createElement('span');
         span.className = `${this.blockName}__text`;
         span.textContent = getLabelValue(state);
 

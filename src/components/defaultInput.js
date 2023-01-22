@@ -39,7 +39,7 @@ export class DefaultField {
 
     render() {
         this.element = this.renderField();
-        this.block.classList.add(Constants.ADAPTIVE_FORM+"-"+this.model?.fieldType)
+        this.block.classList.add(`${Constants.ADAPTIVE_FORM}-${this.model?.fieldType}`);
         this.block.appendChild(this.element);
         if (this.model.fieldType !== 'hidden') {
             this.addListener();

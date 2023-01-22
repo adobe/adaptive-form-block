@@ -4,87 +4,87 @@ import * as builder from '../../libs/afb-builder.js';
 import { getLayoutProperties, getViewId } from '../../libs/afb-model.js';
 
 export class CheckboxGroup {
-    blockName = Constants.CHECKBOX_GROUP;
+  blockName = Constants.CHECKBOX_GROUP;
 
-    block;
+  block;
 
-    element;
+  element;
 
-    model;
+  model;
 
-    constructor(block, model) {
-        this.block = block;
-        this.model = model;
-    }
+  constructor(block, model) {
+    this.block = block;
+    this.model = model;
+  }
 
-    addListener() {
-        const widgets = this.element?.querySelectorAll(`[class$='${Constants.WIDGET}']`);
-        widgets?.forEach((widget) => {
-            widget.addEventListener('change', () => {
-                const value = [];
-                widgets?.forEach((inputWidget) => {
-                    if (inputWidget.checked) {
-                        value.push(inputWidget.value);
-                    }
-                }, this);
-                this.model.value = value;
-            });
-        });
-    }
-
-    updateValue = (element, value) => {
-        const widgets = element.querySelectorAll(`[class$='${Constants.WIDGET}']`);
-        widgets?.forEach((widget) => {
-            if (widget.value != null && value?.includes(widget.value)) {
-                widget.checked = true;
-            } else {
-                widget.checked = false;
-            }
+  addListener() {
+    const widgets = this.element?.querySelectorAll(`[class$='${Constants.WIDGET}']`);
+    widgets?.forEach((widget) => {
+      widget.addEventListener('change', () => {
+        const value = [];
+        widgets?.forEach((inputWidget) => {
+          if (inputWidget.checked) {
+            value.push(inputWidget.value);
+          }
         }, this);
-    };
+        this.model.value = value;
+      });
+    });
+  }
 
-    createInputHTML = (state) => {
-        const fragments = document.createDocumentFragment();
-        state?.enum?.forEach((enumVal, index) => {
-            fragments.appendChild(this.createCheckbox(state, enumVal, state?.enumNames?.[index], index));
-        });
-        return fragments;
-    };
+  updateValue = (element, value) => {
+    const widgets = element.querySelectorAll(`[class$='${Constants.WIDGET}']`);
+    widgets?.forEach((widget) => {
+      if (widget.value != null && value?.includes(widget.value)) {
+        widget.checked = true;
+      } else {
+        widget.checked = false;
+      }
+    }, this);
+  };
 
-    createCheckbox = (state, enumValue, enumDisplayName, index) => {
-        const div = document.createElement('div');
-        div.className = `${this.blockName}-item ${getLayoutProperties(state)?.orientation}`;
+  createInputHTML = (state) => {
+    const fragments = document.createDocumentFragment();
+    state?.enum?.forEach((enumVal, index) => {
+      fragments.appendChild(this.createCheckbox(state, enumVal, state?.enumNames?.[index], index));
+    });
+    return fragments;
+  };
 
-        const label = document.createElement('label');
-        label.htmlFor = `${getViewId(state, this.blockName)}__${index}__widget`;
-        label.setAttribute('aria-label', enumDisplayName);
+  createCheckbox = (state, enumValue, enumDisplayName, index) => {
+    const div = document.createElement('div');
+    div.className = `${this.blockName}-item ${getLayoutProperties(state)?.orientation}`;
 
-        const input = builder?.default?.defaultInputRender(state, this.blockName);
-        input.type = 'checkbox';
-        input.id = label.htmlFor;
-        input.value = enumValue.toString();
-        input.checked = state?.value?.includes(enumValue);
+    const label = document.createElement('label');
+    label.htmlFor = `${getViewId(state, this.blockName)}__${index}__widget`;
+    label.setAttribute('aria-label', enumDisplayName);
 
-        const span = document.createElement('span');
-        span.textContent = enumDisplayName || enumValue;
+    const input = builder?.default?.defaultInputRender(state, this.blockName);
+    input.type = 'checkbox';
+    input.id = label.htmlFor;
+    input.value = enumValue.toString();
+    input.checked = state?.value?.includes(enumValue);
 
-        label.appendChild(input);
-        label.appendChild(span);
+    const span = document.createElement('span');
+    span.textContent = enumDisplayName || enumValue;
 
-        div.appendChild(label);
+    label.appendChild(input);
+    label.appendChild(span);
 
-        return div;
-    };
+    div.appendChild(label);
 
-    render() {
-        this.element = builder?.default?.renderField(this.model, this.blockName, this.createInputHTML);
-        this.block.appendChild(this.element);
-        this.addListener();
-        subscribe(this.model, this.element, { value: this.updateValue });
-    }
+    return div;
+  };
+
+  render() {
+    this.element = builder?.default?.renderField(this.model, this.blockName, this.createInputHTML);
+    this.block.appendChild(this.element);
+    this.addListener();
+    subscribe(this.model, this.element, { value: this.updateValue });
+  }
 }
 
 export default async function decorate(block, model) {
-    const checkbox = new CheckboxGroup(block, model);
-    checkbox.render();
+  const checkbox = new CheckboxGroup(block, model);
+  checkbox.render();
 }

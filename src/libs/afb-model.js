@@ -46,9 +46,9 @@ export const getViewId = (state, bemBlock) => `${bemBlock}-${state?.id}`;
  * @return {any}
  */
 export const getLayoutProperties = (state) => {
-    let layoutProperties = {};
-    if (state && state.properties && state.properties['afs:layout']) {
-        layoutProperties = state.properties['afs:layout'];
-    }
-    return layoutProperties;
+  let layoutProperties = {};
+  if (state && state.properties && state.properties['afs:layout']) {
+    layoutProperties = state.properties['afs:layout'];
+  }
+  return layoutProperties;
 };

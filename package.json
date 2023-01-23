@@ -9,7 +9,7 @@
     "build": "npm run update:all",
     "test": "wtr \"./test/**/*.test.js\" --node-resolve --port=2000 --coverage",
     "test:watch": "npm test -- --watch",
-    "lint:js": "eslint ",
+    "lint:js": "eslint src/.",
     "lint:css": "stylelint 'styles/*.css'",
     "lint": "npm run lint:js && npm run lint:css",
     "update:core": "rollup -c rollup/af-core.config.js",

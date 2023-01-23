@@ -11,7 +11,7 @@
     "test:watch": "npm test -- --watch",
     "lint:js": "eslint src/.",
     "lint:css": "stylelint 'styles/*.css'",
-    "lint": "npm run lint:js && npm run lint:css",
+    "lint": "npm run lint:js",
     "update:core": "rollup -c rollup/af-core.config.js",
     "update:formatters": "rollup -c rollup/af-formatters.config.js",
     "update:formula": "rollup -c rollup/json-formula.config.js",

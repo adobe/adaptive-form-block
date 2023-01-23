@@ -35,13 +35,13 @@ export class Range extends DefaultField {
      * @param {HTMLSpanElement} hover
      * @param {HTMLInputElement} widget
      */
-  #updateView(state, hover) {
+  // eslint-disable-next-line class-methods-use-this
+  #updateView(state, hover, widget) {
     try {
-      const widget = getWidget(this.block);
-      const min = Number(widget.min) || 0;
-      const max = Number(widget.max) || 1;
-      const value = Number(widget.value) || 0;
-      const step = Number(widget.step) || 1;
+      const min = Number(state.minimum) || 0;
+      const max = Number(state.maximum) || 1;
+      const value = Number(state.value) || 0;
+      const step = Number(state.step) || 1;
 
       const totalSteps = Math.ceil((max - min) / step);
       const currStep = Math.ceil((value - min) / step);

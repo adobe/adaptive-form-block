@@ -19,6 +19,7 @@
     "lint:js": "eslint ",
     "lint:css": "stylelint 'styles/*.css'",
     "lint": "npm run lint:js && npm run lint:css",
+    "postinstall": "npm run update:all",
     "update:core": "rollup -c rollup/af-core.config.js",
     "update:formatters": "rollup -c rollup/af-formatters.config.js",
     "update:formula": "rollup -c rollup/json-formula.config.js",
@@ -28,8 +29,8 @@
   "license": "ISC",
   "devDependencies": {
     "@adobe/json-formula": "0.1.50",
-    "@aemforms/af-core": "file:///Users/varundua/codebase/af2-web-runtime/packages/forms-next-core",
-    "@aemforms/af-formatters": "file:///Users/varundua/codebase/af2-web-runtime/packages/forms-next-formatters",
+    "@aemforms/af-core": "0.22.23",
+    "@aemforms/af-formatters": "0.22.23",
     "@babel/eslint-parser": "^7.19.1",
     "@esm-bundle/chai": "^4.3.4-fix.0",
     "@types/jest": "^29.2.3",

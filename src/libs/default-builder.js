@@ -73,11 +73,8 @@ export const createWidgetWrapper = (state, bemBlock) => {
   element.dataset.cmpIs = bemBlock;
   // element.dataset.cmpAdaptiveformcontainerPath = getFormContainerPath();
 
-  // @ts-ignore
-  if (state?.style) {
-    // @ts-ignore
-    element.className += ` ${state?.style}`;
-  }
+  addStyle(element, state);
+
   return element;
 };
 
@@ -285,3 +282,8 @@ export const getRender = async (fieldModel) => {
   }
   return block;
 };
+
+export function addStyle(element, state) {
+  // add support for comma separated styles.
+  element.className += state?.style ? ` ${state?.style}` : '';
+}

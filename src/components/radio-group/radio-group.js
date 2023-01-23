@@ -28,7 +28,10 @@ export class RadioGroup extends DefaultField {
 
   createRadioButton = (state, enumValue, enumDisplayName, index) => {
     const div = document.createElement('div');
-    div.className = `${this.blockName}__option ${getLayoutProperties(state)?.orientation}`;
+    div.className = `${this.blockName}__option`;
+
+    const orientation = getLayoutProperties(state)?.orientation;
+    div.className += (orientation ? ` ${orientation}` : '');
 
     const label = document.createElement('label');
     label.className = `${this.blockName}__option__label`;

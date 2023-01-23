@@ -2,6 +2,7 @@ import { Click } from '../../libs/afb-events.js';
 import { getLabelValue, getTooltipValue, getViewId } from '../../libs/afb-model.js';
 import { subscribe } from '../../libs/afb-interaction.js';
 import { Constants } from '../../libs/constants.js';
+import * as builder from '../../libs/afb-builder.js';
 
 export class Button {
   blockName = Constants.BUTTON;
@@ -34,6 +35,8 @@ export class Button {
     button.dataset.cmpEnabled = `${state?.enabled === true}`;
     button.dataset.cmpIs = this.blockName;
     button.setAttribute('aria-label', getLabelValue(state));
+
+    builder.default.addStyle(button, state);
 
     const span = document.createElement('span');
     span.className = `${this.blockName}__text`;

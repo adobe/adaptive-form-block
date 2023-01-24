@@ -66,6 +66,7 @@ export default class NumericInputWidget {
     this.#widget = widget;
     this.#model = model;
     // initialize options for backward compatibility
+    // eslint-disable-next-line no-underscore-dangle
     this.#options = { ...this.#defaultOptions, ...this.#model._jsonModel };
     let matchStr = this.#matchArray[this.#options.dataType];
     if (matchStr) {

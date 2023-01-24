@@ -9,7 +9,7 @@ export class NumberInput extends DefaultField {
 
   widgetFormatter;
 
-  _updateValue = (element, value) => {
+  updateValue = (element, value) => {
     if (this.widgetFormatter) {
       this.widgetFormatter.setValue(value);
     } else {
@@ -27,7 +27,8 @@ export class NumberInput extends DefaultField {
     if (!this.widgetFormatter) {
       this.addListener();
     }
-    subscribe(this.model, this.element, { value: this._updateValue });
+    // eslint-disable-next-line no-underscore-dangle
+    subscribe(this.model, this.element, { value: this.updateValue });
   }
 }
 

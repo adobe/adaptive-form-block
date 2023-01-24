@@ -9,7 +9,7 @@ const PROPERTY_RULES = 'rules.properties';
 /**
  * @param {string} formPath
  */
-const _getForm = async function _getForm(formPath) {
+const getForm = async function getForm(formPath) {
   if (!formPath) {
     throw new Error('formPath is required');
   }
@@ -90,7 +90,7 @@ export default class ExcelToFormModel {
   async getFormModel(formPath) {
     if (formPath) {
       console.time('Get Excel JSON');
-      const exData = await _getForm(formPath);
+      const exData = await getForm(formPath);
       console.timeEnd('Get Excel JSON');
       return this.transform(exData, formPath, false);
     }

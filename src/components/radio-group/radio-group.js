@@ -56,7 +56,7 @@ export class RadioGroup extends DefaultField {
     return div;
   };
 
-  _updateEnum = (element, Enum) => {
+  updateEnum = (element, Enum) => {
     // todo: remove extra options, fallback to enum if enumNames are not updated.
     const widgets = this.element?.querySelectorAll(`[class$='${Constants.WIDGET}']`);
     widgets?.forEach((widget, i) => {
@@ -64,7 +64,7 @@ export class RadioGroup extends DefaultField {
     });
   };
 
-  _updateEnumNames = (element, enumNames) => {
+  updateEnumNames = (element, enumNames) => {
     // todo: remove extra options, fallback to enum if enumNames are not updated.
     const widgets = this.element?.querySelectorAll('[class$=\'option__label\']');
     widgets?.forEach((widget, i) => {
@@ -96,8 +96,8 @@ export class RadioGroup extends DefaultField {
       this.element,
       {
         value: this.updateValue,
-        enum: this._updateEnum,
-        enumNames: this._updateEnumNames,
+        enum: this.updateEnum,
+        enumNames: this.updateEnumNames,
       },
     );
   }

@@ -49,7 +49,6 @@ export class AdaptiveForm {
       for (const index in fields) {
         const field = fields[index];
         const fieldModel = this.getModel(field.id);
-        // eslint-disable-next-line no-await-in-loop
         const element = await builder?.default?.getRender(fieldModel);
         form.append(element);
       }

@@ -92,7 +92,8 @@ export default class ExcelToFormModel {
       console.time('Get Excel JSON');
       const exData = await _getForm(formPath);
       console.timeEnd('Get Excel JSON');
-      return this.transform(exData, formPath, false);
+      const res = await this.transform(exData, formPath, false);
+      return res;
     }
   }
 
@@ -102,7 +103,7 @@ export default class ExcelToFormModel {
      *
      * @return {{formDef: any, excelData: any}} response
      */
-  transform(exData, formPath, validateRules) {
+  async transform(exData, formPath, validateRules) {
     this.errors = [];
     // if its adaptive form json just return it.
     if (exData?.adaptiveform) {
@@ -118,11 +119,25 @@ export default class ExcelToFormModel {
     const transformRules = [];
     let rowNo = 2;
 
-    exData.data.forEach((/** @type {{ [s: string]: any; } | ArrayLike<any>} */ item) => {
+    const entries = await Promise.all(exData.data.filter((item) => item.fieldType === 'fragment' && item.name).map(async (item) => {
+      const transformer = new ExcelToFormModel();
+      const url = `${formPath}?sheet=${item.name}`;
+      const fragmentJson = await transformer.getFormModel(url);
+      return [item.name, fragmentJson.formDef];
+    }));
+
+    const fragments = Object.fromEntries(entries);
+
+    exData.data.forEach(async (/** @type {{ [s: string]: any; } | ArrayLike<any>} */ item) => {
       // eslint-disable-next-line no-unused-vars
       const source = Object.fromEntries(Object.entries(item).filter(([_, v]) => (v != null && v !== '')));
       let field = { ...source, ...this.#initField() };
-      if (item.name || item.Field) {
+      if (field.fieldType === 'fragment' && field.name) {
+        const fragmentJson = fragments[field.name];
+        fragmentJson.items.forEach((fragmentItem) => {
+          this.#addToParent(fragmentItem);
+        });
+      } else if (item.name || item.Field) {
         this.#transformFieldNames(field);
 
         if (this.#isProperty(field)) {

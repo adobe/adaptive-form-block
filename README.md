@@ -1,4 +1,9 @@
+# The code is not maintained anymore
+
+Please use the block present in the repository https://github.com/adobe-rnd/aem-boilerplate-forms
+
 # Adpative Form Block
+
 Adaptive Form Block for Franklin
 
 AEM Form, Headless Adaptive Forms (HAF) specifies a mechanism to create a Form or Data Capture Experience using a JSON representation, which allows rendering that experience across multiple channels.
